@@ -1,0 +1,60 @@
+{
+  "about": [
+  ":robot: __Sirken Bot v0.01__",
+  "Programmed and maintained by Albero#9762.",
+  "Feel free to send me your discovered bugs, suggestions and in-game plats!"
+
+ ],
+ "help": [
+  "Bzzz. I can read only lines starting with an exclamatory mark and understand very few commands (ignore square bracket). Because I am a silly bot. Bzzz.",
+  "",
+  "  [!help (param)]  - Show this help. for a specific command help: [!help command] (ex. [!help tod])",
+  "  [!get]   - Show the status of a Merb",
+  "  [!list]  - Show the list of Merbs",
+  "  [!tod]   - Update the ToD of a Merb",
+  "  [!merbs] - List name and aliases of supported Merbs",
+  "  [!about] - About Sirken Bot"
+ ],
+
+ "get": [
+  ".Syntax: [!get [Merb Name] [(info)] [(timezone)]] - Show the status of the Merb",
+  "",
+  "  [Merb Name]  - mandatory. Merb full name or one of its tag ([!merbs] to list them)",
+  "",
+  "  [(info)]     - optional. Show more details about the Merb",
+  "",
+  "  [(timezone)] - optional. Show times in your timezone (GMT, CET, PST, EST)",
+  "",
+  ".Examples: [!get Scout] :: [!get Scout Charisa] :: [!get Lucan info cet] :: [!get KdT info est]",
+  ""
+ ],
+
+ "list": [
+
+  ".Syntax [!list] [(info)] [(timezone)] - Show a list of Merbs next to spawn",
+  "",
+  "  [(info)]     - optional. Show more details about the Merb",
+  "",
+  "  [(timezone)] - optional. Show times in your timezone (GMT, CET, PST, EST)",
+  "",
+  ".Examples: [!list info pst]",
+  ""
+ ],
+
+ "tod": [
+  ".Syntax: [!tod [Merb Name] [Time] [(Date)] [(approx)] [(timezone)]] - Update the Merb Time of Death",
+  "",
+  "  [Merb Name]   - mandatory. merb full name or one of its tag ([!list tags] to list them)",
+  "",
+  "  [Time]        - mandatory. can be {hh:mm} or {now} or {xx minutes ago}",
+  "",
+  "  [(Date)]      - optional. Use the format {yyyy-mm-dd}. If no date is passed, today is used",
+  "",
+  "  [(approx)]    - optional. If not sure about the exact time consider adding this parameter",
+  "",
+  "  [(timezone)]  - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|pst}",
+  "",
+  ".Examples: [!tod Lucan now approx] :: [!tod Scout Charisa 9mins ago] :: [!tod scout 12:34 approx pst]",
+  "           [!tod Vulak 69 minutes ago ] :: [!tod Verina 2019-02-25 15:00 est approx]"
+ ]
+}

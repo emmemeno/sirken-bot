@@ -1,0 +1,1479 @@
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:\b(sir lucan d'lere|lucan|sir lucan|sir lucan dlere)
+DEBUG:root:\b(scout charisa|scout|scout roll|charisa)
+DEBUG:root:\b(lodizal|lodi)
+DEBUG:root:\b(vulak)
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:\b(sir lucan d'lere|lucan|sir lucan|sir lucan dlere)\b
+DEBUG:root:\b(scout charisa|scout|scout roll|charisa)\b
+DEBUG:root:\b(lodizal|lodi)\b
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get superlodi
+DEBUG:root:\b(sir lucan d'lere|lucan|sir lucan|sir lucan dlere)\b
+DEBUG:root:\b(scout charisa|scout|scout roll|charisa)\b
+DEBUG:root:\b(lodizal|lodi)\b
+DEBUG:root:\b(vulak)\b
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:\b(sir lucan d'lere|lucan|sir lucan|sir lucan dlere)\b
+DEBUG:root:\b(scout charisa|scout|scout roll|charisa)\b
+DEBUG:root:\b(lodizal|lodi)\b
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodizal
+DEBUG:root:\b(sir lucan d'lere|lucan|sir lucan|sir lucan dlere)\b
+DEBUG:root:\b(scout charisa|scout|scout roll|charisa)\b
+DEBUG:root:\b(lodizal|lodi)\b
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:\b(sir lucan d'lere|lucan|sir lucan|sir lucan dlere)\b
+DEBUG:root:\b(scout charisa|scout|scout roll|charisa)\b
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get all
+DEBUG:root:\b(sir lucan d'lere|lucan|sir lucan|sir lucan dlere)\b
+DEBUG:root:\b(scout charisa|scout|scout roll|charisa)\b
+DEBUG:root:\b(lodizal|lodi)\b
+DEBUG:root:\b(vulak)\b
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get kdt info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help list
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help alias
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod suca
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 141
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !alias
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !alias
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 241mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 06:43:00
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod 23 mins ago lucan
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:22:00
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 5mins ago approx
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:47:00, accuracy: 0
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 45mins ago approx
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:12:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 1min ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:57:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 61mins ago ~
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 09:57:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 60 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 09:59:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 61 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 09:58:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 11:00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 59 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:01:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 420 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 419 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:02:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 400 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:21:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 419mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:04:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get all lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -2: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !set lucan 430 mins ago
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 430 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -2: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod 429 mins ago
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 421 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:09:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -2: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 410 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:20:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan 419 mins ago
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 419 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:12:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 419mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:15:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -2: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 418 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 04:17:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -2: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -2: 
+DEBUG:root:Status of -2: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -2: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -2: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout approx 550 mins ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 02:40:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout ~ 520 mins ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 03:10:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scoutg
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 00:00
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 00:00:12, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan approx now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 12:13:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 10 minutes ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 12:06:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 10 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 12:06:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 13 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 12:03:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 1hour ago
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan now approx
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 12:25:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout charisa 9mins ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 12:17:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 12:34 approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-23 12:34:23, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod Vulak 69 minutes ago
+INFO:root:Vulak updated by Albero#9762! New Tod: 2019-02-24 11:17:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod vulak now
+INFO:root:Vulak updated by Albero#9762! New Tod: 2019-02-24 14:08:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get vulak info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get vulak
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get vulak
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi now
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 14:28:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout now
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi now
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 14:45:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get all logi
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get all lodi
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 558mins ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 05:34:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 598 minutes ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 04:55:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info scout
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan pst
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan pst
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan cst
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan pst
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan est
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan est
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan pst
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan EST
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan est
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan est
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan pst
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan pst
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 15:55:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan pst
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan pst
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan pst
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan est
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lucan
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 16:05:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list time
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all pst
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get vulak
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get vulak info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get vulak
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get vulak
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info vulak
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info vulak
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info vulak pst
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info est
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info vulak est
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info vulak
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 389 minutes ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:27:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 389 minutes ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:31:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 390 minutes ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:31:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 389 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:33:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 389 mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:35:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout now
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 17:45:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 17:48:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 415mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 10:57:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan info
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 17:52:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info lucan
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 17:54:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 17:54:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 17:57:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 17:57:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 17:59:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 15:15 gmt
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 15:15:58+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 15:15 est
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-23 20:15:19+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan info
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 18:01:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 19:00 gmt
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-23 19:00:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan info
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 19:00 pst
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 03:00:27+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan
+DEBUG:root:Status of -2: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 18:06:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 18:09:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 12:45
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 11:45:52+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 11:11 pst
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 19:11:22+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan info
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 24:24 pst
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 12:24:18+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 23:59 pst
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-25 07:59:43+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan info
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 5mins ago
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-24 18:11:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !alias
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !alias
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lodi 00:00
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-23 23:00:45+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 0: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lodi 1:00
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 00:00:03+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lodi
+DEBUG:root:Status of 2: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lodi
+DEBUG:root:Status of 2: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info lodi
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info lodi pst
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get vulak all
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !save
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get Lodizel info pst
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get Lodi info pst
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 3:18
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 02:18:41+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 3:40
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 02:40:45+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 1 minute ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 20:21:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info scout
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list scout
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 2: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 03:40 pst
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 11:40:40+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 12:40
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 11:40:10+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lodi
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 10:40 gmt
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 10:40:44+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info lodi
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of 1: 
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of 0: 
+DEBUG:root:Status of -1: 
+DEBUG:root:Status of -2: 
+DEBUG:root:Status of 0: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info scout
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Status of -1: 
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info scout
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: %s - eta: %s - spawns %s - tod %s
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 02:00:00+00:00 - spawns 16 - tod 2019-02-18 00:00:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout now approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 21:12:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 12:12
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 11:12:38+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-25 04:12:38+00:00 - spawns 0 - tod 2019-02-24 11:12:38+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 5:00
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 04:00:54+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 23:00:54+00:00 - spawns 0 - tod 2019-02-24 04:00:54+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 5:30
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 04:30:08+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:30:08+00:00 - spawns 0 - tod 2019-02-24 04:30:08+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 7:30
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 06:30:27+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 23:30:27+00:00 - spawns 0 - tod 2019-02-24 06:30:27+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 5:00
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 04:00:34+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 23:00:34+00:00 - spawns 0 - tod 2019-02-24 04:00:34+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 1:00
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 00:00:47+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi now
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 21:21:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-25 14:21:00+00:00 - spawns 0 - tod 2019-02-24 21:21:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 4:00
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 03:00:04+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 22:00:04+00:00 - spawns 0 - tod 2019-02-24 03:00:04+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 2:00
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 01:00:17+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 01:00:17+00:00 - spawns 0 - tod 2019-02-24 01:00:17+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 5:00
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 04:00:38+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 23:00:38+00:00 - spawns 0 - tod 2019-02-24 04:00:38+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lodi 5:57
+INFO:root:Lodizal updated by Albero#9762! New Tod: 2019-02-24 04:57:52+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lodi
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 07:12:00+00:00 - spawns 0 - tod 2019-02-24 21:12:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 631 mins ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 10:57:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 06:57:00+00:00 - spawns 1 - tod 2019-02-24 10:57:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 571 mins ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 11:58:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-24 21:58:00+00:00 - spawns 0 - tod 2019-02-24 11:58:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 569 min ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 12:00:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-24 22:00:00+00:00 - spawns 0 - tod 2019-02-24 12:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 558 min ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 12:12:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-24 22:12:00+00:00 - spawns 0 - tod 2019-02-24 12:12:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 567 min ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-24 12:03:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-24 22:03:00+00:00 - spawns 0 - tod 2019-02-24 12:03:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-24 22:03:00+00:00 - spawns 0 - tod 2019-02-24 12:03:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !about
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all pst
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all gmt
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all est
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lodi
+DEBUG:root:GET CALL: Lodizal - eta: 2019-02-24 21:57:52+00:00 - spawns 0 - tod 2019-02-24 04:57:52+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !alias
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod now
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-25 14:23:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan now
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 15:27
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-25 14:27:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan now
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-25 14:34:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 00:00 pst
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-25 08:00:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:GET CALL: Sir Lucan D'Lere - eta: 2019-02-25 15:00:00+00:00 - spawns 0 - tod 2019-02-25 08:00:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 2019-2-15
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 2019-2-15 00:00 est
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-25 05:00:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan
+DEBUG:root:GET CALL: Sir Lucan D'Lere - eta: 2019-02-25 05:00:00+00:00 - spawns 0 - tod 2019-02-25 05:00:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 2019-02-15 gmt 11:13
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 2019-02-15 gmt 11:13
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 2019-02-15 gmt 11:13
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 2019-02-15 gmt 11:13
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-15 11:13:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lucan 2019-02-15 est 11:13
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-15 16:13:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 2019-02-15 gmt 11:13
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-15 11:13:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Vyemm - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Noble Dojorn - eta: 2019-02-27 00:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 18:03:00+00:00 - spawns 2 - tod 2019-02-24 12:03:00+00:00
+DEBUG:root:GET CALL: Sontalek - eta: 2019-02-26 08:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Talendor - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Wuoshi - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Zlexak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !alias
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list all
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Vyemm - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Noble Dojorn - eta: 2019-02-27 00:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 18:03:00+00:00 - spawns 2 - tod 2019-02-24 12:03:00+00:00
+DEBUG:root:GET CALL: Sontalek - eta: 2019-02-26 08:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Talendor - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Wuoshi - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Zlexak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get talendor
+DEBUG:root:GET CALL: Talendor - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info talendor
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod lucan 2019-02-15 gmt 11:13 approx
+INFO:root:Sir Lucan D'Lere updated by Albero#9762! New Tod: 2019-02-15 11:13:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get lucan
+DEBUG:root:GET CALL: Sir Lucan D'Lere - eta: 2019-02-15 11:13:00+00:00 - spawns 0 - tod 2019-02-15 11:13:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info lucan
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Vyemm - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Noble Dojorn - eta: 2019-02-27 00:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 18:03:00+00:00 - spawns 2 - tod 2019-02-24 12:03:00+00:00
+DEBUG:root:GET CALL: Sontalek - eta: 2019-02-26 08:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Talendor - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Wuoshi - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Zlexak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list all
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Vyemm - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Noble Dojorn - eta: 2019-02-27 00:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 18:03:00+00:00 - spawns 2 - tod 2019-02-24 12:03:00+00:00
+DEBUG:root:GET CALL: Sontalek - eta: 2019-02-26 08:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Talendor - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Wuoshi - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Zlexak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !alias
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !alias
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !alias
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Vyemm - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Noble Dojorn - eta: 2019-02-27 00:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 18:03:00+00:00 - spawns 2 - tod 2019-02-24 12:03:00+00:00
+DEBUG:root:GET CALL: Sontalek - eta: 2019-02-26 08:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Talendor - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Wuoshi - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Zlexak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Vyemm - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Noble Dojorn - eta: 2019-02-27 00:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 18:03:00+00:00 - spawns 2 - tod 2019-02-24 12:03:00+00:00
+DEBUG:root:GET CALL: Sontalek - eta: 2019-02-26 08:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Talendor - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Wuoshi - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Zlexak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get faydedar
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get faydedar info
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod tunare 2019-18-11 now
+INFO:root:Tunare updated by Albero#9762! New Tod: 2019-02-25 15:14:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod dunare 2019-18-11
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod tunare 2019-18-11
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod tunare 2019-18-11 12:00 pst
+INFO:root:Tunare updated by Albero#9762! New Tod: 2019-02-25 20:00:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get tunare
+DEBUG:root:GET CALL: Tunare - eta: 2019-03-04 12:00:00+00:00 - spawns 0 - tod 2019-02-25 20:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod tunare 2019-02-18 12:00 pst
+INFO:root:Tunare updated by Albero#9762! New Tod: 2019-02-18 20:00:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get tunare
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 04:00:00+00:00 - spawns 0 - tod 2019-02-18 20:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info tunare
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod tunare 2019-02-18 12:00 est approx
+INFO:root:Tunare updated by Albero#9762! New Tod: 2019-02-18 17:00:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info tunare
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout charisa 9mins ago approx
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout charisa 9 mins ago approx
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 5 minutes ago
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 5 minutes ago
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 5 minutes ago
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 5 minutes ago
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 5 minutes ago
+INFO:root:Sirken Bot Connected to Discord
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 5 minutes ago
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod scout 5 minutes ago
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-25 19:42:00+00:00, accuracy: 1
+INFO:root:Json Saved
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get info scout
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Gorenaire - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Gozzrem - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Ikatiar the Venom - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Innoruk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Jorlleag - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Keldor Dek'Torek - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Kelorek'Dar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: King Tormax - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Klandicar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lady Mirenilla - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lady Nevederia - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lady Vox - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lendiniara the Keeper - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Feshlak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Koi'Doken - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Nagafen - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Vyemm - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Lord Yelinak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Nexona - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Noble Dojorn - eta: 2019-02-27 00:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Phara Dar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-26 05:42:00+00:00 - spawns 0 - tod 2019-02-25 19:42:00+00:00
+DEBUG:root:GET CALL: Sevalak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Severilous - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Silverwing - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Sontalek - eta: 2019-02-26 08:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Talendor - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Telkorenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:GET CALL: Vulak`Aerr - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Wuoshi - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Xygoz - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Zlexak - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Gorenaire - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !alias
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Gorenaire - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Gorenaire - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Gorenaire - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Faydedar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Gorenaire - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list info
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list info
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Aaryonar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cazic Thule - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Cekenar - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dagarn the Destroyer - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dain Frostreaver IV - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dozekar the Cursed - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Dracoliche - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Druushk - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+DEBUG:root:GET CALL: Eashen of the Sky - eta: 2019-02-26 16:01:00+00:00 - spawns 0 - tod 2019-02-20 00:01:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-26 05:42:00+00:00 - spawns 0 - tod 2019-02-25 19:42:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list info scout
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info scout
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 2019-02-20 00:02 approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-19 23:02:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info scout
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info scout
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 2019-02-21 00:02 approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-20 23:02:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 2019-02-22 00:02 approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-21 23:02:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !get info scout
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 2019-02-23 00:02 approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-22 23:02:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 2019-02-24 00:02 approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-23 23:02:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-26 01:02:00+00:00 - spawns 4 - tod 2019-02-23 23:02:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-26 01:02:00+00:00 - spawns 4 - tod 2019-02-23 23:02:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 2019-02-20 00:02 approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-19 23:02:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !tod scout 2019-02-21 00:02 approx
+INFO:root:Scout Charisa updated by Albero#9762! New Tod: 2019-02-20 23:02:00+00:00, accuracy: 0
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !list
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 23:02:00+00:00 - spawns 11 - tod 2019-02-20 23:02:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help list
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan info est
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan info cet
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get lucan info cest
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help  list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help  list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help    get
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help arg
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help urca
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help list
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help about
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !help
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !help tod
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !help get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 23:02:00+00:00 - spawns 11 - tod 2019-02-20 23:02:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get help
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get scout info gmt
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !merbs
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !merb
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !alias
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !get suca
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !help get
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !merbs
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !merbs
+INFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !tod lord bob now
+INFO:root:Lord Doljonijiarnimorinar updated by Albero#9762! New Tod: 2019-02-25 22:04:00+00:00, accuracy: 1
+INFO:root:Json Saved
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !merbs
+DEBUG:root:Process Line: Channel {Direct Message with Albero} [Albero#9762] !list
+DEBUG:root:GET CALL: Lord Doljonijiarnimorinar - eta: 2019-02-28 14:04:00+00:00 - spawns 0 - tod 2019-02-25 22:04:00+00:00
+DEBUG:root:GET CALL: Scout Charisa - eta: 2019-02-25 23:02:00+00:00 - spawns 11 - tod 2019-02-20 23:02:00+00:00
+DEBUG:root:GET CALL: Tunare - eta: 2019-02-26 01:00:00+00:00 - spawns 0 - tod 2019-02-18 17:00:00+00:00
+INFO:root:Sirken Bot Connected to Discord
+https://wiki.project1999.com/Vessel DrozlinINFO:root:Sirken Bot Connected to Discord
+DEBUG:root:Process Line: Channel {generale} [Albero#9762] !help
