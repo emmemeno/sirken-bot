@@ -1,0 +1,790 @@
+{
+  "a broken golem": {
+    "alias": [
+      "broken golem"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 0,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Aaryonar": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Avatar of Abhorrence": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Cazic Thule": {
+    "alias": [
+      "Cazic"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Cekenar": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Coercer T'vala": {
+    "alias": [
+      "Coercer"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Dagarn the Destroyer": {
+    "alias": [
+      "Dagarn"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Dain Frostreaver IV": {
+    "alias": [
+      "Dain"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Derakor the Vindicator": {
+    "alias": [
+      "Vindi",
+      "Derakor"
+    ],
+    "respawn_time": 8,
+    "plus_minus": 1,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Dozekar the Cursed": {
+    "alias": [
+      "Dozekar"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Dracoliche": {
+    "alias": [
+      "Draco"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Dread": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Druushk": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Eashen of the Sky": {
+    "alias": [
+      "Eashen"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Faydedar": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Fright": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Gorenaire": {
+    "alias": [
+      "Gore"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Gozzrem": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Ikatiar the Venom": {
+    "alias": [
+      "Ikatiar"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Innoruk": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Jorlleag": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Keldor Dek'Torek": {
+    "alias": [
+      "KdT",
+      "Keldor"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Kelorek'Dar": {
+    "alias": [
+      "Kelorek"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "King Tormax": {
+    "alias": [
+      "Tormax"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "King Tranix": {
+    "alias": [
+      "Tranix"
+    ],
+    "respawn_time": 8,
+    "plus_minus": 0,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Klandicar": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lady Mirenilla": {
+    "alias": [
+      "Mirenilla"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lady Nevederia": {
+    "alias": [
+      "Nevederia"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lady Vox": {
+    "alias": [
+      "Vox"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lendiniara the Keeper": {
+    "alias": [
+      "Lendiniara"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lodizal": {
+    "alias": [
+      "lodi"
+    ],
+    "respawn_time": 18,
+    "plus_minus": 1,
+    "tod": "2019-02-24 04:57",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lord Doljonijiarnimorinar": {
+    "alias": [
+      "Lord Bob"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-25 22:04",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lord Feshlak": {
+    "alias": [
+      "Feshlak"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lord Koi'Doken": {
+    "alias": [
+      "LKD"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lord Nagafen": {
+    "alias": [
+      "Nagafen",
+      "Naggy"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lord of Ire": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lord of Loathing": {
+    "alias": [
+      "Loathing"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lord Vyemm": {
+    "alias": [
+      "Vyemm"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Lord Yelinak": {
+    "alias": [
+      "Yelinak"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Maestro of Rancor": {
+    "alias": [
+      "maestro"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Magi P'Tasa": {
+    "alias": [
+      "Magi"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Master of Spite": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Master of the Guard": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Master Yael": {
+    "alias": [
+      "Yael"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Mistress of Scorn": {
+    "alias": [
+      "Mistress"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Nexona": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Noble Dojorn": {
+    "alias": [
+      "Dojorn",
+      "Noble"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 0,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Phara Dar": {
+    "alias": [
+      "Phara"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Phinigel Autropos": {
+    "alias": [
+      "Phinigel",
+      "Phini"
+    ],
+    "respawn_time": 12,
+    "plus_minus": 0,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Scout Charisa": {
+    "alias": [
+      "scout",
+      "Scout roll",
+      "Charisa"
+    ],
+    "respawn_time": 10,
+    "plus_minus": 0,
+    "tod": "2019-02-20 23:02",
+    "signed": "Albero#9762",
+    "accuracy": 0,
+    "recurring": 1
+  },
+  "Sentry Badain": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Sevalak": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Severilous": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Silverwing": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Sir Lucan D'Lere": {
+    "alias": [
+      "Lucan",
+      "Sir Lucan",
+      "Sir Lucan DLere"
+    ],
+    "respawn_time": 7,
+    "plus_minus": 0,
+    "tod": "2019-02-15 11:13",
+    "signed": "Albero#9762",
+    "accuracy": 0,
+    "recurring": 0
+  },
+  "Sontalek": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 16,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Statue of Rallos Zek": {
+    "alias": [
+      "Statue"
+    ],
+    "respawn_time": 120,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Stomples": {
+    "alias": [
+      "broken golem"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 0,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Talendor": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Telkorenar": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Terror": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "The Final Arbiter": {
+    "alias": [
+      "Arbiter"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "The Progenitor": {
+    "alias": [
+      "Progenitor"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 12,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Trakanon": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Tunare": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-18 17:00",
+    "signed": "Albero#9762",
+    "accuracy": 0,
+    "recurring": 0
+  },
+  "Velketor the Sorcerer": {
+    "alias": [
+      "Velketor"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Venril Sathir": {
+    "alias": [],
+    "respawn_time": 72,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Verina Tomb": {
+    "alias": [
+      "Verina"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 24,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Vulak`Aerr": {
+    "alias": [
+      "Vulak"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Wraith of a Shissir": {
+    "alias": [
+      "Shissir"
+    ],
+    "respawn_time": 72,
+    "plus_minus": 0,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Wuoshi": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Xygoz": {
+    "alias": [],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Zlandicar": {
+    "alias": [],
+    "respawn_time": 96,
+    "plus_minus": 24,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Zlexak": {
+    "alias": [
+      "Zlex"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Zordak Ragefire": {
+    "alias": [
+      "Zordak",
+      "Ragefire"
+    ],
+    "respawn_time": 36,
+    "plus_minus": 36,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
+  "Vessel Drozlin": {
+    "alias": [
+      "Vessel"
+    ],
+    "respawn_time": 108,
+    "plus_minus": 60,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  }
+}
