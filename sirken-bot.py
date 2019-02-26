@@ -51,20 +51,22 @@ class Time_Handler:
         # time is mandatory
         if not time_in:
             return False
-        # if date is not provided, use actual date and replace hour and minute
-        if not date_in:
-            date_new = datetime.datetime.utcnow().replace(hour=time_in['hour'],
-                                                          minute=time_in['minute'],
-                                                          second=0,
-                                                          microsecond=0)
-        else:
-            # if both time and date:
+
+        # try to validate the date
+        try:
             date_new = datetime.datetime(year=date_in['year'],
                                          month=date_in['month'],
                                          day=date_in['day'],
                                          hour=time_in['hour'],
                                          minute=time_in['minute'])
-
+        except:
+            logging.debug("Date format error.")
+            print("Date format error.")
+            # if date is not provided, use actual date and replace hour and minute
+            date_new = datetime.datetime.utcnow().replace(hour=time_in['hour'],
+                                                          minute=time_in['minute'],
+                                                          second=0,
+                                                          microsecond=0)
         return self.naive_to_tz(date_new,timezone, 'UTC')
 
     def naive_to_tz(self, mydate, tz_from="CET", tz_to="CET"):
@@ -560,6 +562,7 @@ class Input_Handler:
             "get": self.get_single,     # Get a single Merb
             "tod": self.update,         # Update a Merb Status
             "merbs": self.alias,        # Reload from File
+            "hi": self.help
         }
         func = cmd_list.get(self.cmd, lambda: {"destination": self.author, "content": self.error_command()})
         return func()
@@ -602,12 +605,12 @@ if __name__ == "__main__":
         'disable_existing_loggers': True,
     })
 
-    logging.basicConfig(filename='Sirken_Bot.log', level=logging.DEBUG)
+    logging.basicConfig(filename='sirken-bot.log', level=logging.DEBUG)
     json_data = Json_Handler('p99merbs.json')   # Load Json data...
     time_h = Time_Handler()                # Handler for Time Validation
     merbs = Merb_List(json_data.merbs)          # ...Initialize Merbs List
     merbs.order()
-    helper = Helper("Sirken_Bot_help.json")
+    helper = Helper("sirken-bot-help.json")
     in_h = Input_Handler(merbs,time_h,json_data,helper)
 
     Client = discord.Client()  # Initialise Client
@@ -635,5 +638,5 @@ if __name__ == "__main__":
 
 
     client.loop.create_task(digest(in_h))
-    client.run("NTM5MDAxMzg2MDc2MjA5MTY0.Dy8NMw.hIFPz-opPQ62wkpuWyBOq6ucTCY")  # Run the Bot
+    client.run("NTQ5OTM3NDM3MDkxMjk5MzI4.D1bMFg.5kQASSGnI_CmlsR2YKViQFUsiGM")  # Run the Bot
 

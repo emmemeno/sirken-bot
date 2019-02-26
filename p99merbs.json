@@ -521,9 +521,9 @@
     ],
     "respawn_time": 10,
     "plus_minus": 0,
-    "tod": "2019-02-20 23:02",
+    "tod": "2019-02-26 11:45",
     "signed": "Albero#9762",
-    "accuracy": 0,
+    "accuracy": 1,
     "recurring": 1
   },
   "Sentry Badain": {
@@ -704,6 +704,17 @@
     "accuracy": 1,
     "recurring": 0
   },
+  "Vessel Drozlin": {
+    "alias": [
+      "Vessel"
+    ],
+    "respawn_time": 108,
+    "plus_minus": 60,
+    "tod": "2019-02-13 00:00",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 0
+  },
   "Vulak`Aerr": {
     "alias": [
       "Vulak"
@@ -771,17 +782,6 @@
     ],
     "respawn_time": 36,
     "plus_minus": 36,
-    "tod": "2019-02-13 00:00",
-    "signed": "Albero#9762",
-    "accuracy": 1,
-    "recurring": 0
-  },
-  "Vessel Drozlin": {
-    "alias": [
-      "Vessel"
-    ],
-    "respawn_time": 108,
-    "plus_minus": 60,
     "tod": "2019-02-13 00:00",
     "signed": "Albero#9762",
     "accuracy": 1,
