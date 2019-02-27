@@ -126,7 +126,7 @@ class Message_Composer:
     def time_remaining(self, name, eta, plus_minus, window, spawns, accuracy, tod, author):
         now = time_h.change_tz(datetime.datetime.now(), "UTC")
         eta = time_h.change_tz(eta, "UTC")
-        prefix = ""
+        postfix = ""
         output = "[" + name + "] "
         approx = ""
         if accuracy == 0 or spawns > 6:
@@ -140,11 +140,11 @@ class Message_Composer:
         if now < window['start'] and plus_minus:
             output += "window will %sopen in %s" % (approx, self.countdown(now , eta))
         if window['start'] < now < window['end']:
-            prefix = "@ "
-            output += "in window until " + self.countdown(now , eta)
+            postfix = "<- "
+            output += "in window until %s " % self.countdown(now , eta)
         # output += " - {ToD: %s} signed by %s" % (tod.strftime(DATE_FORMAT_PRINT), author)
         output += '\n'
-        return prefix + output
+        return output + postfix
 
     def detail(self,name, tod, signed, respawn_time, plus_minus, window_start, window_end, accuracy, eta):
         output = "%s\n" % (name)
