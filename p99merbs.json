@@ -633,9 +633,21 @@
     "accuracy": 1,
     "recurring": 0
   },
-  "Test": {
+  "Guardian Kozzalym": {
+    "alias": [
+      "Kozzalym"
+    ],
+    "respawn_time": 120,
+    "plus_minus": 0,
+    "tod": "2019-02-27 00:09",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 1
+  },
+  ,
+  "Vaniki": {
     "alias": [],
-    "respawn_time": 1,
+    "respawn_time": 122,
     "plus_minus": 0,
     "tod": "2019-02-27 00:09",
     "signed": "Albero#9762",
