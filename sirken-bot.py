@@ -8,10 +8,11 @@ import asyncio
 import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
+import config
 
 """" Initialize """
-BROADCAST_CHANNEL = "412554059833409547"
-DISCORD_TOKEN = "NTQ5OTM3NDM3MDkxMjk5MzI4.D1bMFg.5kQASSGnI_CmlsR2YKViQFUsiGM"
+BROADCAST_CHANNEL = config.BROADCAST_CHANNEL
+DISCORD_TOKEN = config.DISCORD_TOKEN
 DATE_FORMAT = "%Y-%m-%d %H:%M"
 DATE_FORMAT_PRINT = "%b %d %H:%M"
 
