@@ -143,8 +143,7 @@ class Message_Composer:
             postfix = "<- "
             output += "in window until %s " % self.countdown(now , eta)
         # output += " - {ToD: %s} signed by %s" % (tod.strftime(DATE_FORMAT_PRINT), author)
-        output += '\n'
-        return output + postfix
+        return output + postfix + "\n"
 
     def detail(self,name, tod, signed, respawn_time, plus_minus, window_start, window_end, accuracy, eta):
         output = "%s\n" % (name)
