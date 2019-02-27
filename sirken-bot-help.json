@@ -25,7 +25,7 @@
   "",
   "  [(timezone)] - optional. Show times in your timezone (GMT, CET, PST, EST)",
   "",
-  ".Examples: [!get Scout] :: [!get Scout Charisa] :: [!get Lucan info cet] :: [!get KdT info est]",
+  ".Examples: [!get Scout] :: [!get info Lord Bob pst] :: [!get Lucan info cet] :: [!get KdT info est]",
   ""
  ],
 
