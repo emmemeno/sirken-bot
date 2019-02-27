@@ -113,7 +113,7 @@ class Message_Composer:
         minutes = int((seconds_diff // 60) % 60)
         if days == 1:
             output += "1 day "
-        if hours > 1:
+        if days > 1:
             output += str(days) + " days "
         if hours == 1:
             output += "1 hour "
