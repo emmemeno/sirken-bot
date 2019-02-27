@@ -108,8 +108,8 @@ class Message_Composer:
         output = ""
         date_diff = d_from - d_to
         seconds_diff = date_diff.total_seconds()
-        days = int((seconds_diff // (60 * 60 * 24)))
-        hours = int(seconds_diff // (60 * 60))
+        days = int(seconds_diff // (60 * 60 * 24))
+        hours = int((seconds_diff - days*86400) // (60 * 60))
         minutes = int((seconds_diff // 60) % 60)
         if days == 1:
             output += "1 day "
