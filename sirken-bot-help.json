@@ -31,11 +31,7 @@
 
  "list": [
 
-  ".Syntax [!list] [(info)] [(timezone)] - Show a list of Merbs next to spawn",
-  "",
-  "  [(timezone)] - optional. Show times in your timezone (GMT, CET, PST, EST)",
-  "",
-  ".Examples: [!list info pst]",
+  ".Syntax [!list] - Show a list of Merbs next to spawn",
   ""
  ],
 
