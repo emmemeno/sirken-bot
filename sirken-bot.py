@@ -114,7 +114,7 @@ class Message_Composer:
         if days == 1:
             output += "1 day "
         if hours > 1:
-            output += str(hours) + " days "
+            output += str(days) + " days "
         if hours == 1:
             output += "1 hour "
         if hours > 1:
