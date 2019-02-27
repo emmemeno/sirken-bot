@@ -10,7 +10,7 @@ from discord.ext.commands import Bot
 from discord.ext import commands
 
 """" Initialize """
-BROADCAST_CHANNEL = "539046495299829766"
+BROADCAST_CHANNEL = "412554059833409547"
 DISCORD_TOKEN = "NTQ5OTM3NDM3MDkxMjk5MzI4.D1bMFg.5kQASSGnI_CmlsR2YKViQFUsiGM"
 DATE_FORMAT = "%Y-%m-%d %H:%M"
 DATE_FORMAT_PRINT = "%b %d %H:%M"
