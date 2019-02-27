@@ -439,7 +439,7 @@ class Input_Handler:
         timezone_msg=""
         if self.info:
             timezone_msg = 'Timezone: ' + self.timezone
-            print_list = self.merbs.get_all(self.timezone, 'detail')
+            print_list = self.merbs.get_all(self.timezone, 'countdown')
         else:
             print_list = self.merbs.get_all(self.timezone, 'countdown')
 

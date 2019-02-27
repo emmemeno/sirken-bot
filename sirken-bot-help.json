@@ -33,8 +33,8 @@
 
   ".Syntax [!list] [(info)] [(timezone)] - Show a list of Merbs next to spawn",
   "",
-  "  [(info)]     - optional. Show more details about the Merb",
-  "",
+  //"  [(info)]     - optional. Show more details about the Merb",
+  //"",
   "  [(timezone)] - optional. Show times in your timezone (GMT, CET, PST, EST)",
   "",
   ".Examples: [!list info pst]",
