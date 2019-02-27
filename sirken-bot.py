@@ -9,7 +9,9 @@ import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 
-
+"""" Initialize """
+BROADCAST_CHANNEL = "539046495299829766"
+DISCORD_TOKEN = "NTQ5OTM3NDM3MDkxMjk5MzI4.D1bMFg.5kQASSGnI_CmlsR2YKViQFUsiGM"
 DATE_FORMAT = "%Y-%m-%d %H:%M"
 DATE_FORMAT_PRINT = "%b %d %H:%M"
 
@@ -61,7 +63,6 @@ class Time_Handler:
                                          minute=time_in['minute'])
         except:
             logging.debug("Date format error.")
-            print("Date format error.")
             # if date is not provided, use actual date and replace hour and minute
             date_new = datetime.datetime.utcnow().replace(hour=time_in['hour'],
                                                           minute=time_in['minute'],
@@ -104,7 +105,7 @@ class Message_Composer:
         return pre_content + prefix + text + postfix
 
     def countdown(self, d_to, d_from):
-        output=""
+        output = ""
         date_diff = d_from - d_to
         seconds_diff = date_diff.total_seconds()
         hours = int(seconds_diff // (60 * 60))
@@ -122,22 +123,22 @@ class Message_Composer:
 
         return output
 
-    def time_remaining(self, name, status, eta, spawns, accuracy, tod, author):
+    def time_remaining(self, name, eta, plus_minus, window, spawns, accuracy, tod, author):
         now = time_h.change_tz(datetime.datetime.now(), "UTC")
         eta = time_h.change_tz(eta, "UTC")
         output = "[" + name + "] "
         approx = ""
-        if accuracy == 0 or spawns>5:
+        if accuracy == 0 or spawns > 6:
             approx = "roughly "
-        if status == -2:
+        if now > eta and not plus_minus:
             output += "ToD too old. Please update it if you have a chance! "
-        if status == -1:
-            output += "will %sspawn in %s" % (approx, self.countdown(now, eta))
-        if status == 0:
+        if now > eta and plus_minus:
             output += "window is close. Please update its ToD if u have a chance! "
-        if status == 1:
+        if now < eta and not plus_minus:
+            output += "will %sspawn in %s" % (approx, self.countdown(now, eta))
+        if now < window['start'] and plus_minus:
             output += "window will %sopen in %s" % (approx, self.countdown(now , eta))
-        if status == 2:
+        if window['start'] < now < window['end']:
             output += "in window until " + self.countdown(now , eta)
         # output += " - {ToD: %s} signed by %s" % (tod.strftime(DATE_FORMAT_PRINT), author)
         output += '\n'
@@ -200,21 +201,20 @@ class Merb:
         # Number of spawns since last tod (for recurring mobs)
         self.spawns = 0
 
-        # Status of the mob respect the current datetime.
-        # returns:
-        # -2 if Merb has no window and respawn is past,
-        # -1 if Merb has no window and respawn is coming
-        #  0 if window is past,
-        #  1 if window is coming,
-        #  2 if in window
-        self.status = int()
-
         # Spawn Windows {"start"} {"end"}
         self.window = self.get_window()
 
         # Eta for the spawn/window start/window end
         self.eta = self.get_eta()
 
+    def __str__(self):
+        return 'Name {} - Respawn Time {}±{} - ToD {} - Window Starts {} - Window ends {} - ETA: {}'.format(self.name,
+                                                                                                            self.respawn_time,
+                                                                                                            self.plus_minus,
+                                                                                                            self.tod,
+                                                                                                            self.window["start"],
+                                                                                                            self.window["end"],
+                                                                                                            self.eta)
 
     def get_window(self):
         w_start = self.tod + datetime.timedelta(hours=self.respawn_time) - datetime.timedelta(hours=self.plus_minus)
@@ -225,65 +225,47 @@ class Merb:
         self.tod = new_tod
         self.signed = author
         self.accuracy = approx
-        self.eta = self.get_eta()
         self.window = self.get_window()
         self.eta = self.get_eta()
         logging.info("%s updated by %s! New Tod: %s, accuracy: %s" % (self.name, self.signed, self.tod, self.accuracy))
 
-    def set_status(self, virtual_tod = None):
-        if (virtual_tod == None):
+    def get_eta(self, virtual_tod=None):
+
+        eta = time_h.naive_to_tz(datetime.datetime(1981, 2, 13, 00, 00), "UTC", "UTC")
+        # for recurring function
+        if not virtual_tod:
             virtual_tod = self.tod
-        now = time_h.naive_to_tz(datetime.datetime.now(), tz_to="UTC")
-        if self.plus_minus == 0 and now > (virtual_tod + datetime.timedelta(hours=self.respawn_time)):
-            self.status = -2
-            return True
-        if self.plus_minus == 0 and now < (virtual_tod + datetime.timedelta(hours=self.respawn_time)):
-            self.status = -1
-            return True
-        if now > self.window["end"]:
-            self.status = 0
-            return True
-        if now < self.window["start"]:
-            self.status = 1
-            return True
-        if now > self.window["start"] and now < self.window["end"]:
-            self.status = 2
-            return True
-        return False
-
-    def get_eta(self, new_tod = None):
-
-        if (new_tod == None):
-            new_tod = self.tod
             self.spawns = 0
 
-        self.set_status(new_tod)
+        now = time_h.naive_to_tz(datetime.datetime.now(), tz_to="UTC")
+        delta_hour = datetime.timedelta(hours=self.respawn_time)
 
-        if self.status == -1:
-            eta = new_tod + datetime.timedelta(hours=self.respawn_time)
-        if self.status == 0 or self.status == -2:
-            eta = self.tod
-        if self.status == 1:
+        # no window and spawn in the future
+        if self.plus_minus == 0 and now < (virtual_tod + delta_hour):
+            eta = virtual_tod + delta_hour
+
+        # before window opens
+        if now < self.window["start"] and self.plus_minus:
             eta = self.window["start"]
-        if self.status == 2:
+        # In window
+        if self.window["start"] < now < self.window["end"]:
             eta = self.window["end"]
 
         #set a new tod for recurring mob (scout)
-        if self.recurring and self.status == -2 and self.spawns < 12:
+        if self.recurring and self.plus_minus == 0 and now >= virtual_tod + delta_hour and self.spawns < 12:
             self.spawns += 1
-            eta = self.get_eta(new_tod + + datetime.timedelta(hours=self.respawn_time))
-
-
+            eta = self.get_eta(virtual_tod + delta_hour)
+            return eta
         return eta
 
-
     def print_short_info(self):
-
-        self.get_eta()
-        logging.debug("GET CALL: %s - eta: %s - spawns %s - tod %s" % (self.name, self.eta, self.spawns, self.tod))
-        return Message_Composer().time_remaining(self.name, self.status ,self.eta, self.spawns, self.accuracy, self.tod, self.signed)
+        if self.recurring:
+            self.eta = self.get_eta()
+        return Message_Composer().time_remaining(self.name,self.eta, self.plus_minus, self.window, self.spawns, self.accuracy, self.tod, self.signed)
 
     def print_long_info(self, timezone):
+        if self.recurring:
+            self.eta = self.get_eta()
         tod_tz = time_h.change_tz(self.tod, timezone)
         w_start_tz = time_h.change_tz(self.window["start"], timezone)
         w_end_tz = time_h.change_tz(self.window["end"], timezone)
@@ -342,8 +324,12 @@ class Merb_List:
                               )
                          )
 
-    def order(self):
-        self.merbs.sort(key=lambda merb: merb.name.lower())
+    def order(self, order='name'):
+        if order == 'name':
+            self.merbs.sort(key=lambda merb: merb.name.lower())
+        if order == 'eta':
+            self.merbs.sort(key=lambda merb: merb.eta)
+
 
     def get_single(self,name):
         for merb in self.merbs:
@@ -352,26 +338,22 @@ class Merb_List:
         return False
 
     def get_all(self, timezone, mode="countdown"):
+        self.order('eta')
         output = ""
-        # Create a new list with only active merbs
-        new_list = list()
 
         for merb in self.merbs:
-            if merb.eta > time_h.naive_to_tz(datetime.datetime.now(), "CET", "UTC"):
-                new_list.append(merb)
-
-        for idx, merb in enumerate(new_list):
-            if (mode == "countdown"):
-                output += merb.print_short_info()
-            else:
-                output += merb.print_long_info(timezone) + "\n"
-            if idx == 8:
-                return output
-        if output =="":
+            if time_h.now() < merb.eta:
+                # Show online merb eta in the future
+                if mode == "countdown":
+                    output += merb.print_short_info()
+                else:
+                    output += merb.print_long_info(timezone) + "\n"
+        if output == "":
             output = "Empty! :("
         return output
 
     def get_all_alias(self):
+        self.order('name')
         output = ""
         for merb in self.merbs:
             output += merb.print_alias()
@@ -582,23 +564,25 @@ class Input_Handler:
 async def digest(in_h):
     tic = 60
     alert = 30
-    alert_msg = "@here\n"
+    alert_msg = ""
     while True:
         await asyncio.sleep(tic)
         now = time_h.change_tz(datetime.datetime.now(), "UTC")
+        # update merb recurring eta
         for merb in merbs.merbs:
+            # update merb recurring eta
+            if merb.recurring:
+                merb.eta = merb.get_eta()
             minutes_diff = round((merb.eta - now).total_seconds() / 60.0)
             if minutes_diff == alert:
-                if merb.status == -1:
+                if not merb.plus_minus:
                     await send_spamm(alert_msg + Message_Composer().prettify("[%s] is going to spawn in 30 minutes!" % merb.name, "CSS"))
-                elif merb.status ==1:
+                else:
                     await send_spamm(alert_msg + Message_Composer().prettify("[%s] window opens in 30 minutes!" % merb.name, "CSS"))
-                logging.info("DIGEST: %s ETA in %d minutes" % (merb.name, alert))
+                logging.info("DIGEST: %s ETA in %d minutes: %s" % (merb.name, alert, merb.eta))
+
 
 if __name__ == "__main__":
-
-    """" Initialize """
-    BROADCAST_CHANNEL = "539046495299829766"
 
     logging.config.dictConfig({
         'version': 1,
@@ -638,5 +622,5 @@ if __name__ == "__main__":
 
 
     client.loop.create_task(digest(in_h))
-    client.run("NTQ5OTM3NDM3MDkxMjk5MzI4.D1bMFg.5kQASSGnI_CmlsR2YKViQFUsiGM")  # Run the Bot
+    client.run(DISCORD_TOKEN)  # Run the Bot
 

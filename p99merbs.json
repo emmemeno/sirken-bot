@@ -326,7 +326,7 @@
     ],
     "respawn_time": 72,
     "plus_minus": 8,
-    "tod": "2019-02-25 22:04",
+    "tod": "2019-02-23 17:20",
     "signed": "Albero#9762",
     "accuracy": 1,
     "recurring": 0
@@ -424,7 +424,7 @@
     ],
     "respawn_time": 72,
     "plus_minus": 12,
-    "tod": "2019-02-13 00:00",
+    "tod": "2019-02-26 23:56",
     "signed": "Albero#9762",
     "accuracy": 1,
     "recurring": 0
@@ -521,7 +521,7 @@
     ],
     "respawn_time": 10,
     "plus_minus": 0,
-    "tod": "2019-02-26 11:45",
+    "tod": "2019-02-26 23:56",
     "signed": "Albero#9762",
     "accuracy": 1,
     "recurring": 1
@@ -570,9 +570,9 @@
     ],
     "respawn_time": 7,
     "plus_minus": 0,
-    "tod": "2019-02-15 11:13",
+    "tod": "2019-02-26 23:55",
     "signed": "Albero#9762",
-    "accuracy": 0,
+    "accuracy": 1,
     "recurring": 0
   },
   "Sontalek": {
@@ -632,6 +632,15 @@
     "signed": "Albero#9762",
     "accuracy": 1,
     "recurring": 0
+  },
+  "Test": {
+    "alias": [],
+    "respawn_time": 1,
+    "plus_minus": 0,
+    "tod": "2019-02-27 00:09",
+    "signed": "Albero#9762",
+    "accuracy": 1,
+    "recurring": 1
   },
   "The Final Arbiter": {
     "alias": [
