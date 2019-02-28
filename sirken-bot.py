@@ -464,15 +464,21 @@ class Input_Handler:
 
 
     def about(self):
-        return {"destination": self.author, "content": helper.get_about()}
+        return {"destination": self.author,
+                "content": helper.get_about(),
+                'broadcast': False}
 
     def help(self):
-        return {"destination": self.author, "content": helper.get_help(self.param)}
+        return {"destination": self.author,
+                "content": helper.get_help(self.param),
+                'broadcast': False}
 
     def get_window(self):
         print_list = self.merbs.get_all_window()
         content = Message_Composer().prettify(print_list,"CSS")
-        return {"destination": self.channel,  "content": content}
+        return {"destination": self.channel,
+                "content": content,
+                'broadcast': False}
 
     def get_list(self):
         timezone_msg=""
@@ -484,40 +490,56 @@ class Input_Handler:
 
 
         content = Message_Composer().prettify(print_list,"CSS", timezone_msg)
-        return {"destination": self.channel,  "content": content}
+        return {"destination": self.channel,
+                "content": content,
+                'broadcast': False}
 
     def get_single(self):
         if self.param == "":
-            return {"destination": self.author, "content": self.error_param(self.cmd, "Missing Parameter. ")}
+            return {"destination": self.author,
+                    "content": self.error_param(self.cmd, "Missing Parameter. "),
+                    'broadcast': False}
         #search the merb
         merb = self.merbs.get_single(self.param)
         if merb:
             if self.info:
                 content = merb.print_long_info(self.timezone)
-                content = Message_Composer().prettify(content,"CSS", "Timezone: %s" % self.timezone)
+                content = Message_Composer().prettify(content,
+                                                      "CSS",
+                                                      "Timezone: %s" % self.timezone)
             else:
                 content = merb.print_short_info()
                 content = Message_Composer().prettify(content, "CSS")
-            return {"destination": self.channel,  "content": content}
+            return {"destination": self.channel,
+                    "content": content,
+                    'broadcast': False}
         else:
-            return {"destination": self.author,  "content": self.error_merb_not_found()}
+            return {"destination": self.author,
+                    "content": self.error_merb_not_found(),
+                    'broadcast': False}
 
     def update(self):
         if self.param == "":
-            return {"destination": self.author, "content": self.error_param(self.cmd, "Missing Parameter. ")}
+            return {"destination": self.author,
+                    "content": self.error_param(self.cmd, "Missing Parameter. "),
+                    'broadcast': False}
 
         merb = self.merbs.get_single(self.param)
 
         # Check if Merb exists
         if merb == False:
-            return {"destination": self.author,  "content": self.error_merb_not_found()}
+            return {"destination": self.author,
+                    "content": self.error_merb_not_found(),
+                    'broadcast': False}
 
         # Parse the Time. Search for "now" keyword, otherwise process line to find a valid time
         new_tod = self.time_h.assemble_date(self.param, self.timezone)
 
         # Check if time is correct
         if new_tod == False:
-            return {"destination": self.author,  "content": self.error_param(self.cmd, "Time Syntax Error. ")}
+            return {"destination": self.author,
+                    "content": self.error_param(self.cmd, "Time Syntax Error. "),
+                    'broadcast': False}
 
         # Check for approx tag, exact for default
         approx = 1
@@ -531,14 +553,22 @@ class Input_Handler:
         self.save()
 
         output_date = time_h.change_tz(new_tod, self.timezone)
-        output_message = "[%s] updated! New Tod: %s [%s] %s" % (merb.name, approx_output, output_date.strftime(DATE_FORMAT_PRINT), self.timezone)
+        output_message = "[%s] updated! New Tod: [%s] %s, %ssigned by %s" % (merb.name, output_date.strftime(DATE_FORMAT_PRINT), self.timezone, approx_output, self.author)
         # The Update Tod is sent into broadcast channel
         output = Message_Composer().prettify(output_message, "CSS")
-        return {"destination": self.channel,  "content": output}
+
+        broadcast = False
+        if self.channel.is_private:
+            broadcast=True
+        return {"destination": self.channel,
+                "content": output,
+                'broadcast': broadcast}
 
     def alias(self):
         content = self.merbs.get_all_alias()
-        return {"destination": self.author,  "content": Message_Composer().prettify(content, "CSS")}
+        return {"destination": self.author,
+                "content": Message_Composer().prettify(content, "CSS"),
+                'broadcast': False}
 
     def save(self):
         self.json_data.save_merbs(self.merbs)
@@ -586,7 +616,9 @@ class Input_Handler:
             "windows":  self.get_window,     # Get Merbs in window
             "hi": self.help
         }
-        func = cmd_list.get(self.cmd, lambda: {"destination": self.author, "content": self.error_command()})
+        func = cmd_list.get(self.cmd, lambda: {"destination": self.author,
+                                               "content": self.error_command(),
+                                               'broadcast': False})
         return func()
 
     def error_command(self):
@@ -608,17 +640,17 @@ async def digest(in_h):
     while True:
         await asyncio.sleep(tic)
         now = time_h.change_tz(datetime.datetime.now(), "UTC")
-        # update merb recurring eta
         for merb in merbs.merbs:
-            # update merb  eta
+            # update merb eta
             merb.eta = merb.get_eta()
             minutes_diff = (merb.eta - now).total_seconds() // 60.0
+            logging.debug("DIGEST: %s | ETA: %s | DIFF MINUTES: %s" % (merb.name, merb.eta, minutes_diff))
             if minutes_diff == alert:
                 if not merb.plus_minus:
                     await send_spamm(alert_msg + Message_Composer().prettify("[%s] is going to spawn in 30 minutes!" % merb.name, "CSS"))
                 else:
                     await send_spamm(alert_msg + Message_Composer().prettify("[%s] window opens in 30 minutes!" % merb.name, "CSS"))
-                logging.info("DIGEST: %s ETA in %d minutes: %s" % (merb.name, alert, merb.eta))
+                logging.info("DIGEST: %s ETA in %d minutes: %s <<<<" % (merb.name, alert, merb.eta))
 
 
 if __name__ == "__main__":
@@ -653,6 +685,8 @@ if __name__ == "__main__":
         output = in_h.process(message.author, message.channel, message.content)
         if output:
             await client.send_message(output["destination"], output["content"])
+            if output['broadcast']:
+                await send_spamm(output['content'])
 
     @client.event
     async def send_spamm(message):
