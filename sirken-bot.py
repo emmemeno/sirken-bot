@@ -133,6 +133,7 @@ class Message_Composer:
         now = time_h.change_tz(datetime.datetime.now(), "UTC")
         eta = time_h.change_tz(eta, "UTC")
         postfix = ""
+        prefix = ""
         output = "[" + name + "] "
         approx = ""
         if accuracy == 0 or spawns > 6:
@@ -146,10 +147,11 @@ class Message_Composer:
         if now < window['start'] and plus_minus:
             output += "window will %sopen in %s" % (approx, self.countdown(now , eta))
         if window['start'] <= now <= window['end']:
-            postfix = "<- "
+            prefix = "# "
+            postfix = "<-"
             output += "in window until %s " % self.countdown(now , eta)
         # output += " - {ToD: %s} signed by %s" % (tod.strftime(DATE_FORMAT_PRINT), author)
-        return output + postfix + "\n"
+        return prefix + output + postfix + "\n"
 
     def detail(self,name, tod, signed, respawn_time, plus_minus, window_start, window_end, accuracy, eta):
         output = "%s\n" % (name)
@@ -263,7 +265,11 @@ class Merb:
             self.spawns += 1
             eta = self.get_eta(virtual_tod + delta_hour)
             return eta
+
         return eta
+
+    def ordered_eta(self):
+        return self.eta - datetime.timedelta(hours=self.plus_minus*2)
 
 
     def print_short_info(self):
@@ -334,7 +340,7 @@ class Merb_List:
         if order == 'name':
             self.merbs.sort(key=lambda merb: merb.name.lower())
         if order == 'eta':
-            self.merbs.sort(key=lambda merb: merb.eta)
+            self.merbs.sort(key=lambda merb: merb.ordered_eta())
 
 
     def get_single(self,name):
@@ -614,11 +620,11 @@ if __name__ == "__main__":
     })
 
     logging.basicConfig(filename='sirken-bot.log', level=logging.DEBUG)
-    json_data = Json_Handler('p99merbs.json')   # Load Json data...
+    json_data = Json_Handler(config.MERBS_FILE)   # Load Json data...
     time_h = Time_Handler()                # Handler for Time Validation
     merbs = Merb_List(json_data.merbs)          # ...Initialize Merbs List
     merbs.order()
-    helper = Helper("sirken-bot-help.json")
+    helper = Helper(config.HELP_FILE)
     in_h = Input_Handler(merbs,time_h,json_data,helper)
 
     Client = discord.Client()  # Initialise Client
