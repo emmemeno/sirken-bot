@@ -9,11 +9,12 @@
   "Bzzz. I can read only lines starting with an exclamatory mark and understand very few commands (ignore square bracket). Because I am a silly bot. Bzzz.",
   "",
   "  [!help (param)]  - Show this help. for a specific command help: [!help command] (ex. [!help tod])",
-  "  [!get]   - Show the status of a Merb",
-  "  [!list]  - Show the list of Merbs",
-  "  [!tod]   - Update the ToD of a Merb",
-  "  [!merbs] - List name and aliases of supported Merbs",
-  "  [!about] - About Sirken Bot"
+  "  [!get]      - Show the status of a Merb",
+  "  [!list]     - Show the list of upcoming Merbs",
+  "  [!windows]  - Show the list of Merbs in window",
+  "  [!tod]      - Update the ToD of a Merb",
+  "  [!merbs]    - List name and aliases of supported Merbs",
+  "  [!about]    - About Sirken Bot"
  ],
 
  "get": [
@@ -32,6 +33,12 @@
  "list": [
 
   ".Syntax [!list] - Show a list of Merbs next to spawn",
+  ""
+ ],
+
+ "windows": [
+
+  ".Syntax [!windows] - Show a list of Merbs in window",
   ""
  ],
 

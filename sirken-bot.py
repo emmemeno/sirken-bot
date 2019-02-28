@@ -145,7 +145,7 @@ class Message_Composer:
             output += "will %sspawn in %s" % (approx, self.countdown(now, eta))
         if now < window['start'] and plus_minus:
             output += "window will %sopen in %s" % (approx, self.countdown(now , eta))
-        if window['start'] < now < window['end']:
+        if window['start'] <= now <= window['end']:
             postfix = "<- "
             output += "in window until %s " % self.countdown(now , eta)
         # output += " - {ToD: %s} signed by %s" % (tod.strftime(DATE_FORMAT_PRINT), author)
@@ -265,14 +265,13 @@ class Merb:
             return eta
         return eta
 
+
     def print_short_info(self):
-        if self.recurring:
-            self.eta = self.get_eta()
+        self.eta = self.get_eta()
         return Message_Composer().time_remaining(self.name,self.eta, self.plus_minus, self.window, self.spawns, self.accuracy, self.tod, self.signed)
 
     def print_long_info(self, timezone):
-        if self.recurring:
-            self.eta = self.get_eta()
+        self.eta = self.get_eta()
         tod_tz = time_h.change_tz(self.tod, timezone)
         w_start_tz = time_h.change_tz(self.window["start"], timezone)
         w_end_tz = time_h.change_tz(self.window["end"], timezone)
@@ -343,6 +342,17 @@ class Merb_List:
             if merb.check_name(name):
                 return merb
         return False
+
+    def get_all_window(self):
+        self.order('eta')
+        output = ""
+
+        for merb in self.merbs:
+            if merb.window['start'] <= time_h.now() <= merb.window['end']:
+                output += merb.print_short_info()
+        if output == "":
+            output = "Empty! :("
+        return output
 
     def get_all(self, timezone, mode="countdown"):
         self.order('eta')
@@ -441,6 +451,11 @@ class Input_Handler:
 
     def help(self):
         return {"destination": self.author, "content": helper.get_help(self.param)}
+
+    def get_window(self):
+        print_list = self.merbs.get_all_window()
+        content = Message_Composer().prettify(print_list,"CSS")
+        return {"destination": self.channel,  "content": content}
 
     def get_list(self):
         timezone_msg=""
@@ -545,12 +560,13 @@ class Input_Handler:
         self.info = re.search(r"\b(info)\b", self.param)
 
         cmd_list = {
-            "about": self.about,        # About
-            "help": self.help,          # Help
-            "list": self.get_list,      # Get the List of Merbs
-            "get": self.get_single,     # Get a single Merb
-            "tod": self.update,         # Update a Merb Status
-            "merbs": self.alias,        # Reload from File
+            "about": self.about,             # About
+            "help": self.help,               # Help
+            "list": self.get_list,           # Get the List of Merbs
+            "get": self.get_single,          # Get a single Merb
+            "tod": self.update,              # Update a Merb Status
+            "merbs": self.alias,             # Reload from File
+            "windows":  self.get_window,     # Get Merbs in window
             "hi": self.help
         }
         func = cmd_list.get(self.cmd, lambda: {"destination": self.author, "content": self.error_command()})
@@ -576,11 +592,12 @@ async def digest(in_h):
         await asyncio.sleep(tic)
         now = time_h.change_tz(datetime.datetime.now(), "UTC")
         # update merb recurring eta
+        print("DIGEST NOW: %s" %now)
         for merb in merbs.merbs:
-            # update merb recurring eta
-            if merb.recurring:
-                merb.eta = merb.get_eta()
-            minutes_diff = round((merb.eta - now).total_seconds() / 60.0)
+            # update merb  eta
+            merb.eta = merb.get_eta()
+            minutes_diff = (merb.eta - now).total_seconds() // 60.0
+            print("DIGEST: %s | ETA: %s | DIFF MINUTES: %s" % (merb.name, merb.eta, minutes_diff))
             if minutes_diff == alert:
                 if not merb.plus_minus:
                     await send_spamm(alert_msg + Message_Composer().prettify("[%s] is going to spawn in 30 minutes!" % merb.name, "CSS"))
