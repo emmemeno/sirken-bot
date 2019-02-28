@@ -268,8 +268,19 @@ class Merb:
 
         return eta
 
+    def in_window(self):
+        now = time_h.change_tz(datetime.datetime.now(), "UTC")
+        if self.window['start'] < now < self.window['end']:
+            return True
+        else:
+            return False
+
+
     def ordered_eta(self):
-        return self.eta - datetime.timedelta(hours=self.plus_minus*2)
+        if self.in_window():
+            return self.eta - datetime.timedelta(hours=self.plus_minus*2)
+        else:
+            return self.eta
 
 
     def print_short_info(self):
@@ -598,12 +609,10 @@ async def digest(in_h):
         await asyncio.sleep(tic)
         now = time_h.change_tz(datetime.datetime.now(), "UTC")
         # update merb recurring eta
-        print("DIGEST NOW: %s" %now)
         for merb in merbs.merbs:
             # update merb  eta
             merb.eta = merb.get_eta()
             minutes_diff = (merb.eta - now).total_seconds() // 60.0
-            print("DIGEST: %s | ETA: %s | DIFF MINUTES: %s" % (merb.name, merb.eta, minutes_diff))
             if minutes_diff == alert:
                 if not merb.plus_minus:
                     await send_spamm(alert_msg + Message_Composer().prettify("[%s] is going to spawn in 30 minutes!" % merb.name, "CSS"))
