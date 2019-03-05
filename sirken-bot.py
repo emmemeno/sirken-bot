@@ -9,6 +9,7 @@ import discord
 from discord.ext.commands import Bot
 from discord.ext import commands
 import config
+import watch
 
 """" Initialize """
 BROADCAST_CHANNEL = config.BROADCAST_CHANNEL
@@ -136,16 +137,19 @@ class Message_Composer:
         prefix = ""
         output = "[" + name + "] "
         approx = ""
-        if accuracy == 0 or spawns > 6:
-            approx = "roughly "
+        if accuracy <= 0 or spawns > 6:
+            approx = ".roughly"
+            if accuracy <= -1 or spawns >= 10:
+                approx = ".very_roughly"
+
         if now > eta and not plus_minus:
             output += "ToD too old. Please update it if you have a chance! "
         if now > eta and plus_minus:
             output += "window is close. Please update its ToD if u have a chance! "
         if now < eta and not plus_minus:
-            output += "will %sspawn in %s" % (approx, self.countdown(now, eta))
+            output += "will %s spawn in %s" % (approx, self.countdown(now, eta))
         if now < window['start'] and plus_minus:
-            output += "window will %sopen in %s" % (approx, self.countdown(now , eta))
+            output += "window will %s open in %s" % (approx, self.countdown(now , eta))
         if window['start'] <= now <= window['end']:
             prefix = "# "
             postfix = "<-"
@@ -153,21 +157,26 @@ class Message_Composer:
         # output += " - {ToD: %s} signed by %s" % (tod.strftime(DATE_FORMAT_PRINT), author)
         return prefix + output + postfix + "\n"
 
-    def detail(self,name, tod, signed, respawn_time, plus_minus, window_start, window_end, accuracy, eta):
+    def detail(self,name, tod, pop, signed, respawn_time, plus_minus, window_start, window_end, accuracy, eta):
         output = "%s\n" % (name)
 
         for c in name:
             output += "="
 
-        #output +="\n{Timezone: %s}" % timezone
+        output += "\n"
 
         approx = ""
         if accuracy == 0:
-            approx = "roughly "
+            approx = ".roughly "
 
-
-        output += "\n{TOD} [%s] || {respawn time} [%s±%s] || {window open} [%s] || {window close} [%s] || {%ssigned by} [%s] || {ETA} [%s] \n" % \
-                  (tod, respawn_time, plus_minus, window_start, window_end, approx, signed+" ", eta)
+        output += " {LAST POP}     [%s]\n" \
+                  " {LAST TOD}     [%s]\n" \
+                  " {RESPAWN TIME} [%s±%s]\n" \
+                  " {WINDOW OPEN}  [%s]\n" \
+                  " {WINDOW CLOSE} [%s]\n" \
+                  " {SIGNED BY}    [%s] %s\n" \
+                  " {ETA}          [%s]\n" % \
+                  (pop, tod, respawn_time, plus_minus, window_start, window_end, signed, approx, eta)
         return output
 
     def alias(self, name, alias):
@@ -177,11 +186,24 @@ class Message_Composer:
         output += "\n"
         return output
 
+class Json_Handler:
 
+    def __init__(self,url):
+        self.url_merb = url
+        self.merbs = self.load_merbs()
+
+    def load_merbs(self):
+        with open(self.url_merb) as f:
+            return json.load(f)
+
+    def save_merbs(self,merb_list):
+        with open(self.url_merb, 'w') as outfile:
+            json.dump(merb_list.serialize(), outfile, indent=2)
+        logging.info("Json Saved")
 
 # Class that define Merb info and a bunch of utilities
 class Merb:
-    def __init__(self, name, alias, respawn_time, plus_minus, tod, signed, accuracy,recurring):
+    def __init__(self, name, alias, respawn_time, plus_minus, tod, pop, signed, accuracy, recurring):
 
         utc = pytz.utc
         # Complete name of the Merb
@@ -196,12 +218,15 @@ class Merb:
 
         self.plus_minus = plus_minus
         # Time of Death
-
         self.tod = utc.localize(datetime.datetime.strptime(tod, DATE_FORMAT))
+
+        # Pop Time
+        self.pop = utc.localize(datetime.datetime.strptime(pop, DATE_FORMAT))
+
         # Author of the last ToD
         self.signed = signed
 
-        # Accuracy. 0 for approx time, 1 for exact time
+        # Accuracy. 0 for approx time, 1 for exact time, -1 when pop > tod
         self.accuracy = accuracy
 
         # If the spawn is recurring. (ex scout)
@@ -211,56 +236,80 @@ class Merb:
         self.spawns = 0
 
         # Spawn Windows {"start"} {"end"}
-        self.window = self.get_window()
+        if self.tod > self.pop:
+            self.window = self.get_window(self.tod)
+        else:
+            self.window = self.get_window(self.pop)
+            self.accuracy = -2
 
         # Eta for the spawn/window start/window end
         self.eta = self.get_eta()
 
     def __str__(self):
-        return 'Name {} - Respawn Time {}±{} - ToD {} - Window Starts {} - Window ends {} - ETA: {}'.format(self.name,
-                                                                                                            self.respawn_time,
-                                                                                                            self.plus_minus,
-                                                                                                            self.tod,
-                                                                                                            self.window["start"],
-                                                                                                            self.window["end"],
-                                                                                                            self.eta)
+        return 'Name {} - Respawn Time {}±{} - ToD {}' \
+               ' - Window Starts {} - Window ends {}' \
+               ' - ETA: {}' \
+                .format(self.name,
+                        self.respawn_time,
+                        self.plus_minus,
+                        self.tod,
+                        self.window["start"],
+                        self.window["end"],
+                        self.eta
+                        )
 
-    def get_window(self):
-        w_start = self.tod + datetime.timedelta(hours=self.respawn_time) - datetime.timedelta(hours=self.plus_minus)
-        w_end = self.tod + datetime.timedelta(hours=self.respawn_time) + datetime.timedelta(hours=self.plus_minus)
+    def get_window(self, from_date):
+        w_start = from_date + datetime.timedelta(hours=self.respawn_time) - datetime.timedelta(hours=self.plus_minus)
+        w_end = from_date + datetime.timedelta(hours=self.respawn_time) + datetime.timedelta(hours=self.plus_minus)
         return {"start": w_start, "end": w_end}
 
-    def update(self, new_tod, author, approx = 1):
+    def update_tod(self, new_tod, author, approx=1):
         self.tod = new_tod
         self.signed = author
         self.accuracy = approx
-        self.window = self.get_window()
+        self.window = self.get_window(new_tod)
         self.eta = self.get_eta()
-        logging.info("%s updated by %s! New Tod: %s, accuracy: %s" % (self.name, self.signed, self.tod, self.accuracy))
+        logging.info("%s TOD updated by %s! New Tod: %s, accuracy: %s" % (self.name, self.signed, self.tod, self.accuracy))
+
+    def update_pop(self, new_pop, author):
+        self.pop = time_h.now()
+        self.signed = author
+        self.window = self.get_window(new_pop)
+        self.eta = self.get_eta()
+        logging.info("%s POP updated by %s! New pop: %s" % (self.name, self.signed, self.pop))
 
     def get_eta(self, virtual_tod=None):
 
         eta = time_h.naive_to_tz(datetime.datetime(1981, 2, 13, 00, 00), "UTC", "UTC")
-        # for recurring function
+
+        # virtual tod is last saved tod if this function is directly called
         if not virtual_tod:
             virtual_tod = self.tod
             self.spawns = 0
 
+        # virtual tod is last saved pop if the latter is newer than the former
+        if self.pop > virtual_tod:
+            self.accuracy = -1
+            virtual_tod = self.pop
+
+        # get now date to calculate the timeframe
         now = time_h.naive_to_tz(datetime.datetime.now(), tz_to="UTC")
         delta_hour = datetime.timedelta(hours=self.respawn_time)
 
-        # no window and spawn in the future
+        # merb has no window and spawn in the future
         if self.plus_minus == 0 and now < (virtual_tod + delta_hour):
             eta = virtual_tod + delta_hour
 
-        # before window opens
+        # merb has window and we are before window opens
         if now < self.window["start"] and self.plus_minus:
             eta = self.window["start"]
-        # In window
+
+        # we are in window
         if self.window["start"] < now < self.window["end"]:
             eta = self.window["end"]
 
-        #set a new tod for recurring mob (scout)
+        # if the merb is a recurring one and we are past the calculated eta...
+        # set a new tod for recurring mob (scout)
         if self.recurring and self.plus_minus == 0 and now >= virtual_tod + delta_hour and self.spawns < 12:
             self.spawns += 1
             eta = self.get_eta(virtual_tod + delta_hour)
@@ -270,7 +319,7 @@ class Merb:
 
     def in_window(self):
         now = time_h.change_tz(datetime.datetime.now(), "UTC")
-        if self.window['start'] < now < self.window['end']:
+        if (self.window['start'] < now < self.window['end']) and self.plus_minus:
             return True
         else:
             return False
@@ -290,12 +339,14 @@ class Merb:
     def print_long_info(self, timezone):
         self.eta = self.get_eta()
         tod_tz = time_h.change_tz(self.tod, timezone)
+        pop_tz = time_h.change_tz(self.pop, timezone)
         w_start_tz = time_h.change_tz(self.window["start"], timezone)
         w_end_tz = time_h.change_tz(self.window["end"], timezone)
         eta = time_h.change_tz(self.eta, timezone)
 
         return Message_Composer().detail(self.name,
                                          tod_tz.strftime(DATE_FORMAT_PRINT),
+                                         pop_tz.strftime(DATE_FORMAT_PRINT),
                                          self.signed,
                                          self.respawn_time, self.plus_minus,
                                          w_start_tz.strftime(DATE_FORMAT_PRINT),
@@ -315,9 +366,12 @@ class Merb:
                       "respawn_time": self.respawn_time,
                       "plus_minus": self.plus_minus,
                       "tod": self.tod.strftime(DATE_FORMAT),
+                      "pop": self.pop.strftime(DATE_FORMAT),
                       "signed": self.signed,
                       "accuracy": self.accuracy,
-                      "recurring": self.recurring}})
+                      "recurring": self.recurring
+                      }
+                 })
 
     # Check name in aliases
     def check_name(self, search):
@@ -336,16 +390,21 @@ class Merb_List:
     def __init__(self, json_obj):
         self.merbs = list()
         for i in json_obj:
+            if not json_obj[i].get("pop", 0):
+                # Date of Last recorded earthquake
+                json_obj[i]["pop"] = "2019-3-4 03:44"
+
             self.merbs.append(Merb(i,
-                              json_obj[i]["alias"],
-                              json_obj[i]["respawn_time"],
-                              json_obj[i]["plus_minus"],
-                              json_obj[i]["tod"],
-                              json_obj[i]["signed"],
-                              json_obj[i]["accuracy"],
-                              json_obj[i]["recurring"]
-                              )
-                         )
+                                    json_obj[i]["alias"],
+                                    json_obj[i]["respawn_time"],
+                                    json_obj[i]["plus_minus"],
+                                    json_obj[i]["tod"],
+                                    json_obj[i]["pop"],
+                                    json_obj[i]["signed"],
+                                    json_obj[i]["accuracy"],
+                                    json_obj[i]["recurring"],
+                                    )
+                             )
 
     def order(self, order='name'):
         if order == 'name':
@@ -400,20 +459,6 @@ class Merb_List:
             json_output.update(merb.serialize())
         return json_output
 
-class Json_Handler:
-
-    def __init__(self,url):
-        self.url_merb = url
-        self.load_merbs()
-
-    def load_merbs(self):
-        with open(self.url_merb) as f:
-            self.merbs = json.load(f)
-
-    def save_merbs(self,merb_list):
-        with open(self.url_merb, 'w') as outfile:
-            json.dump(merb_list.serialize(), outfile, indent=2)
-        logging.info("Json Saved")
 
 class Helper:
 
@@ -444,12 +489,41 @@ class Helper:
         except:
             text = '\n'.join(self.help["help"])
 
-        return Message_Composer().prettify(text, "CSS")
+        return text
 
+class OutputHandler:
+    def __init__(self, max_chars):
+        self.max = max_chars
+        self.splitted_text = []
+
+    def cut(self, text: str):
+        # se la lunghezza del testo da processare è minore del limite, aggiungi il testo alla lista ed esci dalla funzione
+        if len(text) < self.max:
+            self.splitted_text.append(text)
+            return self.splitted_text
+
+        limit = text[0:self.max].rfind('\n')
+        if limit == -1:
+            limit = text[0:self.max].rfind(' ')
+        self.splitted_text.append(text[0:limit+1])
+        self.splitted_text.append(text[limit+1:])
+        new_chunk = self.splitted_text[-1]
+        # print('---\nNew Chunk:\n %s----\n' % new_chunk)
+        if len(new_chunk) > self.max:
+            self.splitted_text.pop()
+            self.cut(new_chunk)
+
+        return self.splitted_text
+
+    def process(self,text):
+        output = self.cut(text).copy()
+        self.splitted_text.clear()
+        return output
 
 class Input_Handler:
 
-    def __init__(self, merbs, time_h, json_data, helper):
+    def __init__(self, out_h, merbs, time_h, json_data, helper, track):
+        self.out_h = out_h
         self.time_h = time_h
         self.merbs = merbs
         self.text = ""
@@ -460,6 +534,7 @@ class Input_Handler:
         self.info = ""
         self.json_data = json_data
         self.helper = helper
+        self.track = track
         self.timezone = "CET"
 
 
@@ -473,25 +548,77 @@ class Input_Handler:
                 "content": helper.get_help(self.param),
                 'broadcast': False}
 
+    def set_watch(self):
+        # If not params are passed get the full list of tracked merbs
+        if not self.param:
+            tracked_merbs = watch.get_all(self.author.id)
+            output_msg = ""
+            if not tracked_merbs:
+                output_msg = "No merbs tracked :("
+            else:
+                for tmerb in tracked_merbs:
+                    output_msg += '[%s] will alert %d minutes before ETA\n' % (tmerb, tracked_merbs[tmerb])
+
+
+            return {"destination": self.author,
+                   "content":output_msg,
+                   'broadcast': False}
+
+        # search the merb in the param
+        merb = self.merbs.get_single(self.param)
+        # search for ON/OFF param
+        mode = "ON"
+        if re.search(r"\b(off)\b", self.param):
+            mode = "OFF"
+
+        if merb:
+            # search for minutes param
+            minutes = 30
+            reg_min = re.search(r"\b(\d+)\b", self.param)
+            if reg_min:
+                minutes = int(reg_min.group(0))
+
+            if mode == "ON":
+                output_msg = "Track ON for [%s], I will alert you %d before ETA" % (merb.name, minutes)
+            else:
+                output_msg = "Track OFF for [%s]" % merb.name
+
+            watch.switch(self.author.id, merb.name, minutes,mode)
+
+            return {"destination": self.author,
+                    "content":  output_msg,
+                    'broadcast': False}
+        # if no merb param is passed but OFF, toggle off all alarms
+        elif mode == "OFF":
+            watch.off(self.author.id)
+            return {"destination": self.author,
+                    "content": "All alarms are set to OFF",
+                    'broadcast': False}
+    def earthquake(self):
+        for merb in self.merbs.merbs:
+            merb.update_pop(time_h.now(), str(self.author))
+
+        self.save()
+        broadcast = False
+        if self.channel.is_private:
+            broadcast = True
+        return {"destination": self.channel,
+                    "content": "%s BROADCAST: Minions gather, their forms appearing as time and space coalesce."
+                                % self.author,
+                    'broadcast': broadcast,
+                    'earthquake': self.author}
+
     def get_window(self):
         print_list = self.merbs.get_all_window()
-        content = Message_Composer().prettify(print_list,"CSS")
         return {"destination": self.channel,
-                "content": content,
+                "content": print_list,
                 'broadcast': False}
 
     def get_list(self):
         timezone_msg=""
-        if self.info:
-            timezone_msg = 'Timezone: ' + self.timezone
-            print_list = self.merbs.get_all(self.timezone, 'countdown')
-        else:
-            print_list = self.merbs.get_all(self.timezone, 'countdown')
-
-
-        content = Message_Composer().prettify(print_list,"CSS", timezone_msg)
-        return {"destination": self.channel,
-                "content": content,
+        print_list = self.merbs.get_all(self.timezone, 'countdown')
+        return {"destination": self.author,
+                "content": print_list,
                 'broadcast': False}
 
     def get_single(self):
@@ -504,12 +631,11 @@ class Input_Handler:
         if merb:
             if self.info:
                 content = merb.print_long_info(self.timezone)
-                content = Message_Composer().prettify(content,
-                                                      "CSS",
-                                                      "Timezone: %s" % self.timezone)
+                content = "Timezone: %s\n\n%s" % (self.timezone, content)
+
             else:
                 content = merb.print_short_info()
-                content = Message_Composer().prettify(content, "CSS")
+
             return {"destination": self.channel,
                     "content": content,
                     'broadcast': False}
@@ -518,7 +644,26 @@ class Input_Handler:
                     "content": self.error_merb_not_found(),
                     'broadcast': False}
 
-    def update(self):
+    def update_pop(self):
+        # search the merb in the param
+        merb = self.merbs.get_single(self.param)
+        if merb:
+            merb.update_pop(time_h.now(), str(self.author))
+            self.save()
+            broadcast = False
+            if self.channel.is_private:
+                broadcast = True
+            return {"destination": self.channel,
+                    "content": "[%s] POP! (%s)" % (merb.name, self.author),
+                    'broadcast': broadcast,
+                    'merb_alert': merb}
+        else:
+            return {"destination": self.author,
+                    "content": self.error_merb_not_found(),
+                    'broadcast': False
+                    }
+
+    def update_tod(self):
         if self.param == "":
             return {"destination": self.author,
                     "content": self.error_param(self.cmd, "Missing Parameter. "),
@@ -527,7 +672,7 @@ class Input_Handler:
         merb = self.merbs.get_single(self.param)
 
         # Check if Merb exists
-        if merb == False:
+        if not merb:
             return {"destination": self.author,
                     "content": self.error_merb_not_found(),
                     'broadcast': False}
@@ -548,26 +693,26 @@ class Input_Handler:
             approx = 0
             approx_output = "~"
 
-        merb.update(new_tod, str(self.author), approx)
+        merb.update_tod(new_tod, str(self.author), approx)
         #save to json
         self.save()
 
         output_date = time_h.change_tz(new_tod, self.timezone)
-        output_message = "[%s] updated! New Tod: [%s] %s, %ssigned by %s" % (merb.name, output_date.strftime(DATE_FORMAT_PRINT), self.timezone, approx_output, self.author)
+        output_message = "[%s] updated! New Tod: [%s] %s, %ssigned by %s" %\
+                         (merb.name, output_date.strftime(DATE_FORMAT_PRINT), self.timezone, approx_output, self.author)
         # The Update Tod is sent into broadcast channel
-        output = Message_Composer().prettify(output_message, "CSS")
 
         broadcast = False
         if self.channel.is_private:
             broadcast=True
         return {"destination": self.channel,
-                "content": output,
+                "content": output_message,
                 'broadcast': broadcast}
 
     def alias(self):
         content = self.merbs.get_all_alias()
         return {"destination": self.author,
-                "content": Message_Composer().prettify(content, "CSS"),
+                "content": content,
                 'broadcast': False}
 
     def save(self):
@@ -611,9 +756,12 @@ class Input_Handler:
             "help": self.help,               # Help
             "list": self.get_list,           # Get the List of Merbs
             "get": self.get_single,          # Get a single Merb
-            "tod": self.update,              # Update a Merb Status
+            "tod": self.update_tod,              # Update a Merb Status
             "merbs": self.alias,             # Reload from File
             "windows":  self.get_window,     # Get Merbs in window
+            "watch": self.set_watch,         # Watch a merb
+            "pop": self.update_pop,                 # Set pop time to now
+            "earthquake": self.earthquake,   # Reset all pop times to now
             "hi": self.help
         }
         func = cmd_list.get(self.cmd, lambda: {"destination": self.author,
@@ -622,16 +770,16 @@ class Input_Handler:
         return func()
 
     def error_command(self):
-        return Message_Composer().prettify("Command not found! Type !help for help!")
+        return "Command not found! Type !help for help!"
 
     def error_param(self, cmd, error):
-        return Message_Composer().prettify(error + "For the correct syntax type [!help " + str(cmd) + "]")
+        return error + "For the correct syntax type [!help " + str(cmd) + "]"
 
     def error_time(self):
-        return Message_Composer().prettify("Time syntax error. Type {!help tod]", "CSS")
+        return "Time syntax error. Type {!help tod]"
 
     def error_merb_not_found(self):
-        return Message_Composer().prettify("Merb not found. For a list of named mobs type [!merbs]", "CSS")
+        return "Merb not found. For a list of named mobs type [!merbs]"
 
 async def digest(in_h):
     tic = 60
@@ -644,13 +792,13 @@ async def digest(in_h):
             # update merb eta
             merb.eta = merb.get_eta()
             minutes_diff = (merb.eta - now).total_seconds() // 60.0
-            logging.debug("DIGEST: %s | ETA: %s | DIFF MINUTES: %s" % (merb.name, merb.eta, minutes_diff))
-            if minutes_diff == alert:
-                if not merb.plus_minus:
-                    await send_spamm(alert_msg + Message_Composer().prettify("[%s] is going to spawn in 30 minutes!" % merb.name, "CSS"))
-                else:
-                    await send_spamm(alert_msg + Message_Composer().prettify("[%s] window opens in 30 minutes!" % merb.name, "CSS"))
-                logging.info("DIGEST: %s ETA in %d minutes: %s <<<<" % (merb.name, alert, merb.eta))
+
+            for user in watch.users:
+                destination = discord.utils.get(client.get_all_members(), id=user)
+                if watch.check(user, merb.name, minutes_diff) and not merb.in_window():
+                    await client.send_message(destination, Message_Composer().prettify(merb.print_short_info(), "CSS"))
+                    logging.debug("ALARM TO %s: %s | ETA: %s | DIFF MINUTES: %s" %
+                                  (user, merb.name, merb.eta, minutes_diff))
 
 
 if __name__ == "__main__":
@@ -666,7 +814,9 @@ if __name__ == "__main__":
     merbs = Merb_List(json_data.merbs)          # ...Initialize Merbs List
     merbs.order()
     helper = Helper(config.HELP_FILE)
-    in_h = Input_Handler(merbs,time_h,json_data,helper)
+    watch = watch.Watch("watch.json")
+    out_h = OutputHandler(1900)
+    in_h = Input_Handler(out_h, merbs, time_h, json_data, helper, watch)
 
     Client = discord.Client()  # Initialise Client
     client = commands.Bot(command_prefix="?")  # Initialise client bot
@@ -676,23 +826,50 @@ if __name__ == "__main__":
         print("Sirken Bot is online and connected to Discord")
         logging.info("Sirken Bot Connected to Discord")
 
-
     @client.event
     async def on_message(message):
         if message.author == client.user:
             return
 
-        output = in_h.process(message.author, message.channel, message.content)
-        if output:
-            await client.send_message(output["destination"], output["content"])
-            if output['broadcast']:
-                await send_spamm(output['content'])
+        raw_output = in_h.process(message.author, message.channel, message.content)
+
+        if raw_output:
+            # split the output if too long
+            output_message = out_h.process(raw_output["content"])
+            for message in output_message:
+                await client.send_message(raw_output["destination"], Message_Composer().prettify(message,"CSS"))
+                if raw_output['broadcast']:
+                    await send_spamm(Message_Composer().prettify(message,"CSS"))
+
+            # send PM Alerts
+            if 'merb_alert' in raw_output:
+                await send_pop_alerts(raw_output['merb_alert'], raw_output["content"])
+            if 'earthquake' in raw_output:
+                await send_eq_alert(raw_output['earthquake'])
+
 
     @client.event
     async def send_spamm(message):
         channel_to = client.get_channel(BROADCAST_CHANNEL)
         await client.send_message(channel_to, message)
 
+    @client.event
+    async def send_eq_alert(author):
+        for user in watch.users:
+            destination = discord.utils.get(client.get_all_members(), id=user)
+            await client.send_message(destination,
+                                      Message_Composer().prettify("%s BROADCAST: Minions gather, their forms appearing"
+                                                                  " as time and space coalesce." % author, "CSS"))
+            logging.info("EARTHQUAKE!")
+
+    @client.event
+    async def send_pop_alerts(merb: Merb, message):
+        for user in watch.users:
+            destination = discord.utils.get(client.get_all_members(), id=user)
+            if merb.name in watch.users[user]:
+                await client.send_message(destination,Message_Composer().prettify(message,"CSS"))
+                logging.info("SEND ALERT. %s pop TO: %s" % (merb.name, user))
+                print("SEND ALERT. %s pop TO: %s" % (merb.name, user))
 
     client.loop.create_task(digest(in_h))
     client.run(DISCORD_TOKEN)  # Run the Bot
