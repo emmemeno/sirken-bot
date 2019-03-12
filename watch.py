@@ -21,7 +21,6 @@ class Watch:
         return True
 
     def get_single(self, user, merb):
-        output = ""
         if user not in self.users:
             return False
         else:

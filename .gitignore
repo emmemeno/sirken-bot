@@ -1,4 +1,6 @@
-sirken-bot.log
-p99merbs.json
-p99merbs_test.json
 config.py
+sirken-bot.log
+resources/p99merbs.json
+resources/p99merbs_test.json
+resources/watch.json
+
