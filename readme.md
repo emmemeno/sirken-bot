@@ -1,5 +1,5 @@
 # Sirken Bot v0.3 
-####### They say I give *respawn times*.
+###### They say I give *respawn times*.
 
 Interactive discord bot who stores and updates times of death, pops and let the user set timers for ETA
 
