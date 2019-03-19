@@ -285,11 +285,13 @@ class InputHandler:
     def tz(self):
         timezone = "CET"
         if self.param:
-            reg = re.search(r"\b(pst|pdt|est|edt|cet|gmt)\b", self.param)
+            reg = re.search(r"\b(pst|pdt|cst|cdt|est|edt|cet|gmt)\b", self.param)
             if reg:
                 timezone = reg.group(1).upper()
                 if timezone == "PST" or timezone == "PDT":
                     timezone = "US/Pacific"
+                if timezone == "CST"or timezone == "CDT":
+                    timezone = "US/Central"
                 if timezone == "EST"or timezone == "EDT":
                     timezone = "US/Eastern"
         return timezone

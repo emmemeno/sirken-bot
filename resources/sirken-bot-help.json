@@ -62,7 +62,7 @@
   "",
   "  [(approx)]    - optional. If not sure about the exact time consider adding this parameter",
   "",
-  "  [(timezone)]  - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|pst}",
+  "  [(timezone)]  - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|edt|cst|cdt|pst|pdt}",
   "",
   ".Examples: [!tod Lucan now approx] :: [!tod Scout Charisa 9mins ago] :: [!tod scout 12:34 approx pst]",
   "           [!tod Vulak 69 minutes ago ] :: [!tod Lord Bob 2019-02-25 15:00 est approx]"
