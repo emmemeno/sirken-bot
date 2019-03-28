@@ -43,6 +43,7 @@ def assemble_date(s, timezone='CET'):
 
     # try to validate the date
     try:
+        # if both date and time are provided simply generate the date
         date_new = datetime.datetime(year=date_in['year'],
                                      month=date_in['month'],
                                      day=date_in['day'],
@@ -50,10 +51,15 @@ def assemble_date(s, timezone='CET'):
                                      minute=time_in['minute'])
     except:
         # if date is not provided, use actual date and replace hour and minute
+        # TODO: POTENTIALLY BUG. there could be a misinterpretation on the supposed day
+        # TODO: FIX IDEA. Convert the date to current timezone before replacing the hour/minute.
+        # TODO: NEED TESTING.
         date_new = datetime.datetime.utcnow().replace(hour=time_in['hour'],
                                                       minute=time_in['minute'],
                                                       second=0,
                                                       microsecond=0)
+        
+    # return the date converted to utc from current timezone
     return naive_to_tz(date_new, timezone, 'UTC')
 
 

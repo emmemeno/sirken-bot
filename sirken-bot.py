@@ -325,9 +325,12 @@ if __name__ == "__main__":
 
     logging.config.dictConfig({
         'version': 1,
-        'disable_existing_loggers': True,
+        'disable_existing_loggers': False,
     })
-    logging.basicConfig(filename=config.LOG_FILE, level=logging.DEBUG)
+    logging.basicConfig(filename=config.LOG_FILE,
+                        level=logging.DEBUG,
+                        format='%(asctime)s - %(message)s',
+                        datefmt='%d-%b-%y %H:%M:%S')
     # Initialize Merbs List
     merbs = npc.MerbList(config.MERBS_FILE, config.DATE_FORMAT, config.DATE_FORMAT_PRINT)
     merbs.order()
