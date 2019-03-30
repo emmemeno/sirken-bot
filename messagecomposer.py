@@ -25,7 +25,6 @@ def prettify(text: str, my_type="BLOCK", pre_content=""):
 
 def time_remaining(name, eta, plus_minus, window, spawns, accuracy):
     now = timeh.now()
-    eta = timeh.change_tz(eta, "UTC")
     postfix = ""
     prefix = ""
     output = "[" + name + "] "

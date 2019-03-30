@@ -27,10 +27,10 @@ class Merb:
         self.plus_minus = plus_minus
 
         # Time of Death
-        self.tod = utc.localize(datetime.datetime.strptime(tod, self.d_rec))
+        self.tod = datetime.datetime.strptime(tod, self.d_rec)
 
         # Pop Time
-        self.pop = utc.localize(datetime.datetime.strptime(pop, self.d_rec))
+        self.pop = datetime.datetime.strptime(pop, self.d_rec)
 
         # Author of the last ToD
         self.signed = signed
@@ -86,8 +86,7 @@ class Merb:
         self.eta = self.get_eta()
 
     def get_eta(self, virtual_tod=None):
-
-        eta = timeh.naive_to_tz(datetime.datetime(1981, 2, 13, 00, 00), "UTC", "UTC")
+        eta = datetime.datetime(1981, 2, 13, 00, 00)
 
         # virtual tod is last saved tod if this function is directly called
         if not virtual_tod:
@@ -100,7 +99,7 @@ class Merb:
             virtual_tod = self.pop
 
         # get now date to calculate the timeframe
-        now = timeh.naive_to_tz(datetime.datetime.now(), tz_to="UTC")
+        now = datetime.datetime.utcnow()
         delta_hour = datetime.timedelta(hours=self.respawn_time)
 
         # merb has no window and spawn in the future
@@ -125,7 +124,7 @@ class Merb:
         return eta
 
     def in_window(self):
-        now = timeh.change_tz(datetime.datetime.now(), "UTC")
+        now = timeh.now()
         if (self.window['start'] < now < self.window['end']) and self.plus_minus:
             return True
         else:
@@ -138,12 +137,18 @@ class Merb:
 
     def print_long_info(self, timezone):
         self.eta = self.get_eta()
-        tod_tz = timeh.change_tz(self.tod, timezone)
-        pop_tz = timeh.change_tz(self.pop, timezone)
-        w_start_tz = timeh.change_tz(self.window["start"], timezone)
-        w_end_tz = timeh.change_tz(self.window["end"], timezone)
-        eta = timeh.change_tz(self.eta, timezone)
-        return messagecomposer.detail(self.name,
+
+        tod_tz = timeh.change_naive_to_tz(self.tod, timezone)
+        pop_tz = timeh.change_naive_to_tz(self.pop, timezone)
+        w_start_tz = timeh.change_naive_to_tz(self.window["start"], timezone)
+        w_end_tz = timeh.change_naive_to_tz(self.window["end"], timezone)
+        eta = timeh.change_naive_to_tz(self.eta, timezone)
+        print("SELF.ETA %s - ETA %s" % (self.eta, eta))
+        tz_offset = eta.strftime('%z')
+        tz_offset = "{%s:%s}" % (tz_offset[0:3],tz_offset[3:])
+        tz_print = "Timezone %s %s\n\n" % (timezone, tz_offset)
+
+        return tz_print + messagecomposer.detail(self.name,
                                       tod_tz.strftime(self.d_print),
                                       pop_tz.strftime(self.d_print),
                                       self.signed,

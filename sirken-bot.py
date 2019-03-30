@@ -182,7 +182,6 @@ class InputHandler:
             # detailed info
             if self.info:
                 content = merb.print_long_info(self.timezone)
-                content = "Timezone: %s\n\n%s" % (self.timezone, content)
 
             # countdown info
             else:
@@ -255,7 +254,7 @@ class InputHandler:
         # save merbs
         merbs.save()
 
-        output_date = timeh.change_tz(new_tod, self.timezone)
+        output_date = timeh.change_tz(timeh.naive_to_tz(new_tod,"UTC"), self.timezone)
         output_message = "[%s] updated! New Tod: [%s] %s, %ssigned by %s" %\
                          (merb.name, output_date.strftime(config.DATE_FORMAT_PRINT),
                           self.timezone,
@@ -397,7 +396,6 @@ if __name__ == "__main__":
             if merb.name in watch.users[user]:
                 await client.send_message(destination, messagecomposer.prettify(message, "CSS"))
                 logging.info("SEND ALERT. %s pop TO: %s" % (merb.name, user))
-                print("SEND ALERT. %s pop TO: %s" % (merb.name, user))
 
     # Create Background Loop
     client.loop.create_task(digest())

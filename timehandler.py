@@ -17,13 +17,12 @@ def find_time(line):
 
 
 def now():
-    date_new = datetime.datetime.utcnow().replace(second=0, microsecond=0)
-    return naive_to_tz(date_new, 'UTC', 'UTC')
+    return datetime.datetime.utcnow().replace(second=0, microsecond=0)
 
 
 def from_mins_ago(mins):
     date_new = datetime.datetime.utcnow().replace(second=0, microsecond=0)
-    return naive_to_tz(date_new - datetime.timedelta(minutes=int(mins)), 'UTC', 'UTC')
+    return date_new - datetime.timedelta(minutes=int(mins))
 
 
 def assemble_date(s, timezone='CET'):
@@ -59,21 +58,28 @@ def assemble_date(s, timezone='CET'):
                                                       second=0,
                                                       microsecond=0)
         
-    # return the date converted to utc from current timezone
-    return naive_to_tz(date_new, timezone, 'UTC')
+    # return the date converted to naive (utc) from current timezone
+    local_date = naive_to_tz(date_new, timezone)
+    utc_date = change_tz(local_date, "UTC")
+    naive_date = tz_to_naive(utc_date)
+    return naive_date
 
 
-def naive_to_tz(mydate, tz_from="CET", tz_to="CET"):
-    local = pytz.timezone(tz_from)
-    current_date = local.localize(mydate)
-    tz_convert_to = pytz.timezone(tz_to)
-    return current_date.astimezone(tz_convert_to)
+def naive_to_tz(naive_date, tz_to="UTC"):
+    local = pytz.timezone(tz_to)
+    return local.localize(naive_date)
+
+def tz_to_naive(tz_date):
+    return tz_date.replace(tzinfo=None)
 
 
 def change_tz(mydate, target_timezone="CET"):
     tz_convert_to = pytz.timezone(target_timezone)
     return mydate.astimezone(tz_convert_to)
 
+def change_naive_to_tz(mydate, ttz):
+    mydate = naive_to_tz(mydate, "UTC")
+    return change_tz(mydate, ttz)
 
 def countdown(d_to, d_from):
     output = ""
