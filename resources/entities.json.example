@@ -1,0 +1,124 @@
+{
+  "A Bloodgill Marauder": {
+    "alias": [
+      "Marauder"
+    ],
+    "respawn_time": 8,
+    "plus_minus": 0,
+    "recurring": 0,
+    "tag": []
+  },
+  "An Ancient Jarsath": {
+    "alias": [
+      "Jarsath"
+    ],
+    "respawn_time": 8,
+    "plus_minus": 0,
+    "recurring": 0,
+    "tag": [
+      "vp"
+    ]
+  },
+  "Ground spawn Kaesora (VP Key)": {
+    "alias": [
+      "Ground Kaesora"
+    ],
+    "respawn_time": 8,
+    "plus_minus": 0,
+    "recurring": 0,
+    "tag": []
+  },
+  "Ground spawn Swamp of No Hope (VP Key)": {
+    "alias": [
+      "Ground Swamp"
+    ],
+    "respawn_time": 8,
+    "plus_minus": 0,
+    "recurring": 0,
+    "tag": [
+      "kunark"
+    ]
+  },
+  "Hoshkar": {
+    "alias": [
+      "Hosh"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "recurring": 0,
+    "tag": [
+      "vp",
+      "HoT"
+    ]
+  },
+  "Lord Kreizenn": {
+    "alias": [
+      "Kreizenn"
+    ],
+    "respawn_time": 168,
+    "plus_minus": 8,
+    "recurring": 0,
+    "tag": []
+  },
+  "Test Recurring Merb": {
+    "alias": [
+      "testr"
+    ],
+    "respawn_time": 1,
+    "plus_minus": 0,
+    "recurring": 1,
+    "tag": []
+  },
+  "Test Window Merb": {
+    "alias": [
+      "testw1"
+    ],
+    "respawn_time": 24,
+    "plus_minus": 1,
+    "recurring": 0,
+    "tag": []
+  },
+  "Test Window Merb2": {
+    "alias": [
+      "testw2"
+    ],
+    "respawn_time": 12,
+    "plus_minus": 3,
+    "recurring": 0,
+    "tag": []
+  },
+  "Test Window Merb3": {
+    "alias": [
+      "testw3"
+    ],
+    "respawn_time": 5,
+    "plus_minus": 4,
+    "recurring": 0,
+    "tag": []
+  },
+  "Test Window Merb4": {
+    "alias": [
+      "testw4"
+    ],
+    "respawn_time": 4,
+    "plus_minus": 1,
+    "recurring": 0,
+    "tag": []
+  },
+  "Test Window Merb5": {
+    "alias": [
+      "testw5"
+    ],
+    "respawn_time": 3,
+    "plus_minus": 2,
+    "recurring": 0,
+    "tag": []
+  },
+  "Vilefang": {
+    "alias": [],
+    "respawn_time": 24,
+    "plus_minus": 0,
+    "recurring": 0,
+    "tag": []
+  }
+}

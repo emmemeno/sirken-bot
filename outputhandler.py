@@ -28,3 +28,11 @@ class OutputHandler:
         output = self.cut(text).copy()
         self.splitted_text.clear()
         return output
+
+    def output_list(self, content: list):
+        output = ""
+        for line in content:
+            output += line
+        if output == "":
+            output = "Empty! :("
+        return output

@@ -1,6 +1,6 @@
 {
   "about": [
-  ":robot: __Sirken Bot v0.32__",
+  ":robot: __Sirken Bot v0.5__",
   "Programmed and maintained by Albero#9762.",
   "Feel free to send me your discovered bugs, suggestions and in-game plats!",
   "[GitHub](https://github.com/emmemeno/sirken-bot)"
@@ -20,10 +20,13 @@
   "  [!earthquake]   - omg omg omg (be careful, will reset all pop date/time!)",
   "  [!watch]        - Keep an eye on your merbs",
   "  [!merbs]        - List name and aliases of supported Merbs",
+  "  [!tags]         - List all tags",
   "  [!about]        - About Sirken Bot"
  ],
 
  "get": [
+   "Get the information of a single entity.",
+  "",
   ".Syntax: [!get [Merb Name] [(info)] [(timezone)]] - Show the status of the Merb",
   "",
   "  [Merb Name]  - mandatory. Merb full name or one of its tag !merbs to list them",
@@ -38,7 +41,14 @@
 
  "list": [
 
-  "This command show a list of active merbs (in windows and next to spawn/open window). You will be spammed privately",
+  "This command show a list of active merbs (in windows and next to spawn/open window).",
+  "",
+  ".Syntax: [!list [(tag)] ] - Show the status of the Merb",
+  "",
+  "  [(tag)]     - optional. Narrow the list. Type !tags for a list of used tags",
+  ""
+  ,
+  ".Examples: [!list VP] :: [!list WToV] :: [!list fear] :: [!list Kael]",
   ""
  ],
 

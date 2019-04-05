@@ -45,9 +45,6 @@ class InputHandler:
 
         # check if timezone is provided
         self.timezone = self.tz()
-        # search the parameter info (used in !get and !list commands)
-        if self.param:
-            self.info = re.search(r"\b(info)\b", self.param)
 
         cmd_list = {
             "about": self.about,  # About
@@ -55,7 +52,8 @@ class InputHandler:
             "list": self.get_list,  # Get the List of Merbs
             "get": self.get_single,  # Get a single Merb
             "tod": self.update_tod,  # Update a Merb Status
-            "merbs": self.alias,  # Reload from File
+            "merbs": self.alias,  # Get Aliases
+            "tags": self.tags,  # Get Tags
             "windows": self.get_window,  # Get Merbs in window
             "watch": self.set_watch,  # Watch a merb
             "pop": self.update_pop,  # Set pop time to now
@@ -139,10 +137,10 @@ class InputHandler:
         for merb in merbs.merbs:
             merb.update_pop(timeh.now(), str(self.author))
 
-        merbs.save()
+        merbs.save_timers()
         broadcast = False
         if self.channel.is_private:
-            broadcast = True
+            broadcast = config.BROADCAST_TOD_CHANNELS
         return {"destination": self.channel,
                 "content": "%s BROADCAST: Minions gather, their forms appearing as time and space coalesce."
                            % self.author,
@@ -153,7 +151,7 @@ class InputHandler:
     # PRINT MERBS IN WINDOW
     #######################
     def get_window(self):
-        print_list = merbs.get_all_window()
+        print_list = out_h.output_list(merbs.get_all_window())
         return {"destination": self.channel,
                 "content": print_list,
                 'broadcast': False}
@@ -162,8 +160,25 @@ class InputHandler:
     # PRINT LIST OF MERBS (COUNTDOWN)
     #################################
     def get_list(self):
-        print_list = merbs.get_all(self.timezone, 'countdown')
-        return {"destination": self.author,
+        input_tag = None
+        # search for a tag
+        if self.param:
+            tags = merbs.get_re_tags().lower()
+            input_tag = re.search(tags, self.param.lower())
+
+        if input_tag:
+            print_list = "%s\n" % input_tag.group(0)
+            print_list += "=" * len(input_tag.group(0)) + "\n\n"
+            print_list += out_h.output_list(merbs.get_all_by_tag(input_tag.group(0)))
+        else:
+            print_list = out_h.output_list(merbs.get_all(self.timezone, 'countdown'))
+
+        if len(print_list) > config.MAX_BROADCAST_LENGTH:
+            destination = self.author
+        else:
+            destination = self.channel
+
+        return {"destination": destination,
                 "content": print_list,
                 'broadcast': False}
 
@@ -179,10 +194,11 @@ class InputHandler:
         # search the merb
         merb = merbs.get_single(self.param)
         if merb:
-            # detailed info
+
+            # search the parameter info for detailed information
+            self.info = re.search(r"\b(info)\b", self.param)
             if self.info:
                 content = merb.print_long_info(self.timezone)
-
             # countdown info
             else:
                 content = merb.print_short_info()
@@ -203,10 +219,10 @@ class InputHandler:
         merb = merbs.get_single(self.param)
         if merb:
             merb.update_pop(timeh.now(), str(self.author))
-            merbs.save()
+            merbs.save_timers()
             broadcast = False
             if self.channel.is_private:
-                broadcast = True
+                broadcast = config.BROADCAST_TOD_CHANNELS
             return {"destination": self.channel,
                     "content": "[%s] POP! (%s)" % (merb.name, self.author),
                     'broadcast': broadcast,
@@ -252,7 +268,7 @@ class InputHandler:
 
         merb.update_tod(new_tod, str(self.author), approx)
         # save merbs
-        merbs.save()
+        merbs.save_timers()
 
         output_date = timeh.change_tz(timeh.naive_to_tz(new_tod,"UTC"), self.timezone)
         output_message = "[%s] updated! New Tod: [%s] %s, %ssigned by %s" %\
@@ -264,7 +280,7 @@ class InputHandler:
         # Reveal tod message if updated privately
         broadcast = False
         if self.channel.is_private:
-            broadcast = True
+            broadcast = config.BROADCAST_TOD_CHANNELS
         return {"destination": self.channel,
                 "content": output_message,
                 'broadcast': broadcast}
@@ -273,7 +289,16 @@ class InputHandler:
     # PRINT ALIASES OF MERBS
     ########################
     def alias(self):
-        content = merbs.get_all_alias()
+        content = out_h.output_list(merbs.get_all_alias())
+        return {"destination": self.author,
+                "content": content,
+                'broadcast': False}
+
+    ########################
+    # PRINT ALL TAGS
+    ########################
+    def tags(self):
+        content = out_h.output_list(merbs.get_all_tags())
         return {"destination": self.author,
                 "content": content,
                 'broadcast': False}
@@ -317,6 +342,32 @@ async def digest():
                                   (user, merb.name, merb.eta, minutes_diff))
 
 
+################################################
+# BACKGROUND DAILY DIGEST: Tic every hour      #
+################################################
+async def daily_digest():
+    # tic every hour
+    tic = 60*60
+    while True:
+        # ...
+        output = ""
+        now = timeh.now()
+        # tic only one time per day
+        if int(now.hour) == config.DAILY_HOUR:
+            print_list = merbs.get_all("CET", "countdown", limit_hours=24)
+            if print_list:
+                counter = len(print_list)
+                print_list = out_h.output_list(print_list)
+                pre_message = "Good morning nerds! %d merbs are expected today, %s.\n\n" %\
+                              (counter, timeh.now().strftime("%d %b %Y"))
+                post_message = "\n{Type !hi to start to interact with me}\n"
+                raw_output = out_h.process(pre_message + print_list + post_message)
+                for message in raw_output:
+                    await send_spam(messagecomposer.prettify(message, "CSS"), config.BROADCAST_DAILY_DIGEST_CHANNELS)
+
+        await asyncio.sleep(tic)
+
+
 ########
 # MAIN #
 ########
@@ -327,16 +378,16 @@ if __name__ == "__main__":
         'disable_existing_loggers': False,
     })
     logging.basicConfig(filename=config.LOG_FILE,
-                        level=logging.DEBUG,
+                        level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%d-%b-%y %H:%M:%S')
     # Initialize Merbs List
-    merbs = npc.MerbList(config.MERBS_FILE, config.DATE_FORMAT, config.DATE_FORMAT_PRINT)
+    merbs = npc.MerbList(config.FILE_ENTITIES, config.FILE_TIMERS, config.DATE_FORMAT, config.DATE_FORMAT_PRINT)
     merbs.order()
     # Load Helper
     helper = helper.Helper(config.HELP_FILE)
     # Load Watcher
-    watch = watch.Watch(config.JSON_WATCH)
+    watch = watch.Watch(config.FILE_WATCH)
     # Initialize Output Handler
     out_h = outputhandler.OutputHandler(config.MAX_MESSAGE_LENGTH)
     # Initialize Input Handler
@@ -348,6 +399,9 @@ if __name__ == "__main__":
     async def on_ready():
         print("Sirken Bot is online and connected to Discord")
         logging.info("Sirken Bot Connected to Discord")
+        # Create Background Loops
+        client.loop.create_task(digest())
+        client.loop.create_task(daily_digest())
 
     @client.event
     async def on_message(message):
@@ -363,7 +417,7 @@ if __name__ == "__main__":
             for message in output_message:
                 await client.send_message(raw_output["destination"], messagecomposer.prettify(message, "CSS"))
                 if raw_output['broadcast']:
-                    await send_spam(messagecomposer.prettify(message, "CSS"))
+                    await send_spam(messagecomposer.prettify(message, "CSS"), raw_output['broadcast'])
 
             # send PM Alerts
             if 'merb_alert' in raw_output:
@@ -374,9 +428,10 @@ if __name__ == "__main__":
 
     # Send Spam to Broadcast Channel
     @client.event
-    async def send_spam(message):
-        channel_to = client.get_channel(config.BROADCAST_CHANNEL)
-        await client.send_message(channel_to, message)
+    async def send_spam(message, channels):
+        for channel in channels:
+            destination = client.get_channel(channel)
+            await client.send_message(destination, message)
 
     # Send Earthquake Messages
     @client.event
@@ -397,7 +452,6 @@ if __name__ == "__main__":
                 await client.send_message(destination, messagecomposer.prettify(message, "CSS"))
                 logging.info("SEND ALERT. %s pop TO: %s" % (merb.name, user))
 
-    # Create Background Loop
-    client.loop.create_task(digest())
+
     # Run the Bot
     client.run(config.DISCORD_TOKEN)

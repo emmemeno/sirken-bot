@@ -1,3 +1,4 @@
+import config
 import json
 import datetime
 import pytz
@@ -8,8 +9,8 @@ import messagecomposer
 
 # Class that define Merb info and a bunch of utilities
 class Merb:
-    def __init__(self, name, alias, respawn_time, plus_minus, tod, pop,
-                 signed, accuracy, recurring, date_rec, date_print):
+    def __init__(self, name, alias, respawn_time, plus_minus, recurring, tag, tod, pop,
+                 signed, accuracy, date_rec, date_print):
 
         self.d_rec = date_rec
         self.d_print = date_print
@@ -26,6 +27,12 @@ class Merb:
         # Variance
         self.plus_minus = plus_minus
 
+        # If the spawn is recurring. (ex scout)
+        self.recurring = recurring
+
+        # Tag of the merb
+        self.tag = tag
+
         # Time of Death
         self.tod = datetime.datetime.strptime(tod, self.d_rec)
 
@@ -38,8 +45,7 @@ class Merb:
         # Accuracy. 0 for approx time, 1 for exact time, -1 when pop > tod
         self.accuracy = accuracy
 
-        # If the spawn is recurring. (ex scout)
-        self.recurring = recurring
+
 
         # Number of spawns since last tod (for recurring mobs)
         self.spawns = 0
@@ -149,16 +155,17 @@ class Merb:
         tz_print = "Timezone %s %s\n\n" % (timezone, tz_offset)
 
         return tz_print + messagecomposer.detail(self.name,
-                                      tod_tz.strftime(self.d_print),
-                                      pop_tz.strftime(self.d_print),
-                                      self.signed,
-                                      self.respawn_time,
-                                      self.plus_minus,
-                                      w_start_tz.strftime(self.d_print),
-                                      w_end_tz.strftime(self.d_print),
-                                      self.accuracy,
-                                      eta.strftime(self.d_print)
-                                      )
+                                                 tod_tz.strftime(self.d_print),
+                                                 pop_tz.strftime(self.d_print),
+                                                 self.signed,
+                                                 self.respawn_time,
+                                                 self.plus_minus,
+                                                 self.tag,
+                                                 w_start_tz.strftime(self.d_print),
+                                                 w_end_tz.strftime(self.d_print),
+                                                 self.accuracy,
+                                                 eta.strftime(self.d_print)
+                                                 )
 
     def print_alias(self):
         return messagecomposer.alias(self.name, self.alias)
@@ -166,14 +173,11 @@ class Merb:
     # serialize data
     def serialize(self):
         return ({self.name: {
-                     'alias': self.alias,
-                     "respawn_time": self.respawn_time,
-                     "plus_minus": self.plus_minus,
-                     "tod": self.tod.strftime(self.d_rec),
-                     "pop": self.pop.strftime(self.d_rec),
-                     "signed": self.signed,
-                     "accuracy": self.accuracy,
-                     "recurring": self.recurring}
+                             "tod": self.tod.strftime(self.d_rec),
+                             "pop": self.pop.strftime(self.d_rec),
+                             "signed": self.signed,
+                             "accuracy": self.accuracy
+                            }
                  })
 
     # Check name in aliases
@@ -188,36 +192,64 @@ class Merb:
             return True
         return False
 
+    # Check tag
+    def check_tag(self, tag):
+        for i in self.tag:
+            if i.lower() == tag.lower():
+                return True
+        return False
+
 
 # Class container of Merbs, load from JSON
 class MerbList:
 
-    def __init__(self, url_merb, date_format_rec, date_format_print):
-        self.json_file = url_merb
-        with open(url_merb) as f:
-            json_obj = json.load(f)
+    def __init__(self, url_entities, url_timers, date_format_rec, date_format_print):
+        self.url_entities = url_entities
+        self.url_timers = url_timers
+        self.max_respawn_time = 0
+
+        with open(url_entities) as f:
+            json_entities = json.load(f)
+        with open(url_timers) as f:
+            json_timers = json.load(f)
+
         self.merbs = list()
-
-        for i in json_obj:
-            if not json_obj[i].get("pop", 0):
-                # Date of Last recorded earthquake
-                json_obj[i]["pop"] = "2019-3-4 03:44"
-
+        self.tags = list()
+        for i in json_entities:
+            limit_respawn_time = json_entities[i]["respawn_time"] + json_entities[i]["plus_minus"]
+            if limit_respawn_time > self.max_respawn_time:
+                self.max_respawn_time = limit_respawn_time
+            if i in json_timers:
+                tod = json_timers[i]["tod"]
+                pop = json_timers[i]["pop"]
+                signed = json_timers[i]["signed"]
+                accuracy = json_timers[i]["accuracy"]
+            else:
+                tod = config.DATE_DEFAULT
+                pop= config.DATE_DEFAULT
+                signed = "Default"
+                accuracy = 0
             self.merbs.append(Merb(i,
-                                   json_obj[i]["alias"],
-                                   json_obj[i]["respawn_time"],
-                                   json_obj[i]["plus_minus"],
-                                   json_obj[i]["tod"],
-                                   json_obj[i]["pop"],
-                                   json_obj[i]["signed"],
-                                   json_obj[i]["accuracy"],
-                                   json_obj[i]["recurring"],
+                                   json_entities[i]["alias"],
+                                   json_entities[i]["respawn_time"],
+                                   json_entities[i]["plus_minus"],
+                                   json_entities[i]["recurring"],
+                                   json_entities[i]["tag"],
+                                   tod,
+                                   pop,
+                                   signed,
+                                   accuracy,
                                    date_format_rec,
                                    date_format_print
                                    ))
+            # Create a list of tag
+            for tag in json_entities[i]["tag"]:
+                if not tag.lower() in self.tags and tag:
+                    self.tags.append(tag.lower())
+            self.tags.sort()
 
-    def save(self,):
-        with open(self.json_file, 'w') as outfile:
+    def save_timers(self, ):
+        with open(self.url_timers, 'w') as outfile:
             json.dump(self.serialize(), outfile, indent=2)
 
     def order(self, order='name'):
@@ -227,6 +259,7 @@ class MerbList:
             self.merbs.sort(key=lambda merb: merb.eta)
             self.merbs.sort(key=lambda merb: merb.in_window(), reverse=True)
 
+
     def get_single(self, name):
         for merb in self.merbs:
             if merb.check_name(name):
@@ -235,35 +268,60 @@ class MerbList:
 
     def get_all_window(self):
         self.order('eta')
-        output = ""
+        output = list()
 
         for merb in self.merbs:
             if merb.window['start'] <= timeh.now() <= merb.window['end']:
-                output += merb.print_short_info()
-        if output == "":
-            output = "Empty! :("
+                output.append(merb.print_short_info())
+
         return output
 
-    def get_all(self, timezone, mode="countdown"):
+    def get_all(self, timezone, mode="countdown", limit_hours=None):
+        if not limit_hours:
+            limit_hours = self.max_respawn_time
+        now = timeh.now()
         self.order('eta')
-        output = ""
+        output = list()
 
         for merb in self.merbs:
-            if timeh.now() < merb.eta:
+            date_limit = now + datetime.timedelta(hours=limit_hours)
+            date_diff = date_limit - merb.eta
+            hour_diff = date_diff.total_seconds() / 3600
+            # print("%s HOUR DIFF %d" % (merb.name, hour_diff))
+            if timeh.now() < merb.eta and hour_diff >= 0:
                 # Show online merb eta in the future
                 if mode == "countdown":
-                    output += merb.print_short_info()
+                    output.append(merb.print_short_info())
                 else:
-                    output += merb.print_long_info(timezone) + "\n"
-        if output == "":
-            output = "Empty! :("
+                    output.append(merb.print_long_info(timezone))
+        return output
+
+    def get_all_by_tag(self, tag):
+        self.order('eta')
+        output = list()
+        for merb in self.merbs:
+            if merb.check_tag(tag) and timeh.now() < merb.eta:
+                output.append(merb.print_short_info())
         return output
 
     def get_all_alias(self):
         self.order('name')
-        output = ""
+        output = list()
         for merb in self.merbs:
-            output += merb.print_alias()
+            output.append(merb.print_alias())
+        return output
+
+    def get_all_tags(self):
+        output = list()
+        for tag in self.tags:
+            output.append("%s\n" % tag)
+        return output
+
+    def get_re_tags(self):
+        output = ""
+        for tag in self.tags:
+            output += "%s|" % tag
+        output = output[:-1]
         return output
 
     def serialize(self):

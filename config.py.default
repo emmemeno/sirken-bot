@@ -1,13 +1,23 @@
-
+# Channels for ToD broadcasts
+BROADCAST_TOD_CHANNELS = ["", ""]
+# Channels for daily digest broadcasts
+BROADCAST_DAILY_DIGEST_CHANNELS = ["", ""]
+# The Discord Token
 DISCORD_TOKEN = ""
-BROADCAST_CHANNEL = "309363887386394625"
-MAX_MESSAGE_LENGTH = 1900
+# Mas number of chars per message
+MAX_MESSAGE_LENGTH = 1800
+# Max number of chars to switch from public to private message
+MAX_BROADCAST_LENGTH = 1000
+# Hour of the day to broadcast the daily upcoming merb list
+DAILY_HOUR = 7
 
 PATH_DIR = "resources/"
-MERBS_FILE = PATH_DIR + 'p99merbs_test.json'
-JSON_WATCH = PATH_DIR + "watch.json"
+FILE_ENTITIES = PATH_DIR + 'entities.json'
+FILE_TIMERS = PATH_DIR + 'timers.json'
+FILE_WATCH = PATH_DIR + "watch.json"
 HELP_FILE = PATH_DIR + 'sirken-bot-help.json'
 
+DATE_DEFAULT = "1981-2-13 00:00"
 DATE_FORMAT = "%Y-%m-%d %H:%M"
 DATE_FORMAT_PRINT = "%b %d %H:%M"
 

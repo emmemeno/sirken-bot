@@ -1,0 +1,80 @@
+{
+  "A Bloodgill Marauder": {
+    "tod": "2019-03-11 20:26",
+    "pop": "2019-03-11 20:38",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "An Ancient Jarsath": {
+    "tod": "2019-03-11 20:26",
+    "pop": "2019-03-11 20:38",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Ground spawn Kaesora (VP Key)": {
+    "tod": "2019-03-11 20:26",
+    "pop": "2019-03-11 20:38",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Ground spawn Swamp of No Hope (VP Key)": {
+    "tod": "2019-03-11 20:26",
+    "pop": "2019-03-11 20:38",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Hoshkar": {
+    "tod": "2019-02-25 03:37",
+    "pop": "2019-03-04 03:44",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Lord Kreizenn": {
+    "tod": "2019-03-11 20:26",
+    "pop": "2019-03-11 20:38",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Test Recurring Merb": {
+    "tod": "2019-03-30 19:02",
+    "pop": "2019-03-11 20:38",
+    "signed": "Albero#9762",
+    "accuracy": 1
+  },
+  "Test Window Merb": {
+    "tod": "2019-03-30 20:38",
+    "pop": "2019-03-30 19:35",
+    "signed": "Albero#9762",
+    "accuracy": 1
+  },
+  "Test Window Merb2": {
+    "tod": "2019-03-05 11:09",
+    "pop": "2019-03-11 08:42",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Test Window Merb3": {
+    "tod": "2019-03-05 11:09",
+    "pop": "2019-03-11 15:11",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Test Window Merb4": {
+    "tod": "2019-03-05 11:09",
+    "pop": "2019-03-11 16:55",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Test Window Merb5": {
+    "tod": "2019-03-05 11:09",
+    "pop": "2019-03-11 17:00",
+    "signed": "Albero#9762",
+    "accuracy": -1
+  },
+  "Vilefang": {
+    "tod": "2019-03-19 07:43",
+    "pop": "2019-03-11 20:38",
+    "signed": "Albero#9762",
+    "accuracy": 1
+  }
+}
