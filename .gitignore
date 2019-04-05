@@ -1,6 +1,5 @@
 config.py
 sirken-bot.log
-resources/p99merbs.json
-resources/p99merbs_test.json
+resources/entities.json
+resources/timers.json
 resources/watch.json
-

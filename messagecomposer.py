@@ -26,26 +26,26 @@ def prettify(text: str, my_type="BLOCK", pre_content=""):
 def time_remaining(name, eta, plus_minus, window, spawns, accuracy):
     now = timeh.now()
     postfix = ""
-    prefix = ""
+    prefix = "  "
     output = "[" + name + "] "
-    approx = ""
+    approx = " "
     if accuracy <= 0 or spawns > 6:
-        approx = ".roughly"
+        approx = "~ "
         if accuracy <= -1 or spawns >= 10:
-            approx = ".very_roughly"
+            approx = "~~ "
 
     if now > eta and not plus_minus:
         output += "ToD too old. Please update it if you have a chance! "
     if now > eta and plus_minus:
         output += "window is close. Please update its ToD if u have a chance! "
     if now < eta and not plus_minus:
-        output += "will %s spawn in %s" % (approx, timeh.countdown(now, eta))
+        output += "%swill spawn in %s" % (approx, timeh.countdown(now, eta))
     if now < window['start'] and plus_minus:
-        output += "window will %s open in %s" % (approx, timeh.countdown(now, eta))
+        output += "%swindow will open in %s" % (approx, timeh.countdown(now, eta))
     if window['start'] <= now <= window['end']:
         prefix = "# "
-        postfix = "<-"
-        output += "in window until %s " % timeh.countdown(now, eta)
+        postfix = ""
+        output += "%sin window until %s " % (approx, timeh.countdown(now, eta))
     # output += " - {ToD: %s} signed by %s" % (tod.strftime(DATE_FORMAT_PRINT), author)
     return prefix + output + postfix + "\n"
 

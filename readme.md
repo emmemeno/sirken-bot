@@ -1,4 +1,4 @@
-# Sirken Bot v0.3 
+# Sirken Bot v0.5 
 ###### They say I give *respawn times*.
 
 Interactive discord bot who stores and updates times of death, pops and let the user set timers for ETA
@@ -20,5 +20,6 @@ No copyright indeed, feel free to use wherever you want.
   [!earthquake]   - omg omg omg (be careful, will reset all pop date/time!)
   [!watch]        - Keep an eye on your merbs
   [!merbs]        - List name and aliases of supported Merbs
+  [!tags]         - List all tags
   [!about]        - About Sirken Bot
 ```
