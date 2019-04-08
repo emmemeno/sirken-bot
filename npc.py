@@ -230,7 +230,7 @@ class MerbList:
                 if "signed_pop" not in json_timers[i]:
                     signed_pop = signed_tod
                 else:
-                    signed_pop = json_timers[i]["signed_tod"]
+                    signed_pop = json_timers[i]["signed_pop"]
 
                 accuracy = json_timers[i]["accuracy"]
             else:
