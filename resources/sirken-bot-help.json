@@ -89,7 +89,16 @@
 
  "earthquake" : [
   "Earthquake! This powerful command will reset all pop times and will alert all people watching 1 merb at least",
-  "Use once, go to kill all dragons you can and update ToDs when you are back"
+  "Use once, go to kill all dragons you can and update ToDs when you are back",
+  "",
+  ".Syntax: [!earthquake [Time] [(Date)] [(timezone)]]",
+  "",
+  "  [Time]        - mandatory. can be {hh:mm} or {now} or {xx minutes ago}",
+  "",
+  "  [(Date)]      - optional. Use the format {yyyy-mm-dd}. If no date is passed, today is used",
+  "  [(timezone)]  - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|edt|cst|cdt|pst|pdt}",
+  "",
+  ".Examples: [!earthquake now] :: [!earthquake 9mins ago] :: [!earthquake 2019-08-04 04:03 CET]"
  ],
 
   "watch" : [

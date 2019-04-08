@@ -50,7 +50,7 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy):
     return prefix + output + postfix + "\n"
 
 
-def detail(name, tod, pop, signed, respawn_time, plus_minus, tags, window_start, window_end, accuracy, eta):
+def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tags, window_start, window_end, accuracy, eta):
     output = "%s\n" % name
     output += "=" * len(name) + "\n\n"
     approx = ""
@@ -62,15 +62,16 @@ def detail(name, tod, pop, signed, respawn_time, plus_minus, tags, window_start,
     if print_tags:
         print_tags = print_tags[:-1]
 
-    output += " {LAST POP}     [%s]\n" \
-              " {LAST TOD}     [%s]\n" \
-              " {RESPAWN TIME} [%s±%s]\n" \
-              " {TAGS}         [%s]\n" \
-              " {WINDOW OPEN}  [%s]\n" \
-              " {WINDOW CLOSE} [%s]\n" \
-              " {SIGNED BY}    [%s] %s\n" \
-              " {ETA}          [%s]\n" % \
-              (pop, tod, respawn_time, plus_minus, print_tags, window_start, window_end, signed, approx, eta)
+    output += " {LAST POP}      [%s]\n" \
+              " {LAST TOD}      [%s]\n" \
+              " {RESPAWN TIME}  [%s±%s]\n" \
+              " {TAGS}          [%s]\n" \
+              " {WINDOW OPEN}   [%s]\n" \
+              " {WINDOW CLOSE}  [%s]\n" \
+              " {SIGNED TOD BY} [%s] %s\n" \
+              " {SIGNED POP BY} [%s]\n" \
+              " {ETA}           [%s]\n" % \
+              (pop, tod, respawn_time, plus_minus, print_tags, window_start, window_end, signed_tod, approx, signed_pop, eta)
     return output
 
 

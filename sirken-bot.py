@@ -130,23 +130,6 @@ class InputHandler:
                     "content": "All alarms are set to OFF",
                     'broadcast': False}
 
-    ############
-    # EARTHQUAKE
-    ############
-    def earthquake(self):
-        for merb in merbs.merbs:
-            merb.update_pop(timeh.now(), str(self.author))
-
-        merbs.save_timers()
-        broadcast = False
-        if self.channel.is_private:
-            broadcast = config.BROADCAST_TOD_CHANNELS
-        return {"destination": self.channel,
-                "content": "%s BROADCAST: Minions gather, their forms appearing as time and space coalesce."
-                           % self.author,
-                "broadcast": broadcast,
-                "earthquake": self.author}
-
     #######################
     # PRINT MERBS IN WINDOW
     #######################
@@ -232,6 +215,39 @@ class InputHandler:
                     "content": errors.error_merb_not_found(),
                     'broadcast': False
                     }
+
+    ############
+    # EARTHQUAKE
+    ############
+    def earthquake(self):
+        if not self.param:
+            return {"destination": self.author,
+                    "content": errors.error_param(self.cmd, "Missing Parameter. "),
+                    'broadcast': False}
+
+        new_pops = timeh.assemble_date(self.param, self.timezone)
+
+        # Check if time is correct
+        if not new_pops:
+            return {"destination": self.author,
+                    "content": errors.error_param(self.cmd, "Time Syntax Error. "),
+                    'broadcast': False}
+
+        output_date = timeh.change_tz(timeh.naive_to_tz(new_pops, "UTC"), self.timezone)
+
+        for merb in merbs.merbs:
+            merb.update_pop(new_pops, str(self.author))
+
+        merbs.save_timers()
+        broadcast = False
+        if self.channel.is_private:
+            broadcast = config.BROADCAST_TOD_CHANNELS
+        return {"destination": self.channel,
+                "content": "Earthquake! All pop times updated [%s] %s, signed by %s"
+                           % (output_date.strftime(config.DATE_FORMAT_PRINT), self.timezone, self.author),
+                "broadcast": broadcast
+               }
+
 
     ######################
     # UPDATE TIME OF DEATH

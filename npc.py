@@ -10,7 +10,7 @@ import messagecomposer
 # Class that define Merb info and a bunch of utilities
 class Merb:
     def __init__(self, name, alias, respawn_time, plus_minus, recurring, tag, tod, pop,
-                 signed, accuracy, date_rec, date_print):
+                 author_tod, author_pop, accuracy, date_rec, date_print):
 
         self.d_rec = date_rec
         self.d_print = date_print
@@ -40,7 +40,10 @@ class Merb:
         self.pop = datetime.datetime.strptime(pop, self.d_rec)
 
         # Author of the last ToD
-        self.signed = signed
+        self.signed_tod = author_tod
+
+        # Author of the last pop
+        self.signed_pop = author_pop
 
         # Accuracy. 0 for approx time, 1 for exact time, -1 when pop > tod
         self.accuracy = accuracy
@@ -80,14 +83,14 @@ class Merb:
 
     def update_tod(self, new_tod, author, approx=1):
         self.tod = new_tod
-        self.signed = author
+        self.signed_tod = author
         self.accuracy = approx
         self.window = self.get_window(new_tod)
         self.eta = self.get_eta()
 
     def update_pop(self, new_pop, author):
-        self.pop = timeh.now()
-        self.signed = author
+        self.pop = new_pop
+        self.signed_pop = author
         self.window = self.get_window(new_pop)
         self.eta = self.get_eta()
 
@@ -149,7 +152,6 @@ class Merb:
         w_start_tz = timeh.change_naive_to_tz(self.window["start"], timezone)
         w_end_tz = timeh.change_naive_to_tz(self.window["end"], timezone)
         eta = timeh.change_naive_to_tz(self.eta, timezone)
-        print("SELF.ETA %s - ETA %s" % (self.eta, eta))
         tz_offset = eta.strftime('%z')
         tz_offset = "{%s:%s}" % (tz_offset[0:3],tz_offset[3:])
         tz_print = "Timezone %s %s\n\n" % (timezone, tz_offset)
@@ -157,7 +159,8 @@ class Merb:
         return tz_print + messagecomposer.detail(self.name,
                                                  tod_tz.strftime(self.d_print),
                                                  pop_tz.strftime(self.d_print),
-                                                 self.signed,
+                                                 self.signed_tod,
+                                                 self.signed_pop,
                                                  self.respawn_time,
                                                  self.plus_minus,
                                                  self.tag,
@@ -175,7 +178,8 @@ class Merb:
         return ({self.name: {
                              "tod": self.tod.strftime(self.d_rec),
                              "pop": self.pop.strftime(self.d_rec),
-                             "signed": self.signed,
+                             "signed_tod": self.signed_tod,
+                             "signed_pop": self.signed_pop,
                              "accuracy": self.accuracy
                             }
                  })
@@ -222,12 +226,18 @@ class MerbList:
             if i in json_timers:
                 tod = json_timers[i]["tod"]
                 pop = json_timers[i]["pop"]
-                signed = json_timers[i]["signed"]
+                signed_tod = json_timers[i]["signed_tod"]
+                if "signed_pop" not in json_timers[i]:
+                    signed_pop = signed_tod
+                else:
+                    signed_pop = json_timers[i]["signed_tod"]
+
                 accuracy = json_timers[i]["accuracy"]
             else:
                 tod = config.DATE_DEFAULT
                 pop= config.DATE_DEFAULT
-                signed = "Default"
+                signed_tod = "Default"
+                signed_pop = "Default"
                 accuracy = 0
             self.merbs.append(Merb(i,
                                    json_entities[i]["alias"],
@@ -237,7 +247,8 @@ class MerbList:
                                    json_entities[i]["tag"],
                                    tod,
                                    pop,
-                                   signed,
+                                   signed_tod,
+                                   signed_pop,
                                    accuracy,
                                    date_format_rec,
                                    date_format_print
