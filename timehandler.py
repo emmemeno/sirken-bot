@@ -20,6 +20,11 @@ def now():
     return datetime.datetime.utcnow().replace(second=0, microsecond=0)
 
 
+def now_local(timezone):
+    tz = pytz.timezone(timezone)
+    return datetime.datetime.now(tz)
+
+
 def from_mins_ago(mins):
     date_new = datetime.datetime.utcnow().replace(second=0, microsecond=0)
     return date_new - datetime.timedelta(minutes=int(mins))
@@ -33,26 +38,25 @@ def assemble_date(time_in, date_in, timezone='CET'):
 
     # try to validate the date
     try:
-        # if both date and time are provided simply generate the date
+        # if both date and time are provided simply generate the date...
         date_new = datetime.datetime(year=date_in['year'],
                                      month=date_in['month'],
                                      day=date_in['day'],
                                      hour=time_in['hour'],
                                      minute=time_in['minute'])
+        # ...and attach the timezone on it
+        local_date = naive_to_tz(date_new, timezone)
     except:
-        # if date is not provided, use actual date and replace hour and minute
-        # TODO: POTENTIALLY BUG. there could be a misinterpretation on the supposed day
-        # TODO: FIX IDEA. Convert the date to current timezone before replacing the hour/minute.
-        # TODO: NEED TESTING.
-        date_new = datetime.datetime.utcnow().replace(hour=time_in['hour'],
+        # if only time is provided, build it starting from local now
+        date_new = now_local(timezone)
+        local_date = date_new.replace(hour=time_in['hour'],
                                                       minute=time_in['minute'],
                                                       second=0,
                                                       microsecond=0)
 
-    # return the date converted to naive (utc) from current timezone
-    local_date = naive_to_tz(date_new, timezone)
     utc_date = change_tz(local_date, "UTC")
     naive_date = tz_to_naive(utc_date)
+
     return naive_date
 
 
