@@ -1,4 +1,5 @@
 from fuzzywuzzy import fuzz
+import config
 import operator
 import re
 import timehandler as timeh
@@ -207,9 +208,9 @@ class LineParser:
         sorted_result = sorted(result.items(), key=operator.itemgetter(1), reverse=True)
         first_result_merb = next(iter(sorted_result))[0]
         first_result_value = next(iter(sorted_result))[1]
-        if first_result_value >= 90:
+        if first_result_value >= config.FUZZY_THRESHOLD:
             self.merb = first_result_merb
-        if first_result_value >= 65:
+        if first_result_value >= config.FUZZY_GUESSED_THRESHOLD:
             self.merb_guessed = first_result_merb
 
     def get(self):

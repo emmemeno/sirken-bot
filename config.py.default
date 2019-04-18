@@ -11,6 +11,9 @@ MAX_BROADCAST_LENGTH = 1000
 # Hour of the day to broadcast the daily upcoming merb list
 DAILY_HOUR = 7
 
+FUZZY_THRESHOLD = 85
+FUZZY_GUESSED_THRESHOLD = 65
+
 PATH_DIR = "resources/"
 FILE_ENTITIES = PATH_DIR + 'entities.json'
 FILE_TIMERS = PATH_DIR + 'timers.json'
