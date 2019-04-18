@@ -64,7 +64,7 @@ class Merb:
         self.eta = self.get_eta()
 
     def get_eta(self, virtual_tod=None):
-        eta = datetime.datetime(1981, 2, 13, 00, 00)
+        eta = datetime.datetime.strptime(config.DATE_DEFAULT,config.DATE_FORMAT)
 
         # virtual tod is last saved tod if this function is directly called
         if not virtual_tod:
@@ -114,12 +114,17 @@ class Merb:
 
     def print_long_info(self, timezone):
         self.eta = self.get_eta()
+        if self.eta == config.DATE_DEFAULT:
+            eta = "N/A"
+        else:
+            eta = timeh.change_naive_to_tz(self.eta, timezone)
+            eta = eta.strftime(self.d_print)
 
         tod_tz = timeh.change_naive_to_tz(self.tod, timezone)
         pop_tz = timeh.change_naive_to_tz(self.pop, timezone)
         w_start_tz = timeh.change_naive_to_tz(self.window["start"], timezone)
         w_end_tz = timeh.change_naive_to_tz(self.window["end"], timezone)
-        eta = timeh.change_naive_to_tz(self.eta, timezone)
+
         tz_print = "Timezone %s\n\n" % timezone
 
         return tz_print + messagecomposer.detail(self.name,
@@ -133,7 +138,7 @@ class Merb:
                                                  w_start_tz.strftime(self.d_print),
                                                  w_end_tz.strftime(self.d_print),
                                                  self.accuracy,
-                                                 eta.strftime(self.d_print)
+                                                 eta
                                                  )
 
     def print_meta(self):
