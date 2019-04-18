@@ -6,7 +6,11 @@ class Watch:
         self.url_json = url_json
         self.users = {}
         with open(url_json) as f:
-            self.users = json.load(f)
+            json_watch = json.load(f)
+        # Transform strin key into key ones
+        for key in json_watch:
+            self.users[int(key)] = json_watch[key]
+
 
     def __str__(self):
         return self.users
@@ -38,16 +42,16 @@ class Watch:
                 output[merb] = self.users[user][merb]
         return output
 
-    def switch(self, user, merb, minutes=30, mode="ON"):
+    def switch(self, user, merb, minutes=30, off=True):
         if user not in self.users:
             self.users[user] = {}
-        if mode == "ON":
-            self.users[user][merb] = minutes
-        else:
+        if off:
             self.users[user].pop(merb, None)
+        else:
+            self.users[user][merb] = minutes
         self.save()
 
-    def off(self, user):
+    def all_off(self, user):
         if user in self.users:
             self.users.pop(user, None)
         self.save()

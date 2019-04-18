@@ -1,8 +1,6 @@
 import config
 import json
 import datetime
-import pytz
-import re
 import timehandler as timeh
 import messagecomposer
 
@@ -14,67 +12,38 @@ class Merb:
 
         self.d_rec = date_rec
         self.d_print = date_print
-        utc = pytz.utc
         # Complete name of the Merb
         self.name = name
-
         # Aliases
         self.alias = alias
-
         # Respawn Time
         self.respawn_time = respawn_time
-
         # Variance
         self.plus_minus = plus_minus
-
         # If the spawn is recurring. (ex scout)
         self.recurring = recurring
-
         # Tag of the merb
         self.tag = tag
-
         # Time of Death
         self.tod = datetime.datetime.strptime(tod, self.d_rec)
-
         # Pop Time
         self.pop = datetime.datetime.strptime(pop, self.d_rec)
-
         # Author of the last ToD
         self.signed_tod = author_tod
-
         # Author of the last pop
         self.signed_pop = author_pop
-
         # Accuracy. 0 for approx time, 1 for exact time, -1 when pop > tod
         self.accuracy = accuracy
-
-
-
         # Number of spawns since last tod (for recurring mobs)
         self.spawns = 0
-
         # Spawn Windows {"start"} {"end"}
         if self.tod > self.pop:
             self.window = self.get_window(self.tod)
         else:
             self.window = self.get_window(self.pop)
             self.accuracy = -2
-
-        # Eta for the spawn/window start/window end
+        # Eta
         self.eta = self.get_eta()
-
-    def __str__(self):
-        return 'Name {} - Respawn Time {}±{} - ToD {}' \
-               ' - Window Starts {} - Window ends {}' \
-               ' - ETA: {}' \
-                .format(self.name,
-                        self.respawn_time,
-                        self.plus_minus,
-                        self.tod,
-                        self.window["start"],
-                        self.window["end"],
-                        self.eta
-                        )
 
     def get_window(self, from_date):
         w_start = from_date + datetime.timedelta(hours=self.respawn_time) - datetime.timedelta(hours=self.plus_minus)
@@ -128,7 +97,6 @@ class Merb:
         if self.recurring and self.plus_minus == 0 and now >= virtual_tod + delta_hour and self.spawns < 12:
             self.spawns += 1
             eta = self.get_eta(virtual_tod + delta_hour)
-            return eta
 
         return eta
 
@@ -152,9 +120,7 @@ class Merb:
         w_start_tz = timeh.change_naive_to_tz(self.window["start"], timezone)
         w_end_tz = timeh.change_naive_to_tz(self.window["end"], timezone)
         eta = timeh.change_naive_to_tz(self.eta, timezone)
-        tz_offset = eta.strftime('%z')
-        tz_offset = "{%s:%s}" % (tz_offset[0:3],tz_offset[3:])
-        tz_print = "Timezone %s %s\n\n" % (timezone, tz_offset)
+        tz_print = "Timezone %s\n\n" % timezone
 
         return tz_print + messagecomposer.detail(self.name,
                                                  tod_tz.strftime(self.d_print),
@@ -170,8 +136,8 @@ class Merb:
                                                  eta.strftime(self.d_print)
                                                  )
 
-    def print_alias(self):
-        return messagecomposer.alias(self.name, self.alias)
+    def print_meta(self):
+        return messagecomposer.meta(self.name, self.alias, self.tag)
 
     # serialize data
     def serialize(self):
@@ -183,18 +149,6 @@ class Merb:
                              "accuracy": self.accuracy
                             }
                  })
-
-    # Check name in aliases
-    def check_name(self, search):
-        # create the reg exp with name and aliases
-        keys = self.name.lower()
-        for i in self.alias:
-            keys += "|" + i.lower()
-        reg_expr = r"\b(%s)\b" % keys
-        f = re.search(reg_expr, search.lower())
-        if f:
-            return True
-        return False
 
     # Check tag
     def check_tag(self, tag):
@@ -235,7 +189,7 @@ class MerbList:
                 accuracy = json_timers[i]["accuracy"]
             else:
                 tod = config.DATE_DEFAULT
-                pop= config.DATE_DEFAULT
+                pop = config.DATE_DEFAULT
                 signed_tod = "Default"
                 signed_pop = "Default"
                 accuracy = 0
@@ -269,13 +223,6 @@ class MerbList:
         if order == 'eta':
             self.merbs.sort(key=lambda merb: merb.eta)
             self.merbs.sort(key=lambda merb: merb.in_window(), reverse=True)
-
-
-    def get_single(self, name):
-        for merb in self.merbs:
-            if merb.check_name(name):
-                return merb
-        return False
 
     def get_all_window(self):
         self.order('eta')
@@ -315,11 +262,11 @@ class MerbList:
                 output.append(merb.print_short_info())
         return output
 
-    def get_all_alias(self):
+    def get_all_meta(self):
         self.order('name')
         output = list()
         for merb in self.merbs:
-            output.append(merb.print_alias())
+            output.append(merb.print_meta())
         return output
 
     def get_all_tags(self):

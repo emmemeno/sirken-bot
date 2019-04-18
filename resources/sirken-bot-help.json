@@ -1,7 +1,7 @@
 {
   "about": [
-  ":robot: __Sirken Bot v0.5__",
-  "Programmed and maintained by Albero#9762.",
+  ":robot: __Sirken Bot v0.7__",
+  "Programmed and maintained by Albero.",
   "Feel free to send me your discovered bugs, suggestions and in-game plats!",
   "[GitHub](https://github.com/emmemeno/sirken-bot)"
 
@@ -12,105 +12,102 @@
   "To get a specific command help, please type !help command",
   "",
   "  [!help]         - Show this help",
-  "  [!get]          - Show the status of a Merb",
-  "  [!list]         - Spamm the list of active Merbs",
-  "  [!windows]      - Show the list of only Merbs in window",
-  "  [!tod]          - Update the ToD of a Merb",
-  "  [!pop]          - A Merb is popped",
-  "  [!earthquake]   - omg omg omg (be careful, will reset all pop date/time!)",
+  "  [!get]          - Print merb(s) status",
+  "  [!tod]          - Update the tod of a Merb",
+  "  [!pop]          - Update the pop of a Merb",
+  "  [!earthquake]   - omg omg omg!",
   "  [!watch]        - Keep an eye on your merbs",
-  "  [!merbs]        - List name and aliases of supported Merbs",
-  "  [!tags]         - List all tags",
+  "  [!merbs]        - List name, aliases and tags of Merbs",
   "  [!about]        - About Sirken Bot"
  ],
 
  "get": [
-   "Get the information of a single entity.",
+   "Get info about one or more merbs",
   "",
-  ".Syntax: [!get [Merb Name] [(info)] [(timezone)]] - Show the status of the Merb",
+  ".Syntax: !get {all|windows|tag|merb_name} {info|timezone}",
   "",
-  "  [Merb Name]  - mandatory. Merb full name or one of its tag !merbs to list them",
+  "  {all}       - print merbs with a valid eta",
   "",
-  "  [(info)]     - optional. Show more details about the Merb",
+  "  {windows}   - print merbs in window",
   "",
-  "  [(timezone)] - optional. Show times in your timezone (GMT, CET, PST, EST)",
+  "  {tag}       - print merbs according to the provided tag",
   "",
-  ".Examples: [!get Scout] :: [!get info Lord Bob pst] :: [!get Lucan info cet] :: [!get KdT info est]",
+  "  {merb_name} - print the specified merb info",
+  "",
+  "  {info}      - show more details about a single merb",
+  "",
+  "  {timezone}  - show times in your timezone (GMT, CET, PST, EST)",
+  "",
+  ".Examples: [!get all] :: [!get Scout] :: [!get info Lord Bob pst] :: [!get triplets] :: [!get KdT info est]",
   ""
  ],
 
- "list": [
-
-  "This command show a list of active merbs (in windows and next to spawn/open window).",
-  "",
-  ".Syntax: [!list [(tag)] ] - Show the status of the Merb",
-  "",
-  "  [(tag)]     - optional. Narrow the list. Type !tags for a list of used tags",
-  ""
-  ,
-  ".Examples: [!list VP] :: [!list WToV] :: [!list fear] :: [!list Kael]",
-  ""
- ],
-
- "windows": [
-
-  "Show privately a list of only merbs in window",
-  ""
- ],
 
  "tod": [
-  "ToD aka Time of Death will be used to calculate the window and so the ETA of the merb",
-  "You have a bunch of parameters to update it correctly, please use them appropriately",
+  "ToD aka Time of Death will be used to calculate the ETA of the specified merb",
   "",
-  ".Syntax: [!tod [Merb Name] [Time] [(Date)] [(approx)] [(timezone)]]",
+  ".Syntax: !tod {Merb Name} {Time} {Date} {approx} {timezone}",
   "",
-  "  [Merb Name]   - mandatory. merb full name or one of its alias - !merbs to list them",
+  "  {Merb Name}  - mandatory. merb full name or one of its alias - !merbs to list them",
   "",
-  "  [Time]        - mandatory. can be {hh:mm} or {now} or {xx minutes ago}",
+  "  {Time}       - mandatory. can be {hh:mm} or {now} or {xx minutes ago}",
   "",
-  "  [(Date)]      - optional. Use the format {yyyy-mm-dd}. If no date is passed, today is used",
+  "  {Date}       - optional. Use the format {yyyy-mm-dd}. If no date is passed, today is used",
   "",
-  "  [(approx)]    - optional. If not sure about the exact time consider adding this parameter",
+  "  {approx}     - optional. If not sure about the exact time consider adding this parameter",
   "",
-  "  [(timezone)]  - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|edt|cst|cdt|pst|pdt}",
+  "  {timezone}   - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|edt|cst|cdt|pst|pdt}",
   "",
   ".Examples: [!tod Lucan now approx] :: [!tod Scout Charisa 9mins ago] :: [!tod scout 12:34 approx pst]",
   "           [!tod Vulak 69 minutes ago ] :: [!tod Lord Bob 2019-02-25 15:00 est approx]"
  ],
 
  "pop" : [
-  "When you use this command you will alert people watching the specified merb and will set its very roughly new ETA",
-  "Pop date/time will be used to calculate ETA only if its newer than ToD",
+  "Pop date/time is used to calculate ETA only if its newer than ToD",
   "",
-  ".Syntax: [!pop [Merb Name]]",
+  ".Syntax: !pop {Merb Name} {Time} {Date} {approx} {timezone}",
   "",
-  "  [Merb Name]   - mandatory. merb full name or one of its alias !merbs to list them"
+  "  {Merb Name}  - mandatory. merb full name or one of its alias - !merbs to list them",
+  "",
+  "  {Time}       - mandatory. can be {hh:mm} or {now} or {xx minutes ago}",
+  "",
+  "  {Date}       - optional. Use the format {yyyy-mm-dd}. If no date is passed, today is used",
+  "",
+  "  {approx}     - optional. If not sure about the exact time consider adding this parameter",
+  "",
+  "  {timezone}   - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|edt|cst|cdt|pst|pdt}",
+  "",
+  ".Examples: [!pop Lucan now approx] :: [!pop Scout Charisa 9mins ago] :: [!pop scout 12:34 approx pst]",
+  "           [!pop Vulak 69 minutes ago ] :: [!pop Lord Bob 2019-02-25 15:00 est approx]"
  ],
 
  "earthquake" : [
   "Earthquake! This powerful command will reset all pop times and will alert all people watching 1 merb at least",
   "Use once, go to kill all dragons you can and update ToDs when you are back",
   "",
-  ".Syntax: [!earthquake [Time] [(Date)] [(timezone)]]",
+  ".Syntax: !earthquake {Time} {Date} {timezone}",
   "",
-  "  [Time]        - mandatory. can be {hh:mm} or {now} or {xx minutes ago}",
+  "  {Time}      - mandatory. can be {hh:mm} or {now} or {xx minutes ago}",
   "",
-  "  [(Date)]      - optional. Use the format {yyyy-mm-dd}. If no date is passed, today is used",
-  "  [(timezone)]  - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|edt|cst|cdt|pst|pdt}",
+  "  {Date}      - optional. Use the format {yyyy-mm-dd}. If no date is passed, today is used",
+  "",
+  "  {timezone}  - optional. use a different timezone from cet when {hh:mm} time is used {cet|gmt|est|edt|cst|cdt|pst|pdt}",
   "",
   ".Examples: [!earthquake now] :: [!earthquake 9mins ago] :: [!earthquake 2019-08-04 04:03 CET]"
  ],
 
   "watch" : [
-  "When you watch a merb you will be alerted xx minutes before the ETA and when it pops",
-  "To see a list of watched merbs type without any parameter",
+  "When you watch a merb you will be alerted xx minutes before the ETA",
+  "To see a list of watched merbs type !watch without any parameter",
   "",
-  ".Syntax: [!watch [Merb Name] [minutes] [OFF]",
+  ".Syntax: !watch {merb_name} {minutes} {off}",
   "",
-  "  [Merb Name]   - optional. merb full name or one of its alias !merbs to list them",
+  "  {merb_name}   - merb you are looking for",
   "",
-  "  [Minutes]     - optional specify how many minutes you want to be alerted before ETA (30minutes default)",
+  "  {Minutes}     - optional specify how many minutes you want to be alerted before ETA (30minutes default)",
   "",
-  "  [OFF]         - optional. if no merb is specified all alarms will be switched off"
+  "  {off}         - optional. if no merb is specified all alarms will be switched off",
+  "",
+  ".Examples: [!watch scout] :: [!watch lord bob 60] :: [!watch statue off] :: [!watch off]"
  ]
 }

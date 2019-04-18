@@ -25,17 +25,8 @@ def from_mins_ago(mins):
     return date_new - datetime.timedelta(minutes=int(mins))
 
 
-def assemble_date(s, timezone='CET'):
-    if re.search(r"\b(now)\b", s):
-        return now()
+def assemble_date(time_in, date_in, timezone='CET'):
 
-    regex_str = r"\b(\d+) ?(mins?|minutes?) ago"
-    mins_ago = re.search(regex_str, s)
-    if mins_ago:
-        return from_mins_ago(mins_ago.group(1))
-
-    time_in = find_time(s)
-    date_in = find_date(s)
     # time is mandatory
     if not time_in:
         return False
@@ -57,7 +48,7 @@ def assemble_date(s, timezone='CET'):
                                                       minute=time_in['minute'],
                                                       second=0,
                                                       microsecond=0)
-        
+
     # return the date converted to naive (utc) from current timezone
     local_date = naive_to_tz(date_new, timezone)
     utc_date = change_tz(local_date, "UTC")
@@ -69,6 +60,7 @@ def naive_to_tz(naive_date, tz_to="UTC"):
     local = pytz.timezone(tz_to)
     return local.localize(naive_date)
 
+
 def tz_to_naive(tz_date):
     return tz_date.replace(tzinfo=None)
 
@@ -77,9 +69,11 @@ def change_tz(mydate, target_timezone="CET"):
     tz_convert_to = pytz.timezone(target_timezone)
     return mydate.astimezone(tz_convert_to)
 
+
 def change_naive_to_tz(mydate, ttz):
     mydate = naive_to_tz(mydate, "UTC")
     return change_tz(mydate, ttz)
+
 
 def countdown(d_to, d_from):
     output = ""
