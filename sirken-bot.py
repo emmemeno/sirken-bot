@@ -41,21 +41,22 @@ async def daily_digest():
     # tic every hour
     tic = 60*60
     while True:
+        await asyncio.sleep(tic)
         now = timeh.now()
         # tic only one time per day
         if int(now.hour) == config.DAILY_HOUR:
-            print_list = merbs.get_all("CET", "countdown", limit_hours=24)
-            if print_list:
-                counter = len(print_list)
-                print_list = messagecomposer.output_list(print_list)
-                pre_message = "Good morning nerds! %d merbs are expected today, %s.\n\n" %\
+            merbs_print_list = merbs.get_all("CET", "countdown", limit_hours=24)
+            if output_content:
+                counter = len(merbs_print_list)
+                output_content = messagecomposer.output_list(merbs_print_list)
+                pre_content = "Good morning nerds! %d merbs are expected today, %s.\n\n" %\
                               (counter, timeh.now().strftime("%d %b %Y"))
-                post_message = "\n{Type !hi to start to interact with me}\n"
-                raw_output = out_h.process(pre_message + print_list + post_message)
+                post_content = "\n{Type !hi to start to interact with me}\n"
+                raw_output = out_h.process(pre_content + output_content + post_content)
                 for message in raw_output:
                     await send_spam(messagecomposer.prettify(message, "CSS"), config.BROADCAST_DAILY_DIGEST_CHANNELS)
 
-        await asyncio.sleep(tic)
+
 
 
 ########
