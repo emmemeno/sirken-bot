@@ -77,12 +77,8 @@ class InputHandler:
         output_channel = self.input_channel
         output_broadcast = False
 
-        # print error if no parameters ar passed
-        if not self.lineparser.param:
-            output_content = errors.error_param(self.lineparser.cmd, "Missing Parameter. ")
-            output_channel = self.input_author
         # print a list of all merbs
-        elif self.lineparser.all:
+        if self.lineparser.all:
             output_content = messagecomposer.output_list(self.merbs.get_all(self.lineparser.timezone, 'countdown'))
 
         # print merbs by tag
@@ -96,6 +92,11 @@ class InputHandler:
             output_content = "MERBS IN WINDOW\n"
             output_content += "=" * len(output_content) + "\n\n"
             output_content += messagecomposer.output_list(self.merbs.get_all_window())
+
+        # print error if no parameters ar passed
+        elif not self.lineparser.param:
+            output_content = errors.error_param(self.lineparser.cmd, "Missing Parameter. ")
+            output_channel = self.input_author
 
         # print single merb
         elif self.lineparser.merb:
