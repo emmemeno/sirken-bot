@@ -849,5 +849,12 @@
     "plus_minus": 0,
     "recurring": 1,
     "tag": []
+  },
+  "Ayillish": {
+    "alias": [],
+    "respawn_time": 8,
+    "plus_minus": 0,
+    "recurring": 0,
+    "tag": []
   }
 }
