@@ -1,4 +1,3 @@
-import discord
 import line_parser
 import errors
 import messagecomposer
@@ -162,9 +161,8 @@ class InputHandler:
                                   self.lineparser.timezone,
                                   approx_output,
                                   messagecomposer.simple_username(str(self.input_author)))
-                # BROADCAST if message is a private one
-                if isinstance(self.input_channel, discord.abc.PrivateChannel):
-                    output_broadcast = config.BROADCAST_TOD_CHANNELS
+
+                output_broadcast = self.get_broadcast_channels()
 
             else:
                 output_content = errors.error_param(self.lineparser.cmd, "Time Syntax Error. ")
@@ -248,9 +246,7 @@ class InputHandler:
                               self.lineparser.timezone,
                               self.input_author
                               )
-            # BROADCAST if message is a private one
-            if isinstance(self.input_channel, discord.abc.PrivateChannel):
-                output_broadcast = config.BROADCAST_TOD_CHANNELS
+            output_broadcast = self.get_broadcast_channels()
 
         else:
             output_content = errors.error_param(self.lineparser.cmd, "Time Syntax Error. ")
@@ -269,3 +265,13 @@ class InputHandler:
         return {"destination": self.input_author,
                 "content": output_content,
                 'broadcast': False}
+
+    #########################
+    # GET BROADCAST CHANNELS
+    #########################
+    def get_broadcast_channels(self):
+        broadcast_channels = list()
+        for channel in config.BROADCAST_TOD_CHANNELS:
+            if not self.input_channel.id == channel:
+                broadcast_channels.append(channel)
+        return broadcast_channels
