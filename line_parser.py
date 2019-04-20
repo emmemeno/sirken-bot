@@ -13,6 +13,7 @@ class LineParser:
         self.param = None
         self.info = None
         self.timezone = None
+        self.days_back = 0
         self.parsed_time = None
         self.parsed_date = None
         self.my_date = None
@@ -63,12 +64,14 @@ class LineParser:
             # check if "now" is provided
             if self.find_now():
                 self.my_date = timeh.now()
+            # check if "yesterday" is provided
+            self.find_yesterday()
             # check if "xx minutes ago are provided
             mins_ago = self.find_mins_ago()
             if mins_ago:
                 self.my_date = timeh.from_mins_ago(mins_ago)
             if not self.my_date:
-                self.my_date = timeh.assemble_date(self.parsed_time, self.parsed_date, self.timezone)
+                self.my_date = timeh.assemble_date(self.parsed_time, self.parsed_date, self.timezone,self.days_back)
             # Find Merbs
             self.find_merb()
 
@@ -109,9 +112,15 @@ class LineParser:
             self.polish_line()
 
     def find_time(self):
-        reg = re.search("(([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]))", self.param)
+        reg = re.search(r"\b(([0-9]|0[0-9]|1[0-9]|2[0-3]):([0-5][0-9])\s?([AaPp].?[Mm]\b)?)\b", self.param)
         if reg:
-            self.parsed_time = {"hour": int(reg.group(2)), "minute": int(reg.group(3))}
+            time = {"hour": int(reg.group(2)), "minute": int(reg.group(3))}
+            # If time is am/format, convert it to 24h
+            if reg.group(4):
+                self.parsed_time = timeh.convert24(time, reg.group(4).replace(".", "").lower())
+            else:
+                self.parsed_time = time
+
             # Strip the paramater
             self.param = self.param[:reg.start()] + self.param[reg.end():]
             self.polish_line()
@@ -125,6 +134,14 @@ class LineParser:
             return True
         else:
             return False
+
+    def find_yesterday(self):
+        reg = re.search(r"\b(yesterday)\b", self.param)
+        if reg:
+            self.days_back = 1
+            # Strip the parameter
+            self.param = self.param[:reg.start()] + self.param[reg.end():]
+            self.polish_line()
 
     def find_mins_ago(self):
         regex_str = r"\b(\d+) ?(mins?|minutes?) ago"
@@ -171,7 +188,7 @@ class LineParser:
             return False
 
     def find_approx(self):
-        reg = re.search(r"\b(approx)\b", self.param)
+        reg = re.search(r"\b(approx|around)\b", self.param)
         if reg:
             self.approx = True
             # Strip the parameter
@@ -213,21 +230,30 @@ class LineParser:
         if first_result_value >= config.FUZZY_GUESSED_THRESHOLD:
             self.merb_guessed = first_result_merb
 
+    # Just for debug
     def get(self):
         output = {
             "command": self.cmd,
             "merb": self.merb,
             "merb_guessed": self.merb_guessed,
             "info": self.info,
+            "approx": self.approx,
             "timezone": self.timezone,
+            "days_back": self.days_back,
             "parsed_time": self.parsed_time,
             "parsed_date": self.parsed_date,
-            "my_date": self.my_date,
+            "my_utc_date": self.my_date,
             "off": self.off,
             "all": self.all,
             "tag": self.tag
         }
         return output
+
+    def print(self):
+        output = self.get()
+        for i in output:
+            print("%s: %s" % (i, output[i]))
+        return True
 
     def polish_line(self):
         self.param = re.sub(' +', ' ', self.param)
@@ -237,6 +263,7 @@ class LineParser:
         self.param = None
         self.info = None
         self.timezone = None
+        self.days_back = 0
         self.parsed_time = None
         self.parsed_date = None
         self.my_date = None

@@ -30,7 +30,21 @@ def from_mins_ago(mins):
     return date_new - datetime.timedelta(minutes=int(mins))
 
 
-def assemble_date(time_in, date_in, timezone='CET'):
+def convert24(time, meridian):
+    if time["hour"] > 12:
+        return False
+
+    if meridian == "am":
+        if time["hour"] == 12:
+            time["hour"] = 00
+    elif meridian == "pm":
+        if not time["hour"] == 12:
+            time["hour"] = time["hour"] + 12
+
+    return time
+
+
+def assemble_date(time_in, date_in, timezone='CET', days_back=0):
 
     # time is mandatory
     if not time_in:
@@ -39,20 +53,24 @@ def assemble_date(time_in, date_in, timezone='CET'):
     # try to validate the date
     try:
         # if both date and time are provided simply generate the date...
-        date_new = datetime.datetime(year=date_in['year'],
+        date_assembled = datetime.datetime(year=date_in['year'],
                                      month=date_in['month'],
                                      day=date_in['day'],
                                      hour=time_in['hour'],
                                      minute=time_in['minute'])
         # ...and attach the timezone on it
-        local_date = naive_to_tz(date_new, timezone)
+        local_date = naive_to_tz(date_assembled, timezone)
     except:
         # if only time is provided, build it starting from local now
-        date_new = now_local(timezone)
-        local_date = date_new.replace(hour=time_in['hour'],
+        date_now = now_local(timezone)
+        local_date = date_now.replace(hour=time_in['hour'],
                                                       minute=time_in['minute'],
                                                       second=0,
                                                       microsecond=0)
+        # if date is in the future, use yesterday
+        if local_date > date_now:
+            days_back = 1
+        local_date = local_date - datetime.timedelta(days=days_back)
 
     utc_date = change_tz(local_date, "UTC")
     naive_date = tz_to_naive(utc_date)
