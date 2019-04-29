@@ -14,6 +14,7 @@ Interactive discord bot who stores and updates times of death, pops and watch me
   [!merbs]        - List name and aliases of supported Merbs
   [!about]        - About Sirken Bot
 ```
+
 ### !get
 Print all merbs due to spawn:
 ```
@@ -35,6 +36,7 @@ Get more info about a specified merb
 ```
 !get Lord Bob info
 ```
+
 ### !tod & !pop
 With these commands you will update respectively time of death and pop time of a single merb.
 Pop times are used to calculate merb eta only if newer than tod.
@@ -71,6 +73,7 @@ Full date/time
 ```
 !tod Lord Bob 2019-04-19 05:00PM pst
 ```
+
 ### !earthquake
 Updates all merbs pop times to the specified time. the time format is the same used for !tod and !pop
 ```
@@ -79,6 +82,7 @@ Updates all merbs pop times to the specified time. the time format is the same u
 ```
 !earthquake 12:59am
 ```
+
 ### !watch
 Keep a look on your merbs and be alerted before their spawns/window opens.
 
@@ -102,6 +106,7 @@ Switch off all watchers
 ```
 !watch off
 ```
+
 ### !merbs
 Prints privately a crude list of merbs/alias/tags
 ```
@@ -109,6 +114,20 @@ Prints privately a crude list of merbs/alias/tags
 ```
 
 ### RELEASES
+##### 0.8 aka Paranoid Android
+```
+- Added a RBAC: Now Sirken will parse discord servers roles converting them to bot roles. That means if you dont have
+  the right permission you will not be able to use the relative command.
+- added !users and !roles commands, only for adults
+- added !target command. Thank you Nareb for the suggestion, it's a very nice addition!
+    ex.: !target Lord Bob 
+         !target Lord Bob off
+    - Target merb will be autoswitch off when its tod is updated. 
+    - To list targets: !get targets
+- Added a more sophisticated logging system
+- Changed the !help outputs to be more verbose and (hopefully) clearer.
+
+```
 ##### 0.73
 ```
 - Fixed a future tod/pop date bug. Now when you use a time that's in the future, yesterday is assumed.

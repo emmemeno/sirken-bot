@@ -1,4 +1,5 @@
 import config
+import auth
 import logging
 import logging.config
 import asyncio
@@ -11,7 +12,7 @@ import outputhandler
 import npc
 import watch
 import helper
-
+from timeit import default_timer as timer
 
 ################################################
 # BACKGROUND MINUTE DIGEST : Tic every minute  #
@@ -21,6 +22,7 @@ async def minute_digest():
     while True:
         await asyncio.sleep(tic)
         now = timeh.now()
+
         for merb in merbs.merbs:
             # update merb eta
             merb.eta = merb.get_eta()
@@ -37,26 +39,44 @@ async def minute_digest():
 ################################################
 # BACKGROUND DAILY DIGEST: Tic every hour      #
 ################################################
-async def daily_digest():
+async def hour_digest():
     # tic every hour
     tic = 60*60
     while True:
         await asyncio.sleep(tic)
-        now = timeh.now()
+
+        # Reload Roles and Users
+        authenticator.reload_discord_roles()
+        logger_sirken.info("Roles Reloaded")
+        authenticator.reload_discord_users()
+        logger_sirken.info("Users Reloaded")
+
         # tic only one time per day
-        if int(now.hour) == config.DAILY_HOUR:
-            merbs_print_list = merbs.get_all("CET", "countdown", limit_hours=24)
-            if output_content:
-                counter = len(merbs_print_list)
-                output_content = messagecomposer.output_list(merbs_print_list)
-                pre_content = "Good morning nerds! %d merbs are expected today, %s.\n\n" %\
-                              (counter, timeh.now().strftime("%d %b %Y"))
-                post_content = "\n{Type !hi to start to interact with me}\n"
-                raw_output = out_h.process(pre_content + output_content + post_content)
-                for message in raw_output:
-                    await send_spam(messagecomposer.prettify(message, "CSS"), config.BROADCAST_DAILY_DIGEST_CHANNELS)
+        # now = timeh.now()
+        # if int(now.hour) == config.DAILY_HOUR:
+        #    merbs_print_list = merbs.get_all("CET", "countdown", limit_hours=24)
+        #    if merbs_print_list:
+        #        counter = len(merbs_print_list)
+        #        output_content = messagecomposer.output_list(merbs_print_list)
+        #        pre_content = "Good morning nerds! %d merbs are expected today, %s.\n\n" %\
+        #                      (counter, timeh.now().strftime("%d %b %Y"))
+        #        post_content = "\n{Type !hi to start to interact with me}\n"
+        #        raw_output = out_h.process(pre_content + output_content + post_content)
+        #        for message in raw_output:
+        #            await send_spam(messagecomposer.prettify(message, "CSS"), config.BROADCAST_DAILY_DIGEST_CHANNELS)
 
 
+def setup_logger(name, log_file, level=logging.INFO):
+
+    formatter = logging.Formatter('[%(asctime)s] - %(message)s')
+    handler = logging.FileHandler(log_file)
+    handler.setFormatter(formatter)
+
+    logger = logging.getLogger(name)
+    logger.setLevel(level)
+    logger.addHandler(handler)
+
+    return logger
 
 
 ########
@@ -64,49 +84,86 @@ async def daily_digest():
 ########
 if __name__ == "__main__":
 
+    # Generic Sirken-Bot file logger
+    logger_sirken = setup_logger('Sirken-Bot', config.LOG_FILE)
+
+    # Input file logger
+    logger_input = setup_logger('Input', config.LOG_INPUT_FILE)
+
     logging.config.dictConfig({
         'version': 1,
         'disable_existing_loggers': False,
     })
-    logging.basicConfig(filename=config.LOG_FILE,
-                        level=logging.INFO,
-                        format='%(asctime)s - %(message)s',
-                        datefmt='%d-%b-%y %H:%M:%S')
+
+    # Initialize the Bot
+    t_start = timer()
+    client = commands.Bot(command_prefix="!")  # Initialise client bot
+    t_end = timer()
+    logger_sirken.info("Loading Bot. Done in (%s)" % (round(t_end-t_start, 5)))
+
+    # Initialize Auth
+    authenticator = auth.Auth(client)
+
     # Initialize Merbs List
-    merbs = npc.MerbList(config.FILE_ENTITIES, config.FILE_TIMERS, config.DATE_FORMAT, config.DATE_FORMAT_PRINT)
+    t_start = timer()
+    merbs = npc.MerbList(config.FILE_ENTITIES,
+                         config.FILE_TIMERS,
+                         config.FILE_TARGETS,
+                         config.DATE_FORMAT,
+                         config.DATE_FORMAT_PRINT)
     merbs.order()
+    t_end = timer()
+    logger_sirken.info("Loading Merbs. Done in %s seconds" % (round(t_end-t_start, 5)))
+
     # Load Helper
-    helper = helper.Helper(config.HELP_FILE)
+    t_start = timer()
+    helper = helper.Helper(config.HELP_DIR)
+    t_end = timer()
+    logger_sirken.info("Loading Help. Done in %s seconds" % (round(t_end-t_start, 5)))
+
     # Load Watcher
+    t_start = timer()
     watch = watch.Watch(config.FILE_WATCH)
+    t_end = timer()
+    logger_sirken.info("Loading Watcher. Done in %s seconds" % (round(t_end-t_start, 5)))
+
     # Initialize Output Handler
+    t_start = timer()
     out_h = outputhandler.OutputHandler(config.MAX_MESSAGE_LENGTH)
     # Initialize Input Handler
-    in_h = inputhandler.InputHandler(merbs, helper, out_h, watch)
-    # Bot Stuff
-    client = commands.Bot(command_prefix="!")  # Initialise client bot
+    in_h = inputhandler.InputHandler(authenticator, merbs, helper, out_h, watch)
+    t_end = timer()
+    logger_sirken.info("Loading IO. Done in %s seconds" % (round(t_end-t_start, 5)))
 
     @client.event
     async def on_ready():
-        print("Sirken Bot is online and connected to Discord")
-        logging.info("Sirken Bot Connected to Discord")
-        # Create Background Loops
+        logger_sirken.info("Sirken Bot is online and connected to Discord")
+        # Load Discord Roles
+        t_start = timer()
+        authenticator.load_discord_roles()
+        t_end = timer()
+        logger_sirken.info("Loading Discord Roles. Done in %s seconds" % (round(t_end - t_start, 5)))
+        t_start = timer()
+        authenticator.load_discord_users()
+        t_end = timer()
+        logger_sirken.info("Loading Discord Users. Done in %s seconds" % (round(t_end - t_start, 5)))
+
 
     @client.event
     async def on_message(message):
         # Skip self messages
         if message.author == client.user:
             return
-        # Process messages
+
         raw_output = in_h.process(message.author, message.channel, message.content)
 
         if raw_output:
             # split the output if too long
             output_message = out_h.process(raw_output["content"])
             for message in output_message:
-                await raw_output["destination"].send(messagecomposer.prettify(message, "CSS"))
+                await raw_output["destination"].send(message)
                 if raw_output['broadcast']:
-                    await send_spam(messagecomposer.prettify(message, "CSS"), raw_output['broadcast'])
+                    await send_spam(message, raw_output['broadcast'])
 
             # send PM Alerts
             if 'merb_alert' in raw_output:
@@ -145,5 +202,5 @@ if __name__ == "__main__":
 
     # Run the Bot
     client.loop.create_task(minute_digest())
-    client.loop.create_task(daily_digest())
+    client.loop.create_task(hour_digest())
     client.run(config.DISCORD_TOKEN)

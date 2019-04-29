@@ -1,5 +1,8 @@
 # Errors
 
+def error_auth(cmd):
+    return "You don't have the right permission to use !%s command" % cmd
+
 
 def error_command():
     return "Command not found! Type !help for help!"
@@ -14,4 +17,4 @@ def error_time():
 
 
 def error_merb_not_found():
-    return "Merb not found. For a list of named mobs type [!merbs]"
+    return "Merb not found. For a list of merbs type [!merbs]"

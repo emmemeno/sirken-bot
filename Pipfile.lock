@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "0580cb86ef4b780987c122ad82e02956ff238973b2d6fd09a71e09925a5e03e4"
+            "sha256": "8a9ab8bcb9d136d73c48c430ca2e4ca5f111059ac64b00eefd48cee0fdbfe707"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -92,6 +92,15 @@
             ],
             "markers": "python_version < '3.7'",
             "version": "==1.1.0"
+        },
+        "miracle-acl": {
+            "hashes": [
+                "sha256:4149fd87213f43835b4b799350cc8dec4fe9bee21146fa42ab651a74f1af09d1",
+                "sha256:a4932d5039b539fde82053a824e18b9ba0d8fcc2c1d95dfdf2bbeaf8d553f8f1",
+                "sha256:b78240a40153334d1b3e2ea0cb06f34e067a146d8eacc68c9c243e84cb3175ea"
+            ],
+            "index": "pypi",
+            "version": "==0.0.4.post1"
         },
         "multidict": {
             "hashes": [

@@ -23,7 +23,7 @@ def prettify(text: str, my_type="BLOCK", pre_content=""):
     return pre_content + prefix + text + postfix
 
 
-def time_remaining(name, eta, plus_minus, window, spawns, accuracy):
+def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):
     now = timeh.now()
     postfix = ""
     prefix = ""
@@ -42,12 +42,13 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy):
         if now > window['end']:
             output += "window is close. Please update ToD if u have a chance! "
         elif now < window['start']:
-            output += "%swindow will open in %s" % (approx, timeh.countdown(now, eta))
+            output += "%swindow will open in %s " % (approx, timeh.countdown(now, eta))
         elif window['start'] <= now <= window['end']:
             prefix = ""
-            postfix = "##"
+            postfix = "## "
             output += "%sin window until %s " % (approx, timeh.countdown(now, eta))
-
+    if target:
+        postfix += ".target"
     return prefix + output + postfix + "\n"
 
 
@@ -63,19 +64,19 @@ def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tag
     if print_tags:
         print_tags = print_tags[:-1]
 
-    output += " {LAST POP}      [%s]\n" \
-              " {LAST TOD}      [%s]\n" \
-              " {RESPAWN TIME}  [%s±%s]\n" \
-              " {TAGS}          [%s]\n" \
+    output += "{LAST POP}      [%s]\n" \
+              "{LAST TOD}      [%s]\n" \
+              "{RESPAWN TIME}  [%s±%s]\n" \
+              "{TAGS}          [%s]\n" \
               % (pop, tod, respawn_time, plus_minus, print_tags)
     if plus_minus:
-        output += " {WINDOW OPEN}   [%s]\n" \
-                  " {WINDOW CLOSE}  [%s]\n" \
+        output += "{WINDOW OPEN}   [%s]\n" \
+                  "{WINDOW CLOSE}  [%s]\n" \
                   % (window_start, window_end)
 
-    output += " {SIGNED TOD BY} [%s] %s\n" \
-              " {SIGNED POP BY} [%s]\n" \
-              " {ETA}           [%s]\n" \
+    output += "{SIGNED TOD BY} [%s] %s\n" \
+              "{SIGNED POP BY} [%s]\n" \
+              "{ETA}           [%s]\n" \
               % (simple_username(signed_tod), approx, simple_username(signed_pop), eta)
     return output
 

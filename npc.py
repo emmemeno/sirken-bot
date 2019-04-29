@@ -8,7 +8,7 @@ import messagecomposer
 # Class that define Merb info and a bunch of utilities
 class Merb:
     def __init__(self, name, alias, respawn_time, plus_minus, recurring, tag, tod, pop,
-                 author_tod, author_pop, accuracy, date_rec, date_print):
+                 author_tod, author_pop, accuracy, target, date_rec, date_print):
 
         self.d_rec = date_rec
         self.d_print = date_print
@@ -24,6 +24,8 @@ class Merb:
         self.recurring = recurring
         # Tag of the merb
         self.tag = tag
+        # Bool, True if target
+        self.target = target
         # Time of Death
         self.tod = datetime.datetime.strptime(tod, self.d_rec)
         # Pop Time
@@ -56,6 +58,7 @@ class Merb:
         self.accuracy = approx
         self.window = self.get_window(new_tod)
         self.eta = self.get_eta()
+        self.target = False
 
     def update_pop(self, new_pop, author):
         self.pop = new_pop
@@ -110,11 +113,11 @@ class Merb:
     def print_short_info(self):
         self.eta = self.get_eta()
         return messagecomposer.time_remaining(self.name, self.eta, self.plus_minus, self.window,
-                                              self.spawns, self.accuracy)
+                                              self.spawns, self.accuracy, self.target)
 
     def print_long_info(self, timezone):
         self.eta = self.get_eta()
-        if self.eta == config.DATE_DEFAULT:
+        if self.eta == datetime.datetime.strptime(config.DATE_DEFAULT, config.DATE_FORMAT):
             eta = "N/A"
         else:
             eta = timeh.change_naive_to_tz(self.eta, timezone)
@@ -166,19 +169,23 @@ class Merb:
 # Class container of Merbs, load from JSON
 class MerbList:
 
-    def __init__(self, url_entities, url_timers, date_format_rec, date_format_print):
+    def __init__(self, url_entities, url_timers, url_targets,date_format_rec, date_format_print):
         self.url_entities = url_entities
         self.url_timers = url_timers
+        self.url_targets = url_targets
         self.max_respawn_time = 0
 
         with open(url_entities) as f:
             json_entities = json.load(f)
         with open(url_timers) as f:
             json_timers = json.load(f)
+        with open(url_targets) as f:
+            json_targets = json.load(f)
 
         self.merbs = list()
         self.tags = list()
         for i in json_entities:
+            # CALCULATE LIMIT HOURS FOR GET ALL REQUESTS
             limit_respawn_time = json_entities[i]["respawn_time"] + json_entities[i]["plus_minus"]
             if limit_respawn_time > self.max_respawn_time:
                 self.max_respawn_time = limit_respawn_time
@@ -198,6 +205,10 @@ class MerbList:
                 signed_tod = "Default"
                 signed_pop = "Default"
                 accuracy = 0
+            if i in json_targets:
+                target = True
+            else:
+                target = False
             self.merbs.append(Merb(i,
                                    json_entities[i]["alias"],
                                    json_entities[i]["respawn_time"],
@@ -209,6 +220,7 @@ class MerbList:
                                    signed_tod,
                                    signed_pop,
                                    accuracy,
+                                   target,
                                    date_format_rec,
                                    date_format_print
                                    ))
@@ -218,9 +230,18 @@ class MerbList:
                     self.tags.append(tag.lower())
             self.tags.sort()
 
-    def save_timers(self, ):
+    def save_timers(self):
         with open(self.url_timers, 'w') as outfile:
-            json.dump(self.serialize(), outfile, indent=2)
+            json.dump(self.serialize(), outfile, indent=4)
+
+    def save_targets(self):
+        with open(self.url_targets, 'w') as outfile:
+            self.order('eta')
+            output = list()
+            for merb in self.merbs:
+                if merb.target:
+                    output.append(merb.name)
+            json.dump(output,outfile, indent=4)
 
     def order(self, order='name'):
         if order == 'name':
@@ -250,7 +271,6 @@ class MerbList:
             date_limit = now + datetime.timedelta(hours=limit_hours)
             date_diff = date_limit - merb.eta
             hour_diff = date_diff.total_seconds() / 3600
-            # print("%s HOUR DIFF %d" % (merb.name, hour_diff))
             if timeh.now() < merb.eta and hour_diff >= 0:
                 # Show online merb eta in the future
                 if mode == "countdown":
@@ -264,6 +284,14 @@ class MerbList:
         output = list()
         for merb in self.merbs:
             if merb.check_tag(tag) and timeh.now() < merb.eta:
+                output.append(merb.print_short_info())
+        return output
+
+    def get_all_targets(self):
+        self.order('eta')
+        output = list()
+        for merb in self.merbs:
+            if merb.target:
                 output.append(merb.print_short_info())
         return output
 

@@ -1,37 +1,31 @@
-import re
-import json
-import messagecomposer
+import os
+import glob
+import ntpath
 
 
 class Helper:
 
-    def __init__(self, json_url):
-        with open(json_url) as f:
-            self.help = json.load(f)
+    def __init__(self, path):
+        self.help = {}
+        for file in glob.glob(os.path.join(path, '*.md')):
+            file_name = ntpath.basename(os.path.splitext(file)[0])
+            with open(file) as f:
+                self.help[file_name] = f.read()
+
+    def get_help(self, cmd):
+
+        if cmd:
+            s = "cmd_" + cmd
+        else:
+            s = "index"
+
+        if s in self.help:
+            return self.help[s]
+        else:
+            return self.help['index']
 
     def get_about(self):
-        # if no parameter (what) is passed, return general help
-        try:
-            text = '\n'.join(self.help["about"])
-            return messagecomposer.prettify(text, None)
-        except:
-            return False
+        return self.help['about']
 
-    def get_help(self, what):
-        if not what:
-            return '\n'.join(self.help["help"])
-
-        # find the command
-        my_command = ""
-        for c in self.help:
-            my_command += "|" + c
-        regex = r"\b(%s)\b" % my_command[1:]
-
-        cmd = re.search(regex, what)
-        # if no parameter (what) is passed, return general help
-        try:
-            text = '\n'.join(self.help[cmd.group(1)])
-        except:
-            text = '\n'.join(self.help["help"])
-
-        return text
+    def get_released(self):
+        return self.help['releases']

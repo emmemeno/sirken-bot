@@ -1,0 +1,94 @@
+{
+    "roles": {
+        "owner": {
+            "command": [
+                "help",
+                "get",
+                "tod",
+                "watch",
+                "merbs",
+                "earthquake",
+                "target",
+                "users",
+                "roles",
+                "setrole"
+            ],
+            "reload": [
+                "all"
+            ]
+        },
+        "admin": {
+            "command": [
+                "help",
+                "get",
+                "tod",
+                "watch",
+                "merbs",
+                "earthquake",
+                "target",
+                "users",
+                "roles"
+            ],
+            "reload": [
+                "all"
+            ]
+        },
+        "moderator": {
+            "command": [
+                "help",
+                "get",
+                "tod",
+                "watch",
+                "merbs",
+                "earthquake",
+                "target",
+                "users"
+            ]
+        },
+        "raid_leader": {
+            "command": [
+                "help",
+                "get",
+                "tod",
+                "watch",
+                "merbs",
+                "earthquake",
+                "target"
+            ]
+        },
+        "user": {
+            "command": [
+                "help",
+                "get",
+                "tod",
+                "watch",
+                "merbs"
+            ]
+        },
+        "trialist": {
+            "command": [
+                "help"
+            ]
+        },
+        "guest": {
+            "command": [
+                "help"
+            ]
+        }
+    },
+    "roles-discord": {
+        "guest": [
+        ],
+        "trialist": [
+        ],
+        "user": [
+        ],
+        "raid_leader": [
+        ],
+        "moderator": [
+        ],
+        "admin": [
+        ],
+        "owner": []
+    }
+}

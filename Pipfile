@@ -10,6 +10,7 @@ pytz = "*"
 python-levenshtein = "*"
 fuzzywuzzy = "*"
 discord-py = "*"
+miracle-acl = "*"
 
 [requires]
 python_version = "3.6"
