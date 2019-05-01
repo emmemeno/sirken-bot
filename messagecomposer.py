@@ -1,26 +1,50 @@
 import timehandler as timeh
+import config
 
 
-# Fancy compose and format output functions
+def message_cut(input_text: str, limit: int):
+    """
+    Function that take a string as argument and breaks it in smaller chunks
+    :param input_text: str
+    :param limit: int
+    :return: output: list()
+    """
 
-def prettify(text: str, my_type="BLOCK", pre_content=""):
+    output = list()
 
-    prefix = ""
-    postfix = prefix
+    while len(input_text) > limit:
 
-    if my_type == "BLOCK":
-        prefix = "```\n"
-        postfix = prefix
+        # find a smart new limit based on newline...
+        smart_limit = input_text[0:limit].rfind('\n') + 1
+        if smart_limit == -1:
+            # ...or find a smart new limit based on blank space
+            smart_limit = input_text[0:limit].rfind(' ') + 1
+        output.append(input_text[0:smart_limit])
+        input_text = input_text[smart_limit:]
 
-    elif my_type == "CSS":
-        prefix = "```css\n"
-        postfix = "```\n"
+    output.append(input_text)
+    return output
 
-    elif my_type == "SINGLE":
-        prefix = "`\n"
-        postfix = prefix
 
-    return pre_content + prefix + text + postfix
+def prettify(text: str, my_type="BLOCK"):
+
+    output_text = list()
+    prefix = postfix = ""
+    cut_text = message_cut(text, config.MAX_MESSAGE_LENGTH)
+
+    for chunk in cut_text:
+        if my_type == "BLOCK":
+            prefix = postfix = "```\n"
+        elif my_type == "CSS":
+            prefix = "```css\n"
+            postfix = "```\n"
+
+        elif my_type == "SINGLE":
+            prefix = "`\n"
+            postfix = prefix
+        output_text.append(prefix + chunk + postfix)
+
+    return output_text
 
 
 def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):

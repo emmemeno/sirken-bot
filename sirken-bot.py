@@ -7,12 +7,12 @@ import discord
 from discord.ext import commands
 import timehandler as timeh
 import messagecomposer
-import inputhandler
-import outputhandler
+from sirken_commands import SirkenCommands
 import npc
 import watch
 import helper
 from timeit import default_timer as timer
+
 
 ################################################
 # BACKGROUND MINUTE DIGEST : Tic every minute  #
@@ -127,11 +127,8 @@ if __name__ == "__main__":
     t_end = timer()
     logger_sirken.info("Loading Watcher. Done in %s seconds" % (round(t_end-t_start, 5)))
 
-    # Initialize Output Handler
-    t_start = timer()
-    out_h = outputhandler.OutputHandler(config.MAX_MESSAGE_LENGTH)
-    # Initialize Input Handler
-    in_h = inputhandler.InputHandler(authenticator, merbs, helper, out_h, watch)
+    # Initialize Sirken Commands
+    sirken_cmds = SirkenCommands(authenticator, merbs, helper, watch)
     t_end = timer()
     logger_sirken.info("Loading IO. Done in %s seconds" % (round(t_end-t_start, 5)))
 
@@ -155,22 +152,19 @@ if __name__ == "__main__":
         if message.author == client.user:
             return
 
-        raw_output = in_h.process(message.author, message.channel, message.content)
+        messages_output = sirken_cmds.process(message.author, message.channel, message.content)
 
-        if raw_output:
-            # split the output if too long
-            output_message = out_h.process(raw_output["content"])
-            for message in output_message:
-                await raw_output["destination"].send(message)
-                if raw_output['broadcast']:
-                    await send_spam(message, raw_output['broadcast'])
+        for message in messages_output["content"]:
+            await messages_output["destination"].send(message)
+            if messages_output['broadcast']:
+                await send_spam(message, messages_output['broadcast'])
 
             # send PM Alerts
-            if 'merb_alert' in raw_output:
-                await send_pop_alerts(raw_output['merb_alert'], raw_output["content"])
+            if 'merb_alert' in messages_output:
+                await send_pop_alerts(messages_output['merb_alert'], messages_output["content"])
             # send EQ Alerts
-            if 'earthquake' in raw_output:
-                await send_eq_alert(raw_output['earthquake'])
+            if 'earthquake' in messages_output:
+                await send_eq_alert(messages_output['earthquake'])
 
     # Send Spam to Broadcast Channel
     @client.event

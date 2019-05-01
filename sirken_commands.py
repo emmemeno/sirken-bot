@@ -7,18 +7,18 @@ import config
 import re
 import timehandler as timeh
 import logging
-logger = logging.getLogger("Input")
 import operator
 
+logger = logging.getLogger("Input")
 
-class InputHandler:
 
-    def __init__(self, my_auth, merbs_list, my_help, out_h, watcher):
+class SirkenCommands:
+
+    def __init__(self, my_auth, merbs_list, my_help, watcher):
         self.authenticator = my_auth
         self.merbs = merbs_list
         self.lp = line_parser.LineParser(merbs_list)
         self.helper = my_help
-        self.out_h = out_h
         self.watch = watcher
         self.input_author = None
         self.input_author_roles = None
@@ -30,7 +30,6 @@ class InputHandler:
     def process(self, author, channel, line):
 
         t_start = timer()
-        # get user roles
 
         self.lp.process(line)
 
@@ -345,7 +344,6 @@ class InputHandler:
                                d_role.name,
                                d_role.id,
                                converted_role)
-        output_discord_roles_content = messagecomposer.prettify(output_discord_roles_content, "BLOCK")
 
         output_bot_roles_content = "\nBOT ROLES\n=========\n"
         for b_role in self.authenticator.roles.bot_roles:
@@ -357,10 +355,8 @@ class InputHandler:
                 output_bot_roles_content += "\n"
             output_bot_roles_content += "\n"
 
-        output_bot_roles_content = messagecomposer.prettify(output_bot_roles_content, "BLOCK")
-
         return {"destination": output_channel,
-                "content": output_discord_roles_content + output_bot_roles_content,
+                "content": messagecomposer.prettify(output_discord_roles_content + output_bot_roles_content),
                 'broadcast': output_broadcast}
 
     ##########
@@ -380,24 +376,24 @@ class InputHandler:
             if reg:
                 d_role = self.authenticator.roles.check_discord_role(reg.group(0))
 
-            # Find the Bot_Role
+            # Find the Bot_Roles
             bot_roles_list = self.authenticator.roles.get_bot_roles_list()
             regex = ""
             for role in bot_roles_list:
                 regex += "%s|" % role
             regex = r"\b(" + regex[:-1] + r")\b"
-
             reg = re.search(regex, self.lp.param)
-
             if reg:
                 b_role = reg.group(0)
+
             if not isinstance(d_role, auth.DiscordRole):
                 output_content = "Discord Role ID not found! Type !roles to list them"
             elif not b_role:
                 output_content = "Bot Role not found! Type !roles to list them"
             else:
                 self.authenticator.roles.assign_discord_role_to_bot_role(str(d_role.id), b_role)
-                output_content += "Discord Role [%s] {%s} assigned to Bot Role [%s]\n\n" % (d_role.name, d_role.id, b_role)
+                output_content += "Discord Role [%s] {%s} assigned to Bot Role [%s]\n\n" %\
+                                  (d_role.name, d_role.id, b_role)
                 output_content += "Commands for this new role:\n%s" %\
                                   self.authenticator.acl.which_permissions_any([b_role], "command")
                 self.authenticator.reload_discord_roles()
@@ -417,25 +413,45 @@ class InputHandler:
     def cmd_users(self):
         output_channel = self.input_author
         output_broadcast = False
-        output_content = "USERS\n=====\n"
+
         if "reload" in self.lp.key_words:
             self.authenticator.reload_discord_users()
-            output_content += "{Users Reloaded}\n"
-        output_content += "\n"
+            return {"destination": output_channel,
+                    "content": messagecomposer.prettify("Users Reloaded!\n", "CSS"),
+                    'broadcast': output_broadcast}
 
-        for user in (sorted(self.authenticator.users.values(), key=operator.attrgetter('name'))):
-        # for user_id, user in self.authenticator.users.items():
-            user_name = user.name
-            user_bot_roles = ""
-            for b_role in user.b_roles:
-                user_bot_roles += ".%s " % b_role
-            user_guilds = ""
-            for guild in user.guilds:
-                user_guilds += "{%s} " % guild
-            user_guilds = user_guilds[:-1]
+        # Find the Bot_Roles
+        b_role = False
+        bot_roles_list = self.authenticator.roles.get_bot_roles_list()
+        regex = ""
+        if self.lp.param:
+            for role in bot_roles_list:
+                regex += "%s|" % role
+            regex = r"\b(" + regex[:-1] + r")\b"
+            reg = re.search(regex, self.lp.param)
+            if reg:
+                b_role = reg.group(0)
 
+        if "all" not in self.lp.key_words and b_role not in bot_roles_list:
+            output_content = "Bot Role not found! Type !roles to list them or !users all"
+            return {"destination": output_channel,
+                    "content": messagecomposer.prettify(output_content, "CSS"),
+                    'broadcast': output_broadcast}
 
-            output_content += "- [%s] %s - %s\n" % (user_name, user_guilds, user_bot_roles)
+        output_content = "USERS\n=====\n"
+        get_key = operator.attrgetter("name")
+        for user in (sorted(self.authenticator.users.values(), key=lambda mbr: get_key(mbr).lower())):
+            if "all" in self.lp.key_words or b_role in user.b_roles:
+                user_name = user.name
+                user_bot_roles = ""
+                for user_b_role in user.b_roles:
+                    user_bot_roles += ".%s " % user_b_role
+                user_guilds = ""
+                for guild in user.guilds:
+                    user_guilds += "{%s} " % guild
+                user_guilds = user_guilds[:-1]
+                output_content += "- [%s] %s - %s\n" % (user_name, user_guilds, user_bot_roles)
+
         return {"destination": output_channel,
                 "content": messagecomposer.prettify(output_content, "CSS"),
                 'broadcast': output_broadcast}

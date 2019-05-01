@@ -20,12 +20,12 @@ class Helper:
             s = "index"
 
         if s in self.help:
-            return self.help[s]
+            return [self.help[s]]
         else:
-            return self.help['index']
+            return [self.help['index']]
 
     def get_about(self):
-        return self.help['about']
+        return [self.help['about']]
 
     def get_released(self):
-        return self.help['releases']
+        return [self.help['releases']]
