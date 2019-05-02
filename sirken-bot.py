@@ -31,7 +31,7 @@ async def minute_digest():
             for user in watch.users:
                 destination = discord.utils.get(client.get_all_members(), id=user)
                 if watch.check(user, merb.name, minutes_diff) and not merb.in_window():
-                    await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS"))
+                    await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS")[0])
                     logging.debug("ALARM TO %s: %s | ETA: %s | DIFF MINUTES: %s" %
                                   (user, merb.name, merb.eta, minutes_diff))
 
