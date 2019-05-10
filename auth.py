@@ -93,6 +93,7 @@ class Auth:
         self.acl = Acl()
         self.roles = BotRoles(config.FILE_ROLES)
         self.users = {}
+        self.discord_guilds = list()
         self.acl.grants(self.roles.bot_roles)
 
     def get_single_user_bot_roles(self, user_id):
@@ -103,6 +104,10 @@ class Auth:
 
     def load_discord_roles(self):
         for guild in self.discord_client.guilds:
+            # save a list of guilds the bot is in
+            if guild not in self.discord_guilds:
+                self.discord_guilds.append(guild)
+
             for role in guild.roles:
 
                 self.roles.add_discord_role(guild.name, role.id, role.name)

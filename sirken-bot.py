@@ -128,7 +128,7 @@ if __name__ == "__main__":
     logger_sirken.info("Loading Watcher. Done in %s seconds" % (round(t_end-t_start, 5)))
 
     # Initialize Sirken Commands
-    sirken_cmds = SirkenCommands(authenticator, merbs, helper, watch)
+    sirken_cmds = SirkenCommands(client, authenticator, merbs, helper, watch)
     t_end = timer()
     logger_sirken.info("Loading IO. Done in %s seconds" % (round(t_end-t_start, 5)))
 
@@ -153,11 +153,17 @@ if __name__ == "__main__":
             return
 
         messages_output = sirken_cmds.process(message.author, message.channel, message.content)
+        if not messages_output:
+            return
 
         for message in messages_output["content"]:
             await messages_output["destination"].send(message)
             if messages_output['broadcast']:
                 await send_spam(message, messages_output['broadcast'])
+
+            if 'action' in messages_output:
+                if messages_output["action"] == 'leave_all_guilds':
+                    await leave_guild(authenticator.discord_guilds)
 
             # send PM Alerts
             if 'merb_alert' in messages_output:
@@ -165,6 +171,13 @@ if __name__ == "__main__":
             # send EQ Alerts
             if 'earthquake' in messages_output:
                 await send_eq_alert(messages_output['earthquake'])
+
+    # Leave Guild
+    @client.event
+    async def leave_guild(guilds):
+        for guild in guilds:
+            logger_sirken.info("Leaving %s server" % guild.name)
+            await guild.leave()
 
     # Send Spam to Broadcast Channel
     @client.event

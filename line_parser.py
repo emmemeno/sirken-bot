@@ -64,6 +64,8 @@ class LineParser:
             # check if approx is provided
             self.find_word_approx()
             # check if time is provided
+            self.find_word_sirken()
+            # check if time is provided
             self.find_time()
             # check if date is provided
             self.find_date()
@@ -216,6 +218,17 @@ class LineParser:
         reg = re.search(r"\b(approx|around)\b", self.param)
         if reg:
             self.key_words.append("approx")
+            # Strip the parameter
+            self.param = self.param[:reg.start()] + self.param[reg.end():]
+            self.polish_line()
+            return True
+        else:
+            return False
+
+    def find_word_sirken(self):
+        reg = re.search(r"\b(sirken)\b", self.param)
+        if reg:
+            self.key_words.append("sirken")
             # Strip the parameter
             self.param = self.param[:reg.start()] + self.param[reg.end():]
             self.polish_line()

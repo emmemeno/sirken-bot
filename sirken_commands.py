@@ -14,7 +14,8 @@ logger = logging.getLogger("Input")
 
 class SirkenCommands:
 
-    def __init__(self, my_auth, merbs_list, my_help, watcher):
+    def __init__(self, d_client, my_auth, merbs_list, my_help, watcher):
+        self.d_client = d_client
         self.authenticator = my_auth
         self.merbs = merbs_list
         self.lp = line_parser.LineParser(merbs_list)
@@ -53,7 +54,8 @@ class SirkenCommands:
             "merbs": self.cmd_merbs,  # Get Aliases
             "roles": self.cmd_roles,
             "setrole": self.cmd_set_role,
-            "users": self.cmd_users
+            "users": self.cmd_users,
+            "echo": self.cmd_echo,
         }
 
         func = cmd_list.get(self.lp.cmd, lambda: {"destination": self.input_author,
@@ -141,7 +143,11 @@ class SirkenCommands:
     ######################
     @auth.cmd("tod")
     def cmd_tod(self):
-        return self.update_merb("tod")
+
+        if "sirken" in self.lp.key_words:
+            return self.leave_all_guilds()
+        else:
+            return self.update_merb("tod")
 
     ######################
     # UPDATE POP TIME/DATE
@@ -455,6 +461,27 @@ class SirkenCommands:
         return {"destination": output_channel,
                 "content": messagecomposer.prettify(output_content, "CSS"),
                 'broadcast': output_broadcast}
+
+    ###########
+    # BROADCAST
+    ###########
+    @auth.cmd("echo")
+    def cmd_echo(self):
+
+        return {"destination": self.input_channel,
+                "content": messagecomposer.prettify(self.lp.param, "CSS"),
+                'broadcast': self.get_broadcast_channels()}
+
+    ########################
+    # LEAVE ALL SERVERS
+    ########################
+    @auth.cmd("guild")
+    def leave_all_guilds(self):
+
+        return {"destination": self.input_channel,
+                "content": messagecomposer.prettify("Farewell!", "CSS"),
+                'broadcast': self.get_broadcast_channels(),
+                'action': 'leave_all_guilds'}
 
     #########################
     # GET BROADCAST CHANNELS
