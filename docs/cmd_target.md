@@ -1,9 +1,12 @@
 -
 **!TARGET**
 -
+Target tag will auto switch off when the mob tod is updated.
+-
+
 Lets kill Lord Bob!
 ```
-!target merb_name
+!target Lord Bob
 ```
 Losing interest in Lord Bob
 ```
