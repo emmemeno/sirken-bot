@@ -16,7 +16,7 @@ Updates to a specified time. If time is in the future, yesterday is assumed
 ```
 !pop Lord Bob 14:01
 ```
-Use different timezones
+Use different timezones (when omitted, CE(S)T is assumed)
 ```
 !pop Lord Bob 14:01 est
 ```
