@@ -14,9 +14,9 @@ import helper
 from timeit import default_timer as timer
 
 
-################################################
-# BACKGROUND MINUTE DIGEST : Tic every minute  #
-################################################
+######################
+# TIC EVERY MINUTE   #
+######################
 async def minute_digest():
     tic = 60
     while True:
@@ -36,9 +36,9 @@ async def minute_digest():
                                   (user, merb.name, merb.eta, minutes_diff))
 
 
-################################################
-# BACKGROUND DAILY DIGEST: Tic every hour      #
-################################################
+######################
+# TIC EVERY HOUR     #
+######################
 async def hour_digest():
     # tic every hour
     tic = 60*60
@@ -52,18 +52,18 @@ async def hour_digest():
         logger_sirken.info("Users Reloaded")
 
         # tic only one time per day
-        # now = timeh.now()
-        # if int(now.hour) == config.DAILY_HOUR:
-        #    merbs_print_list = merbs.get_all("CET", "countdown", limit_hours=24)
-        #    if merbs_print_list:
-        #        counter = len(merbs_print_list)
-        #        output_content = messagecomposer.output_list(merbs_print_list)
-        #        pre_content = "Good morning nerds! %d merbs are expected today, %s.\n\n" %\
-        #                      (counter, timeh.now().strftime("%d %b %Y"))
-        #        post_content = "\n{Type !hi to start to interact with me}\n"
-        #        raw_output = out_h.process(pre_content + output_content + post_content)
-        #        for message in raw_output:
-        #            await send_spam(messagecomposer.prettify(message, "CSS"), config.BROADCAST_DAILY_DIGEST_CHANNELS)
+        now = timeh.now()
+        if int(now.hour) == config.DAILY_HOUR:
+            merbs_print_list = merbs.get_all("CET", "countdown", limit_hours=24)
+            if merbs_print_list:
+                counter = len(merbs_print_list)
+
+                pre_content = "DAILY DIGEST\n############\n%d merbs are expected today, %s.\n\n" %\
+                              (counter, timeh.now().strftime("%d %b %Y"))
+                post_content = "\n{Type !hi to start to interact with me}\n"
+                output_content = messagecomposer.output_list(pre_content + merbs_print_list + post_content)
+                for message in output_content:
+                    await send_spam(messagecomposer.prettify(message, "CSS"), config.BROADCAST_DAILY_DIGEST_CHANNELS)
 
 
 def setup_logger(name, log_file, level=logging.INFO):
