@@ -173,7 +173,6 @@ if __name__ == "__main__":
                 await send_eq_alert(messages_output['earthquake'])
 
     # Leave Guild
-    @client.event
     async def leave_guild(guilds):
         for guild in guilds:
             logger_sirken.info("Leaving %s server" % guild.name)

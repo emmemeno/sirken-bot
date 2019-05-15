@@ -241,7 +241,7 @@ class MerbList:
             for merb in self.merbs:
                 if merb.target:
                     output.append(merb.name)
-            json.dump(output,outfile, indent=4)
+            json.dump(output, outfile, indent=4)
 
     def order(self, order='name'):
         if order == 'name':

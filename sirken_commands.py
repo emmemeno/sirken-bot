@@ -176,8 +176,14 @@ class SirkenCommands:
                     self.lp.merb_found.update_tod(self.lp.my_date, str(self.input_author), approx)
                 if mode == "pop":
                     self.lp.merb_found.update_pop(self.lp.my_date, str(self.input_author))
-                # save merbs
+                # save merbs timers
                 self.merbs.save_timers()
+
+                # set target off
+                self.lp.merb_found.target = False
+                # save targets
+                self.merbs.save_targets()
+
                 output_date = timeh.change_tz(timeh.naive_to_tz(self.lp.my_date, "UTC"),
                                               self.lp.timezone)
                 output_content = "[%s] updated! New %s: {%s %s} - %ssigned by %s" % \
@@ -270,6 +276,7 @@ class SirkenCommands:
             else:
                 self.lp.merb_found.target = True
                 output_content = "Target ON for [%s]" % self.lp.merb_found.name
+
             output_content += "- signed by %s" % self.input_author.name
             self.merbs.save_targets()
             output_broadcast = self.get_broadcast_channels()
