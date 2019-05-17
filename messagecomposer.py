@@ -53,9 +53,9 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):
     prefix = ""
     output = "[" + name + "] "
     approx = ""
-    if accuracy <= 0:
+    if accuracy <= 0 or spawns == 1:
         approx = "{roughly} "
-    if accuracy <= -1 or spawns >= 1:
+    if accuracy <= -1 or spawns > 1:
         approx = "{very roughly} "
     if not plus_minus:
         if now > eta:
@@ -73,7 +73,7 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):
             output += "is %sin window until %s " % (approx, timeh.countdown(now, eta))
 
     if spawns >= 1:
-        output += "(%s respawns since last update) " % spawns
+        output += "(%s respawn since last update) " % spawns
     if target:
         postfix += ".target"
     return prefix + output + postfix + "\n"

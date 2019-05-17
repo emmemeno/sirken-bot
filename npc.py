@@ -96,7 +96,7 @@ class Merb:
             eta = self.window["end"]
 
         # if the merb is a recurring one and we are past the calculated eta...
-        # set a new tod for recurring mob (scout)
+        # set a new tod for recurring mob
         if self.recurring and self.plus_minus == 0 and now >= virtual_tod + delta_hour and self.spawns < 12:
             self.spawns += 1
             eta = self.get_eta(virtual_tod + delta_hour)

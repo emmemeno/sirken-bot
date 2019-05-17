@@ -120,7 +120,7 @@ class LineParser:
 
     # Time stuff (boring!)
     def find_date(self):
-        reg = re.search(r"(([12]\d{3})-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01]))", self.param)
+        reg = re.search(r"(([12]\d{3})[-/\\](0?[1-9]|1[0-2])[-/\\](0?[1-9]|[12]\d|3[01]))\b", self.param)
         if reg:
             self.parsed_date = {"year": int(reg.group(2)), "month": int(reg.group(3)), "day": int(reg.group(4))}
             # Strip the parameter
