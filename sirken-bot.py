@@ -60,10 +60,13 @@ async def hour_digest():
 
                 pre_content = "DAILY DIGEST\n############\n%d merbs are expected today, %s.\n\n" %\
                               (counter, timeh.now().strftime("%d %b %Y"))
-                post_content = "\n{Type !hi to start to interact with me}\n"
-                output_content = messagecomposer.output_list(pre_content + merbs_print_list + post_content)
+                post_content = ""
+
+                output_list = messagecomposer.output_list(merbs_print_list)
+                output_content = messagecomposer.prettify(pre_content + output_list + post_content, "CSS")
                 for message in output_content:
-                    await send_spam(messagecomposer.prettify(message, "CSS"), config.BROADCAST_DAILY_DIGEST_CHANNELS)
+                    await send_spam(message, config.BROADCAST_DAILY_DIGEST_CHANNELS)
+                logger_sirken.info("Daily Digest sent")
 
 
 def setup_logger(name, log_file, level=logging.INFO):
@@ -156,8 +159,14 @@ if __name__ == "__main__":
         if not messages_output:
             return
 
+        # Anti spam filter. If message is longer than 1, destination is PM.
+        if len(messages_output["content"])>1:
+            message_destination = message.author
+        else:
+            message_destination = messages_output["destination"]
+
         for message in messages_output["content"]:
-            await messages_output["destination"].send(message)
+            await message_destination.send(message)
             if messages_output['broadcast']:
                 await send_spam(message, messages_output['broadcast'])
 
