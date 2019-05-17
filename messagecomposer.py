@@ -52,25 +52,28 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):
     postfix = ""
     prefix = ""
     output = "[" + name + "] "
-    approx = " "
-    if accuracy <= 0 or spawns > 6:
-        approx = "~ "
-        if accuracy <= -1 or spawns >= 10:
-            approx = "~~ "
+    approx = ""
+    if accuracy <= 0:
+        approx = "{roughly} "
+    if accuracy <= -1 or spawns >= 1:
+        approx = "{very roughly} "
     if not plus_minus:
         if now > eta:
             output += "ToD too old. Please update it if you have a chance! "
         else:
-            output += "%swill spawn in %s" % (approx, timeh.countdown(now, eta))
+            output += "will %sspawn in %s " % (approx, timeh.countdown(now, eta))
     else:
         if now > window['end']:
-            output += "window is close. Please update ToD if u have a chance! "
+            output += "window is close. Please update ToD! "
         elif now < window['start']:
-            output += "%swindow will open in %s " % (approx, timeh.countdown(now, eta))
+            output += "window will %sopen in %s " % (approx, timeh.countdown(now, eta))
         elif window['start'] <= now <= window['end']:
             prefix = ""
             postfix = "## "
-            output += "%sin window until %s " % (approx, timeh.countdown(now, eta))
+            output += "is %sin window until %s " % (approx, timeh.countdown(now, eta))
+
+    if spawns >= 1:
+        output += "(%s respawns since last update) " % spawns
     if target:
         postfix += ".target"
     return prefix + output + postfix + "\n"
@@ -81,7 +84,7 @@ def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tag
     output += "=" * len(name) + "\n\n"
     approx = ""
     if accuracy == 0:
-        approx = ".roughly "
+        approx = "'roughly' "
     print_tags = ""
     for tag in tags:
         print_tags += "%s " % tag
