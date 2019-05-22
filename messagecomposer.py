@@ -59,12 +59,12 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):
         approx = "{very roughly} "
     if not plus_minus:
         if now > eta:
-            output += "ToD too old. Please update it if you have a chance! "
+            output += "ToD is too old. "
         else:
             output += "will %sspawn in %s " % (approx, timeh.countdown(now, eta))
     else:
         if now > window['end']:
-            output += "window is close. Please update ToD! "
+            output += "window is closed. "
         elif now < window['start']:
             output += "window will %sopen in %s " % (approx, timeh.countdown(now, eta))
         elif window['start'] <= now <= window['end']:
