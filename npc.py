@@ -8,7 +8,7 @@ import messagecomposer
 # Class that define Merb info and a bunch of utilities
 class Merb:
     def __init__(self, name, alias, respawn_time, plus_minus, recurring, tag, tod, pop,
-                 author_tod, author_pop, accuracy, target, date_rec, date_print):
+                 author_tod, author_pop, accuracy, target, snippet, date_rec, date_print):
 
         self.d_rec = date_rec
         self.d_print = date_print
@@ -31,9 +31,11 @@ class Merb:
         # Pop Time
         self.pop = datetime.datetime.strptime(pop, self.d_rec)
         # Author of the last ToD
-        self.signed_tod = author_tod
+        self.tod_signed_by = author_tod
         # Author of the last pop
-        self.signed_pop = author_pop
+        self.pop_signed_by = author_pop
+        # Snippet of the last ToD
+        self.snippet = snippet
         # Accuracy. 0 for approx time, 1 for exact time, -1 when pop > tod
         self.accuracy = accuracy
         # Number of spawns since last tod (for recurring mobs)
@@ -52,19 +54,23 @@ class Merb:
         w_end = from_date + datetime.timedelta(hours=self.respawn_time) + datetime.timedelta(hours=self.plus_minus)
         return {"start": w_start, "end": w_end}
 
-    def update_tod(self, new_tod, author, approx=1):
+    def update_tod(self, new_tod, author, snippet="", approx=1):
         self.tod = new_tod
-        self.signed_tod = author
+        self.tod_signed_by = author
         self.accuracy = approx
+        self.snippet = snippet
         self.window = self.get_window(new_tod)
         self.eta = self.get_eta()
         self.target = False
 
-    def update_pop(self, new_pop, author):
+    def update_pop(self, new_pop, author, snippet=""):
         self.pop = new_pop
-        self.signed_pop = author
-        self.window = self.get_window(new_pop)
-        self.eta = self.get_eta()
+        self.pop_signed_by = author
+        # Updates only if pop is more recent than tod
+        if self.pop > self.tod:
+            self.snippet = snippet
+            self.window = self.get_window(new_pop)
+            self.eta = self.get_eta()
 
     def get_eta(self, virtual_tod=None):
         eta = datetime.datetime.strptime(config.DATE_DEFAULT,config.DATE_FORMAT)
@@ -110,10 +116,14 @@ class Merb:
         else:
             return False
 
-    def print_short_info(self):
+    def print_short_info(self, with_snippet=False):
         self.eta = self.get_eta()
+        if with_snippet:
+            snippet = self.snippet
+        else:
+            snippet = ""
         return messagecomposer.time_remaining(self.name, self.eta, self.plus_minus, self.window,
-                                              self.spawns, self.accuracy, self.target)
+                                              self.spawns, self.accuracy, self.target, snippet)
 
     def print_long_info(self, timezone):
         self.eta = self.get_eta()
@@ -133,16 +143,16 @@ class Merb:
         return tz_print + messagecomposer.detail(self.name,
                                                  tod_tz.strftime(self.d_print),
                                                  pop_tz.strftime(self.d_print),
-                                                 self.signed_tod,
-                                                 self.signed_pop,
+                                                 self.tod_signed_by,
+                                                 self.pop_signed_by,
                                                  self.respawn_time,
                                                  self.plus_minus,
                                                  self.tag,
                                                  w_start_tz.strftime(self.d_print),
                                                  w_end_tz.strftime(self.d_print),
                                                  self.accuracy,
-                                                 eta
-                                                 )
+                                                 eta,
+                                                 self.snippet)
 
     def print_meta(self):
         return messagecomposer.meta(self.name, self.alias, self.tag)
@@ -152,9 +162,10 @@ class Merb:
         return ({self.name: {
                              "tod": self.tod.strftime(self.d_rec),
                              "pop": self.pop.strftime(self.d_rec),
-                             "signed_tod": self.signed_tod,
-                             "signed_pop": self.signed_pop,
-                             "accuracy": self.accuracy
+                             "signed_tod": self.tod_signed_by,
+                             "signed_pop": self.pop_signed_by,
+                             "accuracy": self.accuracy,
+                             "snippet": self.snippet
                             }
                  })
 
@@ -198,6 +209,11 @@ class MerbList:
                 else:
                     signed_pop = json_timers[i]["signed_pop"]
 
+                if "snippet" not in json_timers[i]:
+                    snippet = ""
+                else:
+                    snippet = json_timers[i]["snippet"]
+
                 accuracy = json_timers[i]["accuracy"]
             else:
                 tod = config.DATE_DEFAULT
@@ -221,6 +237,7 @@ class MerbList:
                                    signed_pop,
                                    accuracy,
                                    target,
+                                   snippet,
                                    date_format_rec,
                                    date_format_print
                                    ))

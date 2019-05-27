@@ -38,3 +38,7 @@ Full date/time
 ```
 !tod Lord Bob 2019-04-19 05:00PM pst
 ```
+Add a snippet
+```
+!tod Lord Bob now "hello doljasfjiohasofjnoeunfa"
+```

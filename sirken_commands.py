@@ -122,7 +122,7 @@ class SirkenCommands:
             if "info" in self.lp.key_words:
                 output_content = self.lp.merb_found.print_long_info(self.lp.timezone)
             else:
-                output_content = self.lp.merb_found.print_short_info()
+                output_content = self.lp.merb_found.print_short_info(with_snippet=True)
 
         # no parameter recognized but a guessed merb
         elif self.lp.merb_guessed:
@@ -173,9 +173,9 @@ class SirkenCommands:
             if self.lp.my_date:
                 # UPDATE THE TOD
                 if mode == "tod":
-                    self.lp.merb_found.update_tod(self.lp.my_date, str(self.input_author), approx)
+                    self.lp.merb_found.update_tod(self.lp.my_date, str(self.input_author), self.lp.snippet, approx)
                 if mode == "pop":
-                    self.lp.merb_found.update_pop(self.lp.my_date, str(self.input_author))
+                    self.lp.merb_found.update_pop(self.lp.my_date, str(self.input_author), self.lp.snippet)
                 # save merbs timers
                 self.merbs.save_timers()
 
@@ -193,6 +193,8 @@ class SirkenCommands:
                                   self.lp.timezone,
                                   approx_output,
                                   self.input_author.name)
+                if self.lp.snippet:
+                    output_content += "\n-\n%s" % self.lp.snippet
 
                 output_broadcast = self.get_broadcast_channels()
 
@@ -302,7 +304,7 @@ class SirkenCommands:
 
         if self.lp.my_date:
             for merb in self.merbs.merbs:
-                merb.update_pop(self.lp.my_date, str(self.input_author))
+                merb.update_pop(self.lp.my_date, str(self.input_author), "earthquake pop")
 
             self.merbs.save_timers()
 
@@ -310,7 +312,7 @@ class SirkenCommands:
             output_content = "Earthquake! All pop times updated [%s] %s, signed by %s" % \
                              (output_date.strftime(config.DATE_FORMAT_PRINT),
                               self.lp.timezone,
-                              self.input_author
+                              self.input_author.name
                               )
             output_broadcast = self.get_broadcast_channels()
 

@@ -13,6 +13,7 @@ class LineParser:
         self.merbs_list = merbs_list
         self.param = None
         self.cmd = None
+        self.snippet = ""
         self.merb_found = None
         self.merb_guessed = None
         self.timezone = None
@@ -21,8 +22,6 @@ class LineParser:
         self.parsed_date = None
         self.my_date = None
         self.tag = None
-
-
 
     def process(self, line):
         if not line:
@@ -45,6 +44,8 @@ class LineParser:
             return True
 
         if self.param:
+            # find snippet
+            self.find_snippet()
             # check if reload parameter is provided
             self.find_word_reload()
             # check if timezone parameter is provided
@@ -84,6 +85,14 @@ class LineParser:
             self.find_merb()
 
         return True
+
+    def find_snippet(self):
+        reg = re.search(r"['\"](.*?)['\"]", self.param)
+        if reg:
+            self.snippet = reg.group(1)
+            # Strip the parameter
+            self.param = self.param[:reg.start()] + self.param[reg.end():]
+            self.polish_line()
 
     def find_word_reload(self):
         reg = re.search(r"\b(reload)\b", self.param)
@@ -128,7 +137,7 @@ class LineParser:
             self.polish_line()
 
     def find_time(self):
-        reg = re.search(r"\b(([0-9]|0[0-9]|1[0-9]|2[0-3])([:\.])([0-5][0-9])\s?([AaPp].?[Mm]\b)?)\b", self.param)
+        reg = re.search(r"\b(([0-9]|0[0-9]|1[0-9]|2[0-3])([:.])([0-5][0-9])\s?([AaPp].?[Mm]\b)?)\b", self.param)
         if reg:
             time = {"hour": int(reg.group(2)), "minute": int(reg.group(4))}
             # If time is am/format, convert it to 24h
@@ -275,6 +284,7 @@ class LineParser:
         del self.key_words[:]
         self.cmd = None
         self.param = None
+        self.snippet = ""
         self.timezone = None
         self.days_back = 0
         self.parsed_time = None

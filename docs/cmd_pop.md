@@ -39,3 +39,7 @@ Full date/time
 ```
 !pop Lord Bob 2019-04-19 05:00PM pst
 ```
+Add a snippet
+```
+!pop Lord Bob now "hello doljasfjiohasofjnoeunfa"
+```

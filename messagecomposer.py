@@ -47,7 +47,7 @@ def prettify(text: str, my_type="BLOCK"):
     return output_text
 
 
-def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):
+def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target, snippet):
     now = timeh.now()
     postfix = ""
     prefix = ""
@@ -64,7 +64,7 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):
             output += "will %sspawn in %s " % (approx, timeh.countdown(now, eta))
     else:
         if now > window['end']:
-            output += "window is closed. "
+            output += "window is closed "
         elif now < window['start']:
             output += "window will %sopen in %s " % (approx, timeh.countdown(now, eta))
         elif window['start'] <= now <= window['end']:
@@ -76,10 +76,13 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target):
         output += "(%s respawn since last update) " % spawns
     if target:
         postfix += ".target"
-    return prefix + output + postfix + "\n"
+    if snippet:
+        snippet = "-\n%s" % snippet
+
+    return prefix + output + postfix + "\n" + snippet
 
 
-def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tags, window_start, window_end, accuracy, eta):
+def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tags, window_start, window_end, accuracy, eta, snippet):
     output = "%s\n" % name
     output += "=" * len(name) + "\n\n"
     approx = ""
@@ -91,20 +94,22 @@ def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tag
     if print_tags:
         print_tags = print_tags[:-1]
 
-    output += "{LAST POP}      [%s]\n" \
-              "{LAST TOD}      [%s]\n" \
+    output += "{LAST TOD}      [%s] signed by %s\n" \
+              "{LAST POP}      [%s] signed by %s\n" \
               "{RESPAWN TIME}  [%s±%s]\n" \
               "{TAGS}          [%s]\n" \
-              % (pop, tod, respawn_time, plus_minus, print_tags)
+              % (tod, simple_username(signed_tod),
+                 pop, simple_username(signed_pop),
+                 respawn_time, plus_minus,
+                 print_tags)
     if plus_minus:
         output += "{WINDOW OPEN}   [%s]\n" \
                   "{WINDOW CLOSE}  [%s]\n" \
                   % (window_start, window_end)
 
-    output += "{SIGNED TOD BY} [%s] %s\n" \
-              "{SIGNED POP BY} [%s]\n" \
-              "{ETA}           [%s]\n" \
-              % (simple_username(signed_tod), approx, simple_username(signed_pop), eta)
+    output += "{ETA}           [%s]\n" \
+              "{LAST SNIPPET}  [%s]\n" \
+              % (eta, snippet)
     return output
 
 
