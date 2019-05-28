@@ -28,6 +28,12 @@ async def minute_digest():
             merb.eta = merb.get_eta()
             minutes_diff = (merb.eta - now).total_seconds() // 60.0
 
+            # broadcast the alarm 30 minutes before a target spawns
+            if merb.target and minutes_diff == 30:
+                message = "@here\n" + messagecomposer.prettify(merb.print_short_info(), "CSS")[0]
+                await send_spam(message, config.BROADCAST_DAILY_DIGEST_CHANNELS)
+
+            # send a pm to watchers
             for user in watch.users:
                 destination = discord.utils.get(client.get_all_members(), id=user)
                 if watch.check(user, merb.name, minutes_diff) and not merb.in_window():
