@@ -104,7 +104,7 @@ class LineParser:
 
     def set_tz(self):
         self.timezone = "CET"
-        reg = re.search(r"\b(pst|pdt|cst|cdt|est|edt|cet|gmt)\b", self.param)
+        reg = re.search(r"\b(pst|pdt|cst|cdt|est|edt|cet|gmt|hkt)\b", self.param)
         if reg:
             timezone = reg.group(1).upper()
             if timezone == "PST" or timezone == "PDT":
@@ -113,6 +113,8 @@ class LineParser:
                 timezone = "US/Central"
             if timezone == "EST"or timezone == "EDT":
                 timezone = "US/Eastern"
+            if timezone == "HKT":
+                timezone = "Asia/Hong_Kong"
             self.timezone = timezone
             # Strip the parameter
             self.param = self.param[:reg.start()] + self.param[reg.end():]
