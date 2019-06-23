@@ -16,7 +16,7 @@ class LineParser:
         self.snippet = ""
         self.merb_found = None
         self.merb_guessed = None
-        self.timezone = None
+        self.timezone = "CET"
         self.days_back = 0
         self.parsed_time = None
         self.parsed_date = None
@@ -103,7 +103,6 @@ class LineParser:
             self.polish_line()
 
     def set_tz(self):
-        self.timezone = "CET"
         reg = re.search(r"\b(pst|pdt|cst|cdt|est|edt|cet|gmt|hkt)\b", self.param)
         if reg:
             timezone = reg.group(1).upper()
@@ -287,7 +286,6 @@ class LineParser:
         self.cmd = None
         self.param = None
         self.snippet = ""
-        self.timezone = None
         self.days_back = 0
         self.parsed_time = None
         self.parsed_date = None

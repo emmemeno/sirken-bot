@@ -125,6 +125,17 @@ class Merb:
         return messagecomposer.time_remaining(self.name, self.eta, self.plus_minus, self.window,
                                               self.spawns, self.accuracy, self.target, snippet)
 
+    def print_last_update(self, timezone):
+        if self.pop > self.tod:
+            last_update = self.pop
+            mode = "pop"
+        else:
+            last_update = self.tod
+            mode = "tod"
+        print("[%s] %s" % (self.name, self.window['end']))
+        last_update_tz = timeh.change_naive_to_tz(last_update, timezone)
+        return messagecomposer.last_update(self.name, last_update_tz.strftime(self.d_print), mode)
+
     def print_long_info(self, timezone):
         self.eta = self.get_eta()
         if self.eta == datetime.datetime.strptime(config.DATE_DEFAULT, config.DATE_FORMAT):
@@ -266,6 +277,8 @@ class MerbList:
         if order == 'eta':
             self.merbs.sort(key=lambda merb: merb.eta)
             self.merbs.sort(key=lambda merb: merb.in_window(), reverse=True)
+        if order == 'window_end':
+            self.merbs.sort(key=lambda merb: merb.window['end'], reverse=True)
 
     def get_all_window(self):
         self.order('eta')
@@ -323,6 +336,20 @@ class MerbList:
         output = list()
         for tag in self.tags:
             output.append("%s\n" % tag)
+        return output
+
+    def get_all_missing(self, timezone, tag):
+        self.order('window_end')
+        output = list()
+        now = timeh.now()
+        for merb in self.merbs:
+            if tag:
+                if merb.check_tag(tag)and now > merb.eta:
+                    output.append(merb.print_last_update(timezone))
+                else:
+                    continue
+            elif now > merb.eta:
+                output.append(merb.print_last_update(timezone))
         return output
 
     def get_re_tags(self):

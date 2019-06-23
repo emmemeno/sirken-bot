@@ -4,9 +4,10 @@
 ```
   [!about]        - About Sirken Bot
   [!help]         - Show this help
-  [!get]          - Show the status of a Merb
+  [!get]          - Show merbs due to spawn
   [!tod]          - Update the ToD of a Merb
-  [!pop]          - A Merb is popped
+  [!pop]          - Update the pop time of a Merb
+  [!missing]      - Show a list of outdated merbs
   [!earthquake]   - Omg omg omg (be careful, will reset all pop date/time!)
   [!watch]        - Keep an eye on your merbs
   [!merbs]        - List name and aliases of supported Merbs

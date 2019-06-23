@@ -113,12 +113,17 @@ def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tag
     return output
 
 
+def last_update(name, last, mode="tod"):
+    output = "[" + name + "] last %s {%s}\n" % (mode, last)
+    return output
+
+
 def output_list(content: list):
         output = ""
         for line in content:
             output += line
         if output == "":
-            output = "Empty! :("
+            output = "Empty!"
         return output
 
 

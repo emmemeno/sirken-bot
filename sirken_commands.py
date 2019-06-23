@@ -56,6 +56,7 @@ class SirkenCommands:
             "setrole": self.cmd_set_role,
             "users": self.cmd_users,
             "echo": self.cmd_echo,
+            "missing": self.cmd_missing
         }
 
         func = cmd_list.get(self.lp.cmd, lambda: {"destination": self.input_author,
@@ -79,18 +80,18 @@ class SirkenCommands:
                 "content": self.helper.get_about(),
                 'broadcast': False}
 
-    ################
-    # GET THE HELPER
-    ################
+    #######
+    # HELP
+    #######
     @auth.cmd("help")
     def cmd_help(self):
         return {"destination": self.input_author,
                 "content": self.helper.get_help(self.lp.param),
                 'broadcast': False}
 
-    ###################
-    # PRINT SINGLE ONE
-    ###################
+    ######
+    # GET
+    ######
     @auth.cmd("get")
     def cmd_get(self):
         output_channel = self.input_channel
@@ -133,6 +134,27 @@ class SirkenCommands:
         else:
             output_content = errors.error_param(self.lp.cmd, "Missing Parameter. ")
             output_channel = self.input_author
+
+        return {"destination": output_channel,
+                "content": messagecomposer.prettify(output_content, "CSS"),
+                'broadcast': output_broadcast}
+
+    ###############
+    # MISSING
+    ###############
+    @auth.cmd("missing")
+    def cmd_missing(self):
+        output_channel = self.input_channel
+        output_broadcast = False
+        output_content = "MISSING ETA"
+
+        if self.lp.tag:
+            output_content += " - #%s" % self.lp.tag.upper()
+        output_content += " - Timezone: %s" % self.lp.timezone
+
+        output_content += "\n"
+        output_content += "=" * len(output_content) + "\n\n"
+        output_content += messagecomposer.output_list(self.merbs.get_all_missing(self.lp.timezone, self.lp.tag))
 
         return {"destination": output_channel,
                 "content": messagecomposer.prettify(output_content, "CSS"),

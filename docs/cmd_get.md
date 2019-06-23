@@ -28,3 +28,7 @@ Get more info about a specified merb
 ```
 !get Lord Bob info
 ```
+Print a different timezone. Supported timezones: cet | gmt | pst | pdt | cst | cdt | est | edt | hkt
+```
+!get Lord Bob info PST
+```
