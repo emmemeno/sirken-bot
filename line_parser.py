@@ -266,7 +266,7 @@ class LineParser:
             result[merb] = hey
 
             for alias in merb.alias:
-                sub_hey = fuzz.token_set_ratio(self.param, alias)
+                sub_hey = fuzz.token_sort_ratio(self.param, alias)
                 if sub_hey > result[merb]:
                     result[merb] = sub_hey
 
@@ -277,6 +277,7 @@ class LineParser:
             self.merb_found = first_result_merb
         if first_result_value >= config.FUZZY_GUESSED_THRESHOLD:
             self.merb_guessed = first_result_merb
+        print("PARAM: %s\n%s - %s" % (self.param, first_result_merb.name, first_result_value))
 
     def polish_line(self):
         self.param = re.sub(' +', ' ', self.param)
