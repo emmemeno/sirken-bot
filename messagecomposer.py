@@ -82,7 +82,8 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target, snip
     return prefix + output + postfix + "\n" + snippet
 
 
-def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tags, window_start, window_end, accuracy, eta, snippet):
+def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tags,
+           window_start, window_end, accuracy, eta, snippet, trackers):
     output = "%s\n" % name
     output += "=" * len(name) + "\n\n"
     approx = ""
@@ -107,9 +108,38 @@ def detail(name, tod, pop, signed_tod, signed_pop, respawn_time, plus_minus, tag
                   "{WINDOW CLOSE}  [%s]\n" \
                   % (window_start, window_end)
 
-    output += "{ETA}           [%s]\n" \
-              "{LAST SNIPPET}  [%s]\n" \
-              % (eta, snippet)
+    output += "{LAST SNIPPET}  [%s]\n" % snippet
+    if trackers:
+        output += "{TRACKERS}      [\n"
+        for tracker in trackers:
+            output += "%s - " % tracker
+        output = output[0:-3]
+        output += "]"
+    return output
+
+
+def tracker_list(merb, timezone):
+    output = ""
+    for tracker in reversed(merb.trackers):
+        tracker_name = next(iter(tracker))
+        tracker_start = timeh.change_tz(timeh.naive_to_tz( tracker[tracker_name]["time_start"], "UTC"), timezone)
+        tracker_stop = False
+        tracker_fte = tracker[tracker_name]["fte"]
+        if "time_stop" in tracker[tracker_name]:
+            tracker_stop = timeh.change_tz(timeh.naive_to_tz( tracker[tracker_name]["time_stop"], "UTC"), timezone)
+            output += "  "
+        else:
+            output += "# "
+        output += "[%s] - starts at {%s} " % (tracker_name, tracker_start.strftime(config.DATE_FORMAT_PRINT))
+        if tracker_stop:
+            output += "ends at {%s} " % (tracker_stop.strftime(config.DATE_FORMAT_PRINT))
+            output += "(%s) " % timeh.countdown(tracker_start, tracker_stop)
+        if tracker_fte:
+            output += ".fte_team"
+        output += "\n"
+    if not output:
+        output = "Empty!\n\nTo start tracking type {!track %s start}" % merb.name
+
     return output
 
 

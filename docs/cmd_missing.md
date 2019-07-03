@@ -12,7 +12,7 @@ Print all merbs of the specified tag
 ```
 !missing ntov
 ```
-Print a different timezone. Supported timezones: cet | gmt | pst | pdt | cst | cdt | est | edt | hkt
+Print a different timezone other than utc. Supported timezones: cet | gmt | pst | pdt | cst | cdt | est | edt | hkt
 ```
 !missing PST
 ```

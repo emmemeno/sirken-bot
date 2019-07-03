@@ -16,7 +16,7 @@ class LineParser:
         self.snippet = ""
         self.merb_found = None
         self.merb_guessed = None
-        self.timezone = "CET"
+        self.timezone = "UTC"
         self.days_back = 0
         self.parsed_time = None
         self.parsed_date = None
@@ -46,42 +46,42 @@ class LineParser:
         if self.param:
             # find snippet
             self.find_snippet()
-            # check if reload parameter is provided
-            self.find_word_reload()
             # check if timezone parameter is provided
             self.set_tz()
-            # check if info parameter is provided
-            self.find_word_info()
-            # check if off is provided
-            self.find_word_off()
-            # check if all is provided
-            self.find_word_all()
-            # check if target is provided
-            self.find_word_target()
+            # find and strip words
+            self.find_word("info")
+            self.find_word("off")
+            self.find_word("stop")
+            self.find_word("start")
+            self.find_word("all")
+            self.find_word("fte")
+            self.find_word("target", r"\b(targets?)\b")
+            self.find_word("window", r"\b(windows?)\b")
+            self.find_word("approx", r"\b(approx|around|circa)\b")
+            self.find_word("sirken")
+            self.find_word("reload")
             # check if tag is provided
             self.find_tag()
-            # check if window is provided
-            self.find_word_window()
-            # check if approx is provided
-            self.find_word_approx()
-            # check if time is provided
-            self.find_word_sirken()
+
+            # TIME/DATE CALCULATIONS
             # check if time is provided
             self.find_time()
             # check if date is provided
             self.find_date()
             # check if "now" is provided
-            if self.find_now():
+            if self.find_word("now"):
                 self.my_date = timeh.now()
             # check if "yesterday" is provided
-            self.find_yesterday()
+            if self.find_word("yesterday"):
+                self.days_back = 1
             # check if "xx minutes ago are provided
-            mins_ago = self.find_mins_ago()
+            mins_ago = self.find_minutes_ago()
             if mins_ago:
                 self.my_date = timeh.from_mins_ago(mins_ago)
             if not self.my_date:
                 self.my_date = timeh.assemble_date(self.parsed_time, self.parsed_date, self.timezone,self.days_back)
-            # Find Merbs
+
+            # FINALLY FIND A MERB
             self.find_merb()
 
         return True
@@ -90,14 +90,6 @@ class LineParser:
         reg = re.search(r"['\"](.*?)['\"]", self.param)
         if reg:
             self.snippet = reg.group(1)
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-
-    def find_word_reload(self):
-        reg = re.search(r"\b(reload)\b", self.param)
-        if reg:
-            self.key_words.append("reload")
             # Strip the parameter
             self.param = self.param[:reg.start()] + self.param[reg.end():]
             self.polish_line()
@@ -115,15 +107,6 @@ class LineParser:
             if timezone == "HKT":
                 timezone = "Asia/Hong_Kong"
             self.timezone = timezone
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-
-    def find_word_info(self):
-        # search the parameter info for detailed information
-        reg = re.search(r"\b(info)\b", self.param)
-        if reg:
-            self.key_words.append("info")
             # Strip the parameter
             self.param = self.param[:reg.start()] + self.param[reg.end():]
             self.polish_line()
@@ -151,25 +134,7 @@ class LineParser:
             self.param = self.param[:reg.start()] + self.param[reg.end():]
             self.polish_line()
 
-    def find_now(self):
-        reg = re.search(r"\b(now)\b", self.param)
-        if reg:
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-            return True
-        else:
-            return False
-
-    def find_yesterday(self):
-        reg = re.search(r"\b(yesterday)\b", self.param)
-        if reg:
-            self.days_back = 1
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-
-    def find_mins_ago(self):
+    def find_minutes_ago(self):
         regex_str = r"\b(\d+) ?(mins?|minutes?) ago"
         reg = re.search(regex_str, self.param)
         if reg:
@@ -180,65 +145,13 @@ class LineParser:
         else:
             return False
 
-    def find_word_off(self):
-        reg = re.search(r"\b(off)\b", self.param)
-        if reg:
-            self.key_words.append("off")
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-            return True
-        else:
-            return False
+    def find_word(self, word, regex=""):
+        if not regex:
+            regex = r"\b(%s)\b" % word
 
-    def find_word_all(self):
-        reg = re.search(r"\b(all)\b", self.param)
+        reg = re.search(regex, self.param)
         if reg:
-            self.key_words.append("all")
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-            return True
-        else:
-            return False
-
-    def find_word_target(self):
-        reg = re.search(r"\b(targets?)\b", self.param)
-        if reg:
-            self.key_words.append("target")
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-            return True
-        else:
-            return False
-
-    def find_word_window(self):
-        reg = re.search(r"\b(windows?)\b", self.param)
-        if reg:
-            self.key_words.append("window")
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-            return True
-        else:
-            return False
-
-    def find_word_approx(self):
-        reg = re.search(r"\b(approx|around)\b", self.param)
-        if reg:
-            self.key_words.append("approx")
-            # Strip the parameter
-            self.param = self.param[:reg.start()] + self.param[reg.end():]
-            self.polish_line()
-            return True
-        else:
-            return False
-
-    def find_word_sirken(self):
-        reg = re.search(r"\b(sirken)\b", self.param)
-        if reg:
-            self.key_words.append("sirken")
+            self.key_words.append(word)
             # Strip the parameter
             self.param = self.param[:reg.start()] + self.param[reg.end():]
             self.polish_line()
@@ -277,7 +190,7 @@ class LineParser:
             self.merb_found = first_result_merb
         if first_result_value >= config.FUZZY_GUESSED_THRESHOLD:
             self.merb_guessed = first_result_merb
-        print("PARAM: %s\n%s - %s" % (self.param, first_result_merb.name, first_result_value))
+        # print("PARAM: %s\n%s - %s" % (self.param, first_result_merb.name, first_result_value))
 
     def polish_line(self):
         self.param = re.sub(' +', ' ', self.param)
@@ -291,6 +204,7 @@ class LineParser:
         self.parsed_time = None
         self.parsed_date = None
         self.my_date = None
+        self.timezone = "UTC"
         self.tag = None
         self.merb_found = None
         self.merb_guessed = None

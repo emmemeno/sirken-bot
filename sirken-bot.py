@@ -30,7 +30,15 @@ async def minute_digest():
 
             # broadcast the alarm 30 minutes before a target spawns
             if merb.target and minutes_diff == 30:
-                message = "@here\n" + messagecomposer.prettify(merb.print_short_info(), "CSS")[0]
+                print_info = merb.print_short_info() + "\n"
+                trackers = merb.get_active_trackers()
+                if not trackers:
+                    print_info += "To start tracking type {!track %s start}" % merb.name
+                else:
+                    print_info += "Available trackers: "
+                    for tracker in trackers:
+                        print_info += "%s " % tracker
+                message = "@here\n" + messagecomposer.prettify(print_info, "CSS")[0]
                 await send_spam(message, config.BROADCAST_DAILY_DIGEST_CHANNELS)
 
             # send a pm to watchers
@@ -166,16 +174,22 @@ if __name__ == "__main__":
             return
 
         # Anti spam filter. If message is longer than 1, destination is PM.
-        if len(messages_output["content"])>1:
+        if len(messages_output["content"]) > 1:
             message_destination = message.author
         else:
             message_destination = messages_output["destination"]
 
         for message in messages_output["content"]:
             await message_destination.send(message)
+            # BROADCAST THE MESSAGE
             if messages_output['broadcast']:
                 await send_spam(message, messages_output['broadcast'])
-
+            # SEND A SECOND MESSAGE
+            if 'second_message' in messages_output:
+                if messages_output['second_message']:
+                    await send_spam(messages_output['second_message']['content'],
+                                    messages_output['second_message']['destination'])
+            # DO FANCY ACTIONS
             if 'action' in messages_output:
                 if messages_output["action"] == 'leave_all_guilds':
                     await leave_guild(authenticator.discord_guilds)

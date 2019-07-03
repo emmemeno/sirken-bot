@@ -15,7 +15,7 @@ Updates to a specified time. If time is in the future, yesterday is assumed
 ```
 !tod Lord Bob 14:01
 ```
-Use different timezones (when omitted, CE(S)T is assumed)
+Use different timezones other than utc. Supported timezones: cet | gmt | pst | pdt | cst | cdt | est | edt | hkt
 ```
 !tod Lord Bob 14:01 est
 ```

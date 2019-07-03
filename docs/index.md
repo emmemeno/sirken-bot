@@ -7,6 +7,7 @@
   [!get]          - Show merbs due to spawn
   [!tod]          - Update the ToD of a Merb
   [!pop]          - Update the pop time of a Merb
+  [!track]        - Track a Merb
   [!missing]      - Show a list of outdated merbs
   [!earthquake]   - Omg omg omg (be careful, will reset all pop date/time!)
   [!watch]        - Keep an eye on your merbs

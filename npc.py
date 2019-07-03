@@ -48,6 +48,8 @@ class Merb:
             self.accuracy = -2
         # Eta
         self.eta = self.get_eta()
+        # Trackers
+        self.trackers = list()
 
     def get_window(self, from_date):
         w_start = from_date + datetime.timedelta(hours=self.respawn_time) - datetime.timedelta(hours=self.plus_minus)
@@ -62,6 +64,7 @@ class Merb:
         self.window = self.get_window(new_tod)
         self.eta = self.get_eta()
         self.target = False
+        self.stop_all_tracker(new_tod)
 
     def update_pop(self, new_pop, author, snippet=""):
         self.pop = new_pop
@@ -71,6 +74,7 @@ class Merb:
             self.snippet = snippet
             self.window = self.get_window(new_pop)
             self.eta = self.get_eta()
+            self.stop_all_tracker(new_pop)
 
     def get_eta(self, virtual_tod=None):
         eta = datetime.datetime.strptime(config.DATE_DEFAULT,config.DATE_FORMAT)
@@ -109,9 +113,60 @@ class Merb:
 
         return eta
 
+    def get_single_active_tracker(self, target):
+        for my_tracker in self.trackers:
+            if target in my_tracker:
+                if "time_stop" not in my_tracker[target]:
+                    print(my_tracker[target])
+                    return my_tracker[target]
+        return False
+
+    def get_active_trackers(self):
+        active_trackers = list()
+        for my_tracker in self.trackers:
+            tracker = my_tracker[next(iter(my_tracker))]
+            if "time_stop" not in tracker:
+                active_trackers.append(next(iter(my_tracker)))
+        return active_trackers
+
+    def start_tracker(self, tracker, time_start, fte):
+        if self.get_single_active_tracker(tracker):
+            return False
+        else:
+            self.trackers.append({tracker: {"time_start": time_start, "fte": fte}})
+            return True
+
+    def stop_tracker(self, tracker, time_stop):
+        my_tracker = self.get_single_active_tracker(tracker)
+        if my_tracker:
+            my_tracker['time_stop'] = time_stop
+            return True
+        else:
+            return False
+
+    def stop_all_tracker(self, time_stop):
+        for my_tracker in self.trackers:
+            tracker = my_tracker[next(iter(my_tracker))]
+            if "time_stop" not in tracker:
+                if time_stop < tracker['time_start']:
+                    time_stop = tracker['time_start']
+                tracker['time_stop'] = time_stop
+        return
+        # print("STOP ALL TRACKS")
+
+    def wipe_trackers(self):
+        del self.trackers[:]
+        return
+
     def in_window(self):
         now = timeh.now()
         if (self.window['start'] < now < self.window['end']) and self.plus_minus:
+            return True
+        else:
+            return False
+
+    def has_eta(self):
+        if timeh.now() < self.eta:
             return True
         else:
             return False
@@ -163,7 +218,8 @@ class Merb:
                                                  w_end_tz.strftime(self.d_print),
                                                  self.accuracy,
                                                  eta,
-                                                 self.snippet)
+                                                 self.snippet,
+                                                 self.get_active_trackers())
 
     def print_meta(self):
         return messagecomposer.meta(self.name, self.alias, self.tag)
