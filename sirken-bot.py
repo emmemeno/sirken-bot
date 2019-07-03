@@ -126,6 +126,7 @@ if __name__ == "__main__":
     merbs = npc.MerbList(config.FILE_ENTITIES,
                          config.FILE_TIMERS,
                          config.FILE_TARGETS,
+                         config.FILE_TRACKS,
                          config.DATE_FORMAT,
                          config.DATE_FORMAT_PRINT)
     merbs.order()
@@ -185,10 +186,10 @@ if __name__ == "__main__":
             if messages_output['broadcast']:
                 await send_spam(message, messages_output['broadcast'])
             # SEND A SECOND MESSAGE
-            if 'second_message' in messages_output:
-                if messages_output['second_message']:
-                    await send_spam(messages_output['second_message']['content'],
-                                    messages_output['second_message']['destination'])
+            if 'secondary_messages' in messages_output:
+                for secondary_message in messages_output['secondary_messages']:
+                    await send_spam(secondary_message['content'],
+                                    secondary_message['destination'])
             # DO FANCY ACTIONS
             if 'action' in messages_output:
                 if messages_output["action"] == 'leave_all_guilds':

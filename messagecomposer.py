@@ -124,7 +124,7 @@ def tracker_list(merb, timezone):
         tracker_name = next(iter(tracker))
         tracker_start = timeh.change_tz(timeh.naive_to_tz( tracker[tracker_name]["time_start"], "UTC"), timezone)
         tracker_stop = False
-        tracker_fte = tracker[tracker_name]["fte"]
+        tracker_mode = tracker[tracker_name]["mode"]
         if "time_stop" in tracker[tracker_name]:
             tracker_stop = timeh.change_tz(timeh.naive_to_tz( tracker[tracker_name]["time_stop"], "UTC"), timezone)
             output += "  "
@@ -134,13 +134,29 @@ def tracker_list(merb, timezone):
         if tracker_stop:
             output += "ends at {%s} " % (tracker_stop.strftime(config.DATE_FORMAT_PRINT))
             output += "(%s) " % timeh.countdown(tracker_start, tracker_stop)
-        if tracker_fte:
-            output += ".fte_team"
+        else:
+            if timeh.naive_to_tz(timeh.now(), "UTC") < tracker_start:
+                virtual_end = tracker_start
+            else:
+                virtual_end = timeh.naive_to_tz(timeh.now(), "UTC")
+            output += "(%s so far) " % timeh.countdown(tracker_start, virtual_end)
+        if tracker_mode:
+            output += ".%s" % tracker_mode
         output += "\n"
     if not output:
-        output = "Empty!\n\nTo start tracking type {!track %s start}" % merb.name
+        output = "Empty!\n"
 
     return output
+
+
+def track_recap(merb, timezone):
+    output_content = "\n\n%s (%s)\n" % (merb.name, len(merb.get_active_trackers()))
+    output_content += "-" * (len(merb.name) + 4)
+    output_content += "\n"
+    output_content += tracker_list(merb, timezone)
+    return output_content
+
+
 
 
 def last_update(name, last, mode="tod"):
