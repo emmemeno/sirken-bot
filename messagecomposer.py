@@ -130,9 +130,9 @@ def tracker_list(merb, timezone):
             output += "  "
         else:
             output += "# "
-        output += "[%s] - starts at {%s} " % (tracker_name, tracker_start.strftime(config.DATE_FORMAT_PRINT))
+        output += "%s - starts at {%s %s} " % (tracker_name, tracker_start.strftime(config.DATE_FORMAT_PRINT), timezone)
         if tracker_stop:
-            output += "ends at {%s} " % (tracker_stop.strftime(config.DATE_FORMAT_PRINT))
+            output += "stops at {%s %s} " % (tracker_stop.strftime(config.DATE_FORMAT_PRINT), timezone)
             output += "(%s) " % timeh.countdown(tracker_start, tracker_stop)
         else:
             if timeh.naive_to_tz(timeh.now(), "UTC") < tracker_start:
@@ -149,14 +149,24 @@ def tracker_list(merb, timezone):
     return output
 
 
-def track_recap(merb, timezone):
-    output_content = "\n\n%s (%s)\n" % (merb.name, len(merb.get_active_trackers()))
-    output_content += "-" * (len(merb.name) + 4)
+def track_recap(merb, timezone, merb_updated=False):
+    output_content = "\n\n"
+    if merb_updated == "pop":
+        output_content += "[%s] popped at {%s %s}\n" % (merb.name, merb.pop.strftime(config.DATE_FORMAT_PRINT), timezone)
+    elif merb_updated == "tod":
+        output_content += "[%s] died at {%s %s}\n" % (merb.name, merb.tod.strftime(config.DATE_FORMAT_PRINT), timezone)
+    else:
+        output_content += "[%s] (%s) " % (merb.name, len(merb.get_active_trackers()))
+        if timeh.now() < merb.window['start']:
+            output_content += "window will open in %s\n" % timeh.countdown(timeh.now(), merb.eta)
+        elif merb.window['start'] <= timeh.now() <= merb.window['end']:
+            output_content += "in .window for the next %s\n" % timeh.countdown(timeh.now(), merb.eta)
+        else:
+            output_content += "window is closed. Please update tod/pop\n"
+    output_content += "-" * (len(output_content) - 3)
     output_content += "\n"
-    output_content += tracker_list(merb, timezone)
+    output_content += tracker_list(merb, timezone )
     return output_content
-
-
 
 
 def last_update(name, last, mode="tod"):

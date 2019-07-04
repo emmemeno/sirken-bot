@@ -138,7 +138,7 @@ class Merb:
     def stop_tracker(self, tracker, time_stop):
         my_tracker = self.get_single_active_tracker(tracker)
         if my_tracker:
-            my_tracker['time_stop'] = time_stop
+            my_tracker['time_stop']= time_stop
             return my_tracker
         else:
             return False

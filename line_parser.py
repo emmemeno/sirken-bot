@@ -51,8 +51,9 @@ class LineParser:
             # find and strip words
             self.find_word("info")
             self.find_word("off")
-            self.find_word("stop")
             self.find_word("start")
+            self.find_word("stop")
+            self.find_word("end", r"\b(ends?)\b")
             self.find_word("all")
             self.find_word("fte")
             self.find_word("target", r"\b(targets?)\b")

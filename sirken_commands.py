@@ -190,6 +190,10 @@ class SirkenCommands:
 
         # If there is a Merb
         if self.lp.merb_found:
+
+            # Assume now for pop without times
+            if not self.lp.my_date and mode == "pop":
+                self.lp.my_date = timeh.now()
             # Check if we have a date
             if self.lp.my_date:
                 # UPDATE THE TOD
@@ -226,28 +230,15 @@ class SirkenCommands:
                 # TRACKERS
 
                 if self.lp.merb_found.trackers:
-                    trackers_recap = "[%s] " % self.lp.merb_found.name
-                    if mode == "tod":
-                        trackers_recap += "died at "
-                    if mode == "pop":
-                        trackers_recap += "popped at "
-                    trackers_recap += "{%s} - %s\n" % (output_date.strftime(config.DATE_FORMAT_PRINT),
-                                                      self.lp.timezone)
-
-                    trackers_recap += "=" * (len(trackers_recap) - 1)
-                    trackers_recap += "\n\nTrackers and FtE RECAP\n"
-                    trackers_recap += "----------------------\n"
-                    trackers_recap += messagecomposer.tracker_list(self.lp.merb_found, self.lp.timezone)
-                    trackers_recap = messagecomposer.prettify(trackers_recap, "CSS")[0]
-
+                    trackers_recap = messagecomposer.track_recap(self.lp.merb_found, self.lp.timezone, mode)
                     self.lp.merb_found.wipe_trackers()
 
                     # save trackers
                     self.merbs.save_trackers()
 
                     secondary_messages.append({"destination": config.BROADCAST_TRACK_CHANNELS,
-                                             "content": trackers_recap,
-                                             "broadcast": False})
+                                               "content": messagecomposer.prettify(trackers_recap, "CSS")[0],
+                                               "broadcast": False})
 
             else:
                 output_content = errors.error_param(self.lp.cmd, "Time Syntax Error. ")
@@ -277,8 +268,7 @@ class SirkenCommands:
 
         if "target" in self.lp.key_words:
             # Cycles all target merbs and print trackers
-            output_content = "Tracking info for Target Merbs - %s\n" % self.lp.timezone
-            output_content += "=" * (len(output_content)-1)
+            output_content = ""
             for merb in self.merbs.merbs:
                 if merb.target:
                     output_content += messagecomposer.track_recap(merb, self.lp.timezone)
@@ -316,8 +306,7 @@ class SirkenCommands:
             else:
                 track_mode = ""
 
-
-            if "off" in self.lp.key_words or "stop" in self.lp.key_words:
+            if "off" in self.lp.key_words or "stop" in self.lp.key_words or "end" in self.lp.key_words:
                 # check if the user is currently tracking
                 if not user_is_tracking:
                     output_channel = self.input_author
@@ -355,11 +344,7 @@ class SirkenCommands:
                     output_broadcast = self.get_broadcast_channels(config.BROADCAST_TRACK_CHANNELS)
             else:
                 # print track info
-                output_content = "Tracking info for %s (%d) - %s \n" % (self.lp.merb_found.name,
-                                                                        len(self.lp.merb_found.get_active_trackers()),
-                                                                        self.lp.timezone)
-                output_content += "=" * len(output_content) + "\n\n"
-                output_content += messagecomposer.tracker_list(self.lp.merb_found, self.lp.timezone)
+                output_content = messagecomposer.track_recap(self.lp.merb_found, self.lp.timezone)
             # print("ALL TRACKERS for %s:\n%s" % (self.lp.merb_found, self.lp.merb_found.trackers))
             # print("ACTIVE TRACKERS for %s:\n%s" % (self.lp.merb_found, self.lp.merb_found.get_active_trackers()))
             # output_broadcast = config.BROADCAST_TRACK_CHANNELS
