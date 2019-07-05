@@ -96,11 +96,11 @@ def merb_status(merb, timezone,
                             merb.target,
                             v_target_tag)
 
-    # Don't show trackers on merb not in window.
+    # Force hide trackers on merb not in window.
     if not merb.plus_minus or not merb.is_in_window():
         v_trackers = False
 
-    # Force trackers view when merb is in window and a target
+    # Force active trackers view when merb is in window and a target
     if merb.target and merb.is_in_window() and not v_info:
         v_trackers = True
         v_only_active_trackers = True

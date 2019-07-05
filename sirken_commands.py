@@ -354,7 +354,6 @@ class SirkenCommands:
                         tracker_to_remove[self.input_author.name] = stopped_tracker
                         merb.trackers.remove(tracker_to_remove)
 
-
                 # check if the user is currently tracking
             if not output_content:
                 output_channel = self.input_author
@@ -437,7 +436,8 @@ class SirkenCommands:
 
         else:
             output_channel = self.input_author
-            output_content = "Missing Parameter.\nTo start tracking type {!track merb_name start}\n" \
+            output_content = "Missing Parameter.\nTo start tracking type {!track merb_name|tag start}\n" \
+                             "To stop tracking type {!track stop}" \
                              "To get tracking info type {!get merb_name info}"
 
         return {"destination": output_channel,

@@ -2,6 +2,7 @@ config.py
 resources/roles.json
 resources/targets.json
 resources/entities.json
+resources/entities_p99.json
 resources/timers.json
 resources/watch.json
 logs/
