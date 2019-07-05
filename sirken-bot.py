@@ -35,16 +35,14 @@ async def minute_digest():
                 if not trackers:
                     print_info += "To start tracking type {!track %s start}" % merb.name
                 else:
-                    print_info += "Available trackers: "
-                    for tracker in trackers:
-                        print_info += "%s " % tracker
+                    print_info += messagecomposer.tracker_list(merb, "UTC", only_active=True)
                 message = "@here\n" + messagecomposer.prettify(print_info, "CSS")[0]
                 await send_spam(message, config.BROADCAST_DAILY_DIGEST_CHANNELS)
 
             # send a pm to watchers
             for user in watch.users:
                 destination = discord.utils.get(client.get_all_members(), id=user)
-                if watch.check(user, merb.name, minutes_diff) and not merb.in_window():
+                if watch.check(user, merb.name, minutes_diff) and not merb.is_in_window():
                     await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS")[0])
                     logging.debug("ALARM TO %s: %s | ETA: %s | DIFF MINUTES: %s" %
                                   (user, merb.name, merb.eta, minutes_diff))
@@ -68,7 +66,7 @@ async def hour_digest():
         # tic only one time per day
         now = timeh.now()
         if int(now.hour) == config.DAILY_HOUR:
-            merbs_print_list = merbs.get_all("CET", "countdown", limit_hours=24)
+            merbs_print_list = merbs.print_all("CET", "countdown", limit_hours=24)
             if merbs_print_list:
                 counter = len(merbs_print_list)
 

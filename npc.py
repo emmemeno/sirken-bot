@@ -24,7 +24,7 @@ class Merb:
         self.recurring = recurring
         # Tag of the merb
         self.tag = tag
-        # Bool, True if target
+        # False, "auto" or "manual"
         self.target = target
         # Time of Death
         self.tod = datetime.datetime.strptime(tod, self.d_rec)
@@ -63,7 +63,7 @@ class Merb:
         self.snippet = snippet
         self.window = self.get_window(new_tod)
         self.eta = self.get_eta()
-        self.target = False
+        self.auto_switch_off_target()
         self.stop_all_tracker(new_tod)
 
     def update_pop(self, new_pop, author, snippet=""):
@@ -125,7 +125,7 @@ class Merb:
         for my_tracker in self.trackers:
             tracker = my_tracker[next(iter(my_tracker))]
             if "time_stop" not in tracker:
-                active_trackers.append(next(iter(my_tracker)))
+                active_trackers.append(my_tracker)
         return active_trackers
 
     def start_tracker(self, tracker, time_start, mode):
@@ -138,7 +138,10 @@ class Merb:
     def stop_tracker(self, tracker, time_stop):
         my_tracker = self.get_single_active_tracker(tracker)
         if my_tracker:
-            my_tracker['time_stop']= time_stop
+            # prevent start time newer than stop time (when booking, etc.)
+            if my_tracker['time_start'] > time_stop:
+                time_stop = my_tracker['time_start']
+            my_tracker['time_stop'] = time_stop
             return my_tracker
         else:
             return False
@@ -156,7 +159,20 @@ class Merb:
         del self.trackers[:]
         return
 
-    def in_window(self):
+    def is_target(self):
+        if self.target:
+            return True
+        else:
+            return False
+
+    def switch_target(self, mode):
+        self.target = mode
+
+    def auto_switch_off_target(self):
+        if self.target == "manual":
+            self.target = False
+
+    def is_in_window(self):
         now = timeh.now()
         if (self.window['start'] < now < self.window['end']) and self.plus_minus:
             return True
@@ -169,14 +185,21 @@ class Merb:
         else:
             return False
 
-    def print_short_info(self, with_snippet=False):
+    def print_short_info(self, timezone="UTC", v_trackers=False, v_only_active_trackers=False, v_info=False, v_target_tag=True):
         self.eta = self.get_eta()
-        if with_snippet:
-            snippet = self.snippet
-        else:
-            snippet = ""
-        return messagecomposer.time_remaining(self.name, self.eta, self.plus_minus, self.window,
-                                              self.spawns, self.accuracy, self.target, snippet)
+        return messagecomposer.merb_status(self, timezone,
+                                           v_trackers=v_trackers,
+                                           v_only_active_trackers=v_only_active_trackers,
+                                           v_info=v_info,
+                                           v_target_tag=v_target_tag)
+
+    def print_long_info(self, timezone, v_trackers=True, v_only_active_trackers=False, v_info=True, v_target_tag=True):
+        self.eta = self.get_eta()
+        return messagecomposer.merb_status(self, timezone,
+                                           v_trackers=v_trackers,
+                                           v_only_active_trackers=v_only_active_trackers,
+                                           v_info=v_info,
+                                           v_target_tag=v_target_tag)
 
     def print_last_update(self, timezone):
         if self.pop > self.tod:
@@ -187,36 +210,6 @@ class Merb:
             mode = "tod"
         last_update_tz = timeh.change_naive_to_tz(last_update, timezone)
         return messagecomposer.last_update(self.name, last_update_tz.strftime(self.d_print), mode)
-
-    def print_long_info(self, timezone):
-        self.eta = self.get_eta()
-        if self.eta == datetime.datetime.strptime(config.DATE_DEFAULT, config.DATE_FORMAT):
-            eta = "N/A"
-        else:
-            eta = timeh.change_naive_to_tz(self.eta, timezone)
-            eta = eta.strftime(self.d_print)
-
-        tod_tz = timeh.change_naive_to_tz(self.tod, timezone)
-        pop_tz = timeh.change_naive_to_tz(self.pop, timezone)
-        w_start_tz = timeh.change_naive_to_tz(self.window["start"], timezone)
-        w_end_tz = timeh.change_naive_to_tz(self.window["end"], timezone)
-
-        tz_print = "Timezone %s\n\n" % timezone
-
-        return tz_print + messagecomposer.detail(self.name,
-                                                 tod_tz.strftime(self.d_print),
-                                                 pop_tz.strftime(self.d_print),
-                                                 self.tod_signed_by,
-                                                 self.pop_signed_by,
-                                                 self.respawn_time,
-                                                 self.plus_minus,
-                                                 self.tag,
-                                                 w_start_tz.strftime(self.d_print),
-                                                 w_end_tz.strftime(self.d_print),
-                                                 self.accuracy,
-                                                 eta,
-                                                 self.snippet,
-                                                 self.get_active_trackers())
 
     def print_meta(self):
         return messagecomposer.meta(self.name, self.alias, self.tag)
@@ -291,7 +284,7 @@ class MerbList:
 
             # LOAD TARGETS
             if i in json_targets:
-                target = True
+                target = json_targets[i]
             else:
                 target = False
 
@@ -341,10 +334,10 @@ class MerbList:
     def save_targets(self):
         with open(self.url_targets, 'w') as outfile:
             self.order('eta')
-            output = list()
+            output = {}
             for merb in self.merbs:
                 if merb.target:
-                    output.append(merb.name)
+                    output[merb.name] = merb.target
             json.dump(output, outfile, indent=4)
 
     def save_trackers(self):
@@ -376,11 +369,19 @@ class MerbList:
             self.merbs.sort(key=lambda merb: merb.name.lower())
         if order == 'eta':
             self.merbs.sort(key=lambda merb: merb.eta)
-            self.merbs.sort(key=lambda merb: merb.in_window(), reverse=True)
+            self.merbs.sort(key=lambda merb: merb.is_in_window(), reverse=True)
         if order == 'window_end':
             self.merbs.sort(key=lambda merb: merb.window['end'], reverse=True)
 
-    def get_all_window(self):
+    def get_all_by_tag(self, tag):
+        self.order('eta')
+        output = list()
+        for merb in self.merbs:
+            if merb.check_tag(tag) and timeh.now() < merb.eta:
+                output.append(merb)
+        return output
+
+    def print_all_in_window(self):
         self.order('eta')
         output = list()
 
@@ -390,7 +391,7 @@ class MerbList:
 
         return output
 
-    def get_all(self, timezone, mode="countdown", limit_hours=None):
+    def print_all(self, timezone, mode="countdown", limit_hours=None):
         if not limit_hours:
             limit_hours = self.max_respawn_time
         now = timeh.now()
@@ -409,7 +410,7 @@ class MerbList:
                     output.append(merb.print_long_info(timezone))
         return output
 
-    def get_all_by_tag(self, tag):
+    def print_all_by_tag(self, tag):
         self.order('eta')
         output = list()
         for merb in self.merbs:
@@ -417,15 +418,15 @@ class MerbList:
                 output.append(merb.print_short_info())
         return output
 
-    def get_all_targets(self):
+    def print_all_targets(self):
         self.order('eta')
         output = list()
         for merb in self.merbs:
             if merb.target:
-                output.append(merb.print_short_info())
+                output.append(merb.print_short_info(v_target_tag=False))
         return output
 
-    def get_all_meta(self):
+    def print_all_meta(self):
         self.order('name')
         output = list()
         for merb in self.merbs:

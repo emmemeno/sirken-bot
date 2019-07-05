@@ -60,6 +60,7 @@ class LineParser:
             self.find_word("window", r"\b(windows?)\b")
             self.find_word("approx", r"\b(approx|around|circa)\b")
             self.find_word("sirken")
+            self.find_word("sticky")
             self.find_word("reload")
             # check if tag is provided
             self.find_tag()
