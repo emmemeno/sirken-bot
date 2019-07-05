@@ -125,7 +125,9 @@ class SirkenCommands:
                 output_content = self.lp.merb_found.print_long_info(self.lp.timezone)
 
             else:
-                output_content = self.lp.merb_found.print_short_info(self.lp.timezone)
+                output_content = self.lp.merb_found.print_short_info(self.lp.timezone,
+                                                                     v_trackers=True,
+                                                                     v_only_active_trackers=True)
 
         # no parameter recognized but a guessed merb
         elif self.lp.merb_guessed:
