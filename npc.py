@@ -72,14 +72,16 @@ class Merb:
         self.stop_all_tracker(new_tod)
 
     def update_pop(self, new_pop, author, snippet=""):
-        self.pop = new_pop
-        self.pop_signed_by = author
         # Updates only if pop is more recent than tod
         if new_pop > self.tod:
+            self.pop = new_pop
+            self.pop_signed_by = author
             self.snippet = snippet
             self.window = self.get_window(new_pop)
             self.eta = self.get_new_eta()
             self.stop_all_tracker(new_pop)
+            return True
+        return False
 
     def get_new_eta(self, virtual_tod=None):
         eta = datetime.datetime.strptime(config.DATE_DEFAULT,config.DATE_FORMAT)

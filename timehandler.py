@@ -20,6 +20,10 @@ def now():
     return datetime.datetime.utcnow().replace(second=0, microsecond=0)
 
 
+def next_future(hours=1):
+    return now() + datetime.timedelta(hours=hours)
+
+
 def now_local(timezone):
     tz = pytz.timezone(timezone)
     return datetime.datetime.now(tz)

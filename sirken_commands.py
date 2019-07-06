@@ -331,20 +331,22 @@ class SirkenCommands:
 
         # STOP TRACKING
         if "off" in self.lp.key_words or "stop" in self.lp.key_words or "end" in self.lp.key_words:
-            t_counter = 0
+            active_tracker_counter = 0
+            tracker_counter = 0
             output_content = ""
             output_time = timeh.change_tz(timeh.naive_to_tz(timeh.now(), "UTC"), self.lp.timezone)
             for merb in self.merbs.merbs:
                 stopped_tracker = merb.stop_tracker(self.input_author.name, timeh.now())
                 if stopped_tracker:
-                    t_counter = t_counter + 1
+                    tracker_counter = tracker_counter + 1
                     tracker_start = timeh.change_tz(timeh.naive_to_tz(stopped_tracker["time_start"], "UTC"),
                                                     self.lp.timezone)
                     tracker_stop = timeh.change_tz(timeh.naive_to_tz(stopped_tracker["time_stop"], "UTC"), self.lp.timezone)
                     tracking_time = timeh.countdown(tracker_start, tracker_stop)
 
-                    # Print only if merbs was being tracked and not a future
+                    # Print only if active merbs was being tracked and not a future
                     if timeh.now() >= stopped_tracker["time_start"]:
+                        active_tracker_counter = active_tracker_counter + 1
                         output_content += "%s stops tracking [%s] at {%s} %s %s (%s)\n" % (self.input_author.name,
                                                                                            merb.name,
                                                                                            output_time.strftime(
@@ -353,10 +355,10 @@ class SirkenCommands:
                                                                                            track_mode,
                                                                                            tracking_time)
             # Message to output when merbs being tracked are all future
-            if not output_content:
-                output_content += "%s stops tracking" % self.input_author.name
-            if not t_counter:
-                output_content += "You are not tracking any merb"
+            if tracker_counter and not active_tracker_counter:
+                output_content = "%s stops tracking" % self.input_author.name
+            if not tracker_counter:
+                output_content = "You are not tracking any merb"
             else:
                 output_broadcast = self.get_broadcast_channels(config.BROADCAST_TRACK_CHANNELS)
 
@@ -373,30 +375,39 @@ class SirkenCommands:
             # Track by TAG
             if self.lp.tag:
                 # merbs in window being tracked
-                m_counter = 0
-                output_content = ""
+                active_tracker_counter = 0
+                future_tracker_counter = 0
+
                 tag_merbs = self.merbs.get_all_by_tag(self.lp.tag)
                 for merb in tag_merbs:
-                    # start tracking only if merb is not being tracked by the author
+                    # start tracking only if merb is not being tracked by the author yet
                     if not merb.get_single_active_tracker(self.input_author.name) and merb.has_eta():
 
-                        # if merb is not in window, time is its eta (future)
+                        # if merb is not in window, start time is merb window start
                         if not merb.is_in_window():
-                            time = merb.eta
-                            time_future = True
-                        else:
-                            m_counter = m_counter + 1
 
-                        merb.start_tracker(self.input_author.name, time, track_mode)
+                            # Track only merbs that are max 1hour in the future
+                            if timeh.next_future(hours=1) > merb.window['start']:
+                                future_tracker_counter = future_tracker_counter + 1
+                                merb.start_tracker(self.input_author.name, merb.window['start'], track_mode)
+
+                        else:
+                            active_tracker_counter = active_tracker_counter + 1
+                            merb.start_tracker(self.input_author.name, timeh.now(), track_mode)
+
+
                         # save trackers
 
                         # output_content += messagecomposer.track_msg(self.input_author.name, merb, track_mode, time,
                         # time_future) + "\n"
 
                 self.merbs.save_trackers()
-                output_content = "%s starts tracking %s (%d merbs in window)" % (self.input_author.name,
+                output_content = "%s starts tracking %s (%d merbs in window" % (self.input_author.name,
                                                                            self.lp.tag,
-                                                                           m_counter)
+                                                                           active_tracker_counter)
+                if future_tracker_counter:
+                    output_content += " - %d in the next hour" % future_tracker_counter
+                output_content += ")"
                 output_broadcast = self.get_broadcast_channels(config.BROADCAST_TRACK_CHANNELS)
 
             # Merb not found
