@@ -100,8 +100,8 @@ def merb_status(merb, timezone,
     if not merb.plus_minus or not merb.is_in_window() and not v_info:
         v_trackers = False
 
-    # Force active trackers view when merb is in window and a target
-    if merb.target and merb.is_in_window() and not v_info:
+    # Force active trackers view when merb is in window and a target or active trackers are present
+    if (merb.target and merb.is_in_window() and not v_info) or merb.get_active_trackers():
         v_trackers = True
         v_only_active_trackers = True
 
@@ -197,18 +197,20 @@ def tracker_list(merb, timezone, only_active=False):
         else:
             output += "# "
         if tracker[tracker_name]["time_start"] > timeh.now():
-            output += "%s will start tracking at {%s %s} " % (tracker_name, tracker_start.strftime(config.DATE_FORMAT_PRINT), timezone)
+            output += "%s will start tracking at window opening" % tracker_name
         else:
-            output += "%s started tracking at {%s %s} " % (tracker_name, tracker_start.strftime(config.DATE_FORMAT_PRINT), timezone)
-        if tracker_stop:
-            output += "ended at {%s %s} " % (tracker_stop.strftime(config.DATE_FORMAT_PRINT), timezone)
-            output += "(%s) " % timeh.countdown(tracker_start, tracker_stop)
-        else:
-            if timeh.naive_to_tz(timeh.now(), "UTC") < tracker_start:
-                virtual_end = tracker_start
+            if tracker_stop:
+                output += "%s started tracking at {%s %s} ended at {%s %s} (%s)" %\
+                           (tracker_name,
+                            tracker_start.strftime(config.DATE_FORMAT_PRINT),
+                            timezone,
+                            tracker_stop.strftime(config.DATE_FORMAT_PRINT),
+                            timezone,
+                            timeh.countdown(tracker_start, tracker_stop))
             else:
                 virtual_end = timeh.naive_to_tz(timeh.now(), "UTC")
-            output += "(%s so far) " % timeh.countdown(tracker_start, virtual_end)
+                output += "%s is tracking since %s" % (tracker_name, timeh.countdown(tracker_start, virtual_end))
+
         if tracker_mode:
             output += ".%s" % tracker_mode
         output += "\n"

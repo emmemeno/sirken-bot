@@ -421,12 +421,17 @@ class SirkenCommands:
             # Merb has no eta
             elif not self.lp.merb_found.has_eta():
                 output_channel = self.input_author
-                output_content = "Merb has not ETA. ToD too old?"
+                output_content = "%s has not ETA. ToD too old?" % self.lp.merb_found.name
 
             # Merb is not a window type
             elif not self.lp.merb_found.plus_minus:
                 output_channel = self.input_author
-                output_content = "Merb is not a window type!"
+                output_content = "%s is not a window type!" % self.lp.merb_found.name
+
+            # Merb window opening is too far away
+            elif timeh.next_future(1) < self.lp.merb_found.window['start']:
+                output_channel = self.input_author
+                output_content = "%s's window opening is too far away" % self.lp.merb_found.name
             else:
 
                 user_is_tracking = self.lp.merb_found.get_single_active_tracker(self.input_author.name)
