@@ -340,7 +340,9 @@ class SirkenCommands:
                                                     self.lp.timezone)
                     tracker_stop = timeh.change_tz(timeh.naive_to_tz(stopped_tracker["time_stop"], "UTC"), self.lp.timezone)
                     tracking_time = timeh.countdown(tracker_start, tracker_stop)
-                    if not tracking_time == "0 minutes":
+
+                    # Print only if merbs was being tracked and not a future
+                    if timeh.now() >= stopped_tracker["time_start"]:
                         output_content += "%s stops tracking [%s] at {%s} %s %s (%s)\n" % (self.input_author.name,
                                                                                            merb.name,
                                                                                            output_time.strftime(
@@ -348,11 +350,7 @@ class SirkenCommands:
                                                                                            self.lp.timezone,
                                                                                            track_mode,
                                                                                            tracking_time)
-                    else:
-                        output_content += "%s will no more track [%s]\n" % (self.input_author.name, merb.name)
-                        tracker_to_remove = {}
-                        tracker_to_remove[self.input_author.name] = stopped_tracker
-                        merb.trackers.remove(tracker_to_remove)
+
 
                 # check if the user is currently tracking
             if not output_content:
@@ -372,30 +370,36 @@ class SirkenCommands:
 
             # Track by TAG
             if self.lp.tag:
-                count = 0
+                # merbs in window being tracked
+                m_counter = 0
                 output_content = ""
                 tag_merbs = self.merbs.get_all_by_tag(self.lp.tag)
                 for merb in tag_merbs:
-                    # start tracking only if merb is not being tracked by author
+                    # start tracking only if merb is not being tracked by the author
                     if not merb.get_single_active_tracker(self.input_author.name) and merb.has_eta():
+
                         # if merb is not in window, time is its eta (future)
                         if not merb.is_in_window():
                             time = merb.eta
                             time_future = True
+                        else:
+                            m_counter = m_counter + 1
 
                         merb.start_tracker(self.input_author.name, time, track_mode)
                         # save trackers
-                        self.merbs.save_trackers()
 
-                        output_content += messagecomposer.track_msg(self.input_author.name, merb,
-                                                                   track_mode, time, time_future) + "\n"
+                        # output_content += messagecomposer.track_msg(self.input_author.name, merb, track_mode, time,
+                        # time_future) + "\n"
 
-                        output_broadcast = self.get_broadcast_channels(config.BROADCAST_TRACK_CHANNELS)
-                        count = count + 1
-                if count == 0:
+                self.merbs.save_trackers()
+                output_content = "%s starts tracking %s (%d in window)" % (self.input_author.name,
+                                                                           self.lp.tag,
+                                                                           m_counter)
+                output_broadcast = self.get_broadcast_channels(config.BROADCAST_TRACK_CHANNELS)
+
+                if m_counter == 0:
                     output_content = "You are already tracking %s" % self.lp.tag
                     output_broadcast = False
-
 
             # Merb not found
             elif not self.lp.merb_found:
@@ -437,7 +441,7 @@ class SirkenCommands:
         else:
             output_channel = self.input_author
             output_content = "Missing Parameter.\nTo start tracking type {!track merb_name|tag start}\n" \
-                             "To stop tracking type {!track stop}" \
+                             "To stop tracking type {!track stop}\n" \
                              "To get tracking info type {!get merb_name info}"
 
         return {"destination": output_channel,

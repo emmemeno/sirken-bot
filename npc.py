@@ -128,20 +128,27 @@ class Merb:
                 active_trackers.append(my_tracker)
         return active_trackers
 
-    def start_tracker(self, tracker, time_start, mode):
-        if self.get_single_active_tracker(tracker):
+    def start_tracker(self, tracker_name, time_start, mode):
+        if self.get_single_active_tracker(tracker_name):
             return False
         else:
-            self.trackers.append({tracker: {"time_start": time_start, "mode": mode}})
-            return True
+            new_tracker = {tracker_name: {"time_start": time_start, "mode": mode}}
+            self.trackers.append(new_tracker)
+            return new_tracker
 
-    def stop_tracker(self, tracker, time_stop):
-        my_tracker = self.get_single_active_tracker(tracker)
+    def stop_tracker(self, tracker_name, time_stop):
+        my_tracker = self.get_single_active_tracker(tracker_name)
         if my_tracker:
             # prevent start time newer than stop time (when booking, etc.)
             if my_tracker['time_start'] > time_stop:
                 time_stop = my_tracker['time_start']
+            # Stop the tracker
             my_tracker['time_stop'] = time_stop
+
+            # Remove the tracker if he/she is a future
+            if timeh.now() <= my_tracker['time_start']:
+                self.trackers.remove({tracker_name: my_tracker})
+
             return my_tracker
         else:
             return False
@@ -422,7 +429,7 @@ class MerbList:
         self.order('eta')
         output = list()
         for merb in self.merbs:
-            if merb.target:
+            if merb.target and timeh.now() < merb.eta:
                 output.append(merb.print_short_info(v_target_tag=False))
         return output
 

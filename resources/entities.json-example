@@ -1,0 +1,938 @@
+{
+	"A Bloodgill Marauder": {
+		"alias": [
+			"Marauder"
+		],
+		"respawn_time": 8,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": [
+			"vpkey"
+		]
+	},
+	"A White Stallion": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"A shady goblin": {
+		"alias": [
+			"shady goblin"
+		],
+		"respawn_time": 24,
+		"plus_minus": 0,
+		"recurring": 1,
+		"tag": []
+	},
+	"Aaryonar": {
+		"alias": [
+			"Aary"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"An Ancient Jarsath": {
+		"alias": [
+			"Jarsath"
+		],
+		"respawn_time": 8,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": [
+			"vpkey"
+		]
+	},
+	"An angry goblin": {
+		"alias": [
+			"angry"
+		],
+		"respawn_time": 75.5,
+		"plus_minus": 3.5,
+		"recurring": 0,
+		"tag": []
+	},
+	"Avatar of Abhorrence": {
+		"alias": [
+			"Abhorrence"
+		],
+		"respawn_time": 72,
+		"plus_minus": 12,
+		"recurring": 0,
+		"tag": [
+			"Hate"
+		]
+	},
+	"Ayillish": {
+		"alias": [],
+		"respawn_time": 8,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": []
+	},
+	"Casalen": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 1,
+		"tag": [
+			"hot"
+		]
+	},
+	"Cazic Thule": {
+		"alias": [
+			"Cazic"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Fear"
+		]
+	},
+	"Cekenar": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Triplets",
+			"NToV", "ToV"
+		]
+	},
+	"Coercer T'vala": {
+		"alias": [
+			"Coercer"
+		],
+		"respawn_time": 72,
+		"plus_minus": 12,
+		"recurring": 0,
+		"tag": [
+			"Hate"
+		]
+	},
+	"Dagarn the Destroyer": {
+		"alias": [
+			"Dagarn"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Dain Frostreaver IV": {
+		"alias": [
+			"Dain"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Derakor the Vindicator": {
+		"alias": [
+			"Vindi",
+			"Derakor"
+		],
+		"respawn_time": 8,
+		"plus_minus": 1,
+		"recurring": 0,
+		"tag": [
+			"Kael"
+		]
+	},
+	"Dozekar the Cursed": {
+		"alias": [
+			"Dozekar"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+          "ToV"
+        ]
+	},
+	"Dracoliche": {
+		"alias": [
+			"Draco"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Fear"
+		]
+	},
+	"Dread": {
+		"alias": [],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Fear"
+		]
+	},
+	"Drusella Sathir": {
+		"alias": [
+			"Drusella"
+		],
+		"respawn_time": 24,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": []
+	},
+	"Druushk": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"VP"
+		]
+	},
+	"Eashen of the Sky": {
+		"alias": [
+			"Eashen"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Essedera": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 1,
+		"tag": [
+			"hot"
+		]
+	},
+	"Faydedar": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Fright": {
+		"alias": [],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Fear"
+		]
+	},
+	"Gorenaire": {
+		"alias": [
+			"Gore"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Gozzrem": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"WToV", "ToV"
+		]
+	},
+	"Ground spawn Kaesora (VP Key)": {
+		"alias": [
+			"Ground Kaesora"
+		],
+		"respawn_time": 8,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": [
+			"vpkey"
+		]
+	},
+	"Ground spawn Swamp of No Hope (VP Key)": {
+		"alias": [
+			"Ground Swamp"
+		],
+		"respawn_time": 8,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": [
+			"vpkey"
+		]
+	},
+	"Grozzmel": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 1,
+		"tag": [
+			"hot"
+		]
+	},
+	"Guardian Kozzalym": {
+		"alias": [
+			"Kozzalym"
+		],
+		"respawn_time": 120,
+		"plus_minus": 0,
+		"recurring": 1,
+		"tag": []
+	},
+	"Hadden": {
+		"alias": [
+			""
+		],
+		"respawn_time": 6,
+		"plus_minus": 0,
+		"recurring": 1,
+		"tag": []
+	},
+	"Hoshkar": {
+		"alias": [
+			"Hosh"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"VP"
+		]
+	},
+	"Ikatiar the Venom": {
+		"alias": [
+			"Ikatiar"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Innoruuk": {
+		"alias": [
+			"Inny"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Hate"
+		]
+	},
+	"Jorlleag": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Keldor Dek'Torek": {
+		"alias": [
+			"KdT",
+			"Keldor"
+		],
+		"respawn_time": 18,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": [
+			"Kael"
+		]
+	},
+	"Kelorek'Dar": {
+		"alias": [
+			"Kelorek",
+			"CS Dragon"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"King Tormax": {
+		"alias": [
+			"Tormax"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Kael"
+		]
+	},
+	"King Tranix": {
+		"alias": [
+			"Tranix"
+		],
+		"respawn_time": 8,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": []
+	},
+	"Klandicar": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Krigara": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 1,
+		"tag": [
+			"hot"
+		]
+	},
+	"Lady Mirenilla": {
+		"alias": [
+			"Mirenilla"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Lady Nevederia": {
+		"alias": [
+			"Nevederia"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Lady Vox": {
+		"alias": [
+			"Vox"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Lendiniara the Keeper": {
+		"alias": [
+			"Lendiniara",
+			"LTK"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"WToV", "ToV"
+		]
+	},
+	"Lepethida": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 1,
+		"tag": [
+			"hot"
+		]
+	},
+	"Lithiniath": {
+		"alias": [
+			"Lithin"
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Lodizal": {
+		"alias": [
+			"lodi"
+		],
+		"respawn_time": 18,
+		"plus_minus": 1,
+		"recurring": 0,
+		"tag": []
+	},
+	"Lord Doljonijiarnimorinar": {
+		"alias": [
+			"Lord Bob"
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Lord Feshlak": {
+		"alias": [
+			"Feshlak"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Lord Koi'Doken": {
+		"alias": [
+			"LKD"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Lord Kreizenn": {
+		"alias": [
+			"Kreizenn"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Lord Nagafen": {
+		"alias": [
+			"Nagafen",
+			"Naggy"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Lord Vyemm": {
+		"alias": [
+			"Vyemm"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Lord Yelinak": {
+		"alias": [
+			"Yelinak"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Master Yael": {
+		"alias": [
+			"Yael"
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Master of the Guard": {
+		"alias": [],
+		"respawn_time": 72,
+		"plus_minus": 12,
+		"recurring": 0,
+		"tag": [
+			"ST"
+		]
+	},
+	"Midayor": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 1,
+		"tag": [
+			"hot"
+		]
+	},
+	"Mistress of Scorn": {
+		"alias": [
+			"Mistress"
+		],
+		"respawn_time": 72,
+		"plus_minus": 12,
+		"recurring": 0,
+		"tag": [
+			"Hate"
+		]
+	},
+	"Nexona": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"VP"
+		]
+	},
+	"Noble Dojorn": {
+		"alias": [
+			"Dojorn",
+			"Noble"
+		],
+		"respawn_time": 168,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": []
+	},
+	"Phara Dar": {
+		"alias": [
+			"Phara"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"VP"
+		]
+	},
+	"Phinigel Autropos": {
+		"alias": [
+			"Phinigel",
+			"Phini"
+		],
+		"respawn_time": 12,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": []
+	},
+	"Ring8": {
+		"alias": [],
+		"respawn_time": 24,
+		"plus_minus": 0,
+		"recurring": 1,
+		"tag": []
+	},
+	"Scout Charisa": {
+		"alias": [
+			"scout",
+			"Scout roll",
+			"Charisa"
+		],
+		"respawn_time": 10,
+		"plus_minus": 0,
+		"recurring": 1,
+		"tag": []
+	},
+	"Sentry Badain": {
+		"alias": [
+			"Badain"
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Sevalak": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Triplets",
+			"NToV", "ToV"
+		]
+	},
+	"Severilous": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Silverwing": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"VP"
+		]
+	},
+	"Sir Lucan D'Lere": {
+		"alias": [
+			"Lucan",
+			"Sir Lucan",
+			"Sir Lucan DLere"
+		],
+		"respawn_time": 7,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": []
+	},
+	"Sontalek": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 16,
+		"recurring": 0,
+		"tag": []
+	},
+	"Statue of Rallos Zek": {
+		"alias": [
+			"Statue"
+		],
+		"respawn_time": 120,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Kael"
+		]
+	},
+	"Stomples": {
+		"alias": [],
+		"respawn_time": 72,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": []
+	},
+	"Talendor": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Tavekalem": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 1,
+		"tag": [
+			"hot"
+		]
+	},
+	"Telkorenar": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"WToV", "ToV"
+		]
+	},
+	"Terror": {
+		"alias": [],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Fear"
+		]
+	},
+	"The Final Arbiter": {
+		"alias": [
+			"Arbiter",
+			"TFA"
+		],
+		"respawn_time": 72,
+		"plus_minus": 12,
+		"recurring": 0,
+		"tag": [
+			"ST"
+		]
+	},
+	"The Progenitor": {
+		"alias": [
+			"Progenitor"
+		],
+		"respawn_time": 72,
+		"plus_minus": 12,
+		"recurring": 0,
+		"tag": [
+			"ST"
+		]
+	},
+	"Trakanon": {
+		"alias": [],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Tunare": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Vaniki": {
+		"alias": [],
+		"respawn_time": 122,
+		"plus_minus": 0,
+		"recurring": 1,
+		"tag": []
+	},
+	"Velketor the Sorcerer": {
+		"alias": [
+			"Velketor"
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Venril Sathir": {
+		"alias": [],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Verina Tomb": {
+		"alias": [
+			"Verina"
+		],
+		"respawn_time": 72,
+		"plus_minus": 24,
+		"recurring": 0,
+		"tag": []
+	},
+	"Vessel Drozlin": {
+		"alias": [
+			"Vessel"
+		],
+		"respawn_time": 108,
+		"plus_minus": 60,
+		"recurring": 0,
+		"tag": []
+	},
+	"Vilefang": {
+		"alias": [],
+		"respawn_time": 24,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": []
+	},
+	"Vulak`Aerr": {
+		"alias": [
+			"Vulak"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"NToV", "ToV"
+		]
+	},
+	"Wraith of a Shissir": {
+		"alias": [
+			"Shissir"
+		],
+		"respawn_time": 72,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": [
+			"Fear"
+		]
+	},
+	"Wuoshi": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": []
+	},
+	"Xygoz": {
+		"alias": [],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"VP"
+		]
+	},
+	"Ymmeln": {
+		"alias": [
+			""
+		],
+		"respawn_time": 72,
+		"plus_minus": 8,
+		"recurring": 1,
+		"tag": [
+			"hot"
+		]
+	},
+	"Zlandicar": {
+		"alias": [
+			"Zlandi"
+		],
+		"respawn_time": 108,
+		"plus_minus": 12,
+		"recurring": 0,
+		"tag": []
+	},
+	"Zlexak": {
+		"alias": [
+			"Zlex"
+		],
+		"respawn_time": 168,
+		"plus_minus": 8,
+		"recurring": 0,
+		"tag": [
+			"Triplets",
+			"NToV", "ToV"
+		]
+	},
+	"Zordak Ragefire": {
+		"alias": [
+			"Zordak",
+			"Ragefire"
+		],
+		"respawn_time": 36,
+		"plus_minus": 36,
+		"recurring": 0,
+		"tag": []
+	},
+	"a broken golem": {
+		"alias": [
+			"broken golem"
+		],
+		"respawn_time": 72,
+		"plus_minus": 0,
+		"recurring": 0,
+		"tag": [
+			"Fear"
+		]
+	}
+}
