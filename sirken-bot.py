@@ -25,7 +25,7 @@ async def minute_digest():
 
         for merb in merbs.merbs:
             # update merb eta
-            merb.eta = merb.get_eta()
+            merb.eta = merb.get_new_eta()
             minutes_diff = (merb.eta - now).total_seconds() // 60.0
 
             # broadcast the alarm 30 minutes before a target spawns

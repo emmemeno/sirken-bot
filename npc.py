@@ -47,7 +47,7 @@ class Merb:
             self.window = self.get_window(self.pop)
             self.accuracy = -2
         # Eta
-        self.eta = self.get_eta()
+        self.eta = self.get_new_eta()
         # Trackers
         self.trackers = trackers
 
@@ -62,7 +62,12 @@ class Merb:
         self.accuracy = approx
         self.snippet = snippet
         self.window = self.get_window(new_tod)
-        self.eta = self.get_eta()
+        # Update Pop time too if newer then new tod
+        if self.pop > new_tod:
+            self.pop = self.tod
+            self.pop_signed_by = author
+
+        self.eta = self.get_new_eta()
         self.auto_switch_off_target()
         self.stop_all_tracker(new_tod)
 
@@ -70,13 +75,13 @@ class Merb:
         self.pop = new_pop
         self.pop_signed_by = author
         # Updates only if pop is more recent than tod
-        if self.pop > self.tod:
+        if new_pop > self.tod:
             self.snippet = snippet
             self.window = self.get_window(new_pop)
-            self.eta = self.get_eta()
+            self.eta = self.get_new_eta()
             self.stop_all_tracker(new_pop)
 
-    def get_eta(self, virtual_tod=None):
+    def get_new_eta(self, virtual_tod=None):
         eta = datetime.datetime.strptime(config.DATE_DEFAULT,config.DATE_FORMAT)
 
         # virtual tod is last saved tod if this function is directly called
@@ -109,7 +114,7 @@ class Merb:
         # set a new tod for recurring mob
         if self.recurring and self.plus_minus == 0 and now >= virtual_tod + delta_hour and self.spawns < 12:
             self.spawns += 1
-            eta = self.get_eta(virtual_tod + delta_hour)
+            eta = self.get_new_eta(virtual_tod + delta_hour)
 
         return eta
 
@@ -193,7 +198,7 @@ class Merb:
             return False
 
     def print_short_info(self, timezone="UTC", v_trackers=False, v_only_active_trackers=False, v_info=False, v_target_tag=True):
-        self.eta = self.get_eta()
+        self.eta = self.get_new_eta()
         return messagecomposer.merb_status(self, timezone,
                                            v_trackers=v_trackers,
                                            v_only_active_trackers=v_only_active_trackers,
@@ -201,7 +206,7 @@ class Merb:
                                            v_target_tag=v_target_tag)
 
     def print_long_info(self, timezone, v_trackers=True, v_only_active_trackers=False, v_info=True, v_target_tag=True):
-        self.eta = self.get_eta()
+        self.eta = self.get_new_eta()
         return messagecomposer.merb_status(self, timezone,
                                            v_trackers=v_trackers,
                                            v_only_active_trackers=v_only_active_trackers,
