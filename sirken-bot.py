@@ -48,7 +48,7 @@ async def minute_digest():
             # broadcast the alarm 30 minutes before a target spawns
             if merb.target and minutes_diff == 30:
                 print_info = merb.print_short_info(v_trackers=True) + "\n"
-                message = "here\n" + messagecomposer.prettify(print_info, "RED")
+                message = "@here\n" + messagecomposer.prettify(print_info, "RED")
                 await client.get_channel(config.BROADCAST_CHANNEL).send(message)
 
             # send a pm to watchers
