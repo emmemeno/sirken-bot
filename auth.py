@@ -1,8 +1,10 @@
-import config
+import config_auth as config
+import timehandler as timeh
 import json
 from miracle import Acl
 import errors
 import messagecomposer
+import discord
 
 
 class User:
@@ -88,13 +90,22 @@ class BotRoles:
 
 class Auth:
 
-    def __init__(self, discord_client):
-        self.discord_client = discord_client
+    def __init__(self):
+        self.discord_client = None
         self.acl = Acl()
         self.roles = BotRoles(config.FILE_ROLES)
         self.users = {}
         self.discord_guilds = list()
         self.acl.grants(self.roles.bot_roles)
+
+    def add_discord_client(self, client):
+        self.discord_client = client
+
+    def get_single_discord_user(self, user_id):
+        if int(user_id) not in self.users:
+            return False
+        else:
+            return self.users[int(user_id)].discord_user
 
     def get_single_user_bot_roles(self, user_id):
         if user_id not in self.users:
@@ -155,23 +166,40 @@ class Auth:
 def cmd(command):
     def auth_cmd(func):
         def func_wrapper(parent_obj):
-            user_id = parent_obj.input_author.id
-            user_roles = parent_obj.authenticator.get_single_user_bot_roles(user_id)
+
+            input_user = parent_obj.input_author
+            input_channel = parent_obj.input_channel
+            user_roles = parent_obj.authenticator.get_single_user_bot_roles(input_user.id)
             # print("DECORATOR auth.cmd function. User_id %d Roles: %s " % (user_id, user_roles))
             # User not present?
 
             u_acl = parent_obj.authenticator.acl
-            check = u_acl.check_any(user_roles, "command", command)
-            if check or not config.AUTHENTICATION:
-                output = func(parent_obj)
-            else:
+            user_check = u_acl.check_any(user_roles, "command", command)
+            # CHECK FOR CHANNEL PERMISSION
+            if not isinstance(input_channel, discord.channel.DMChannel):
+                channel_error_msg = "Hey %s! You are not allowed to ask me questions in %s channel\n" \
+                                    "Let's talk here!" % (parent_obj.input_author.name, input_channel.name)
+                if len(config.ALLOWED_CHANNELS):
+                    if input_channel.id not in config.ALLOWED_CHANNELS and not input_channel.id == input_user:
+                        return [{"destination": parent_obj.input_author,
+                                "content": channel_error_msg,
+                                'decoration': "BLOCK"}]
+                if len(config.DENY_CHANNELS):
+                    if input_channel.id in config.DENY_CHANNELS and not input_channel.id == input_user:
+                        return [{"destination": parent_obj.input_author,
+                                 "content": channel_error_msg,
+                                 'decoration': "BLOCK"}]
+
+            # CHECK FOR USER PERMISSION
+            if not user_check and config.AUTHENTICATION:
                 output_content = messagecomposer.prettify(errors.error_auth(command), "BLOCK")
                 user_permissions = u_acl.which_permissions_any(user_roles, "command")
                 output_content += messagecomposer.prettify("Commands you can use: %s" % user_permissions, "BLOCK")
-                output = {"destination": parent_obj.input_author,
-                          "content": output_content,
-                          "broadcast": False}
-            return output
+                return [{"destination": parent_obj.input_author,
+                         "content": output_content,
+                         'decoration': "BLOCK"}]
+
+            return func(parent_obj)
 
         return func_wrapper
     return auth_cmd

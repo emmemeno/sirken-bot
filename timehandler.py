@@ -124,3 +124,11 @@ def countdown(d_to, d_from):
         output += str(minutes) + " minutes"
 
     return output
+
+def halfway_to_start_window(merb):
+    halfway_hours = (merb.respawn_time-merb.plus_minus)/2
+    halfway = merb.pop + datetime.timedelta(hours=halfway_hours)
+    if now() > halfway:
+        return True
+    else:
+        return False

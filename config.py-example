@@ -1,0 +1,51 @@
+# The Authenticator is global
+import auth
+authenticator = auth.Auth()
+
+# The Discord Token
+DISCORD_TOKEN = ""
+
+# The ID Channel where the Target Timers is:
+TIMERS_CHANNEL = 111111111111111111
+
+# The Broadcast Channel ID:
+BROADCAST_CHANNEL = 111111111111111111
+
+# The Batphone Channel ID:
+BROADCAST_BP_CHANNEL = 111111111111111111
+
+# Set False to disable the batphone
+BATPHONE = True
+
+# The maximum length allowed per message
+MAX_MESSAGE_LENGTH = 1800
+
+# The maximum length of a public message to be converted in a private message (anti-spam)
+MAX_BROADCAST_LENGTH = 1000
+
+# Fuzzy parameters
+FUZZY_THRESHOLD = 85
+FUZZY_GUESSED_THRESHOLD = 65
+
+# Files path
+PATH_DIR = "resources/"
+FILE_ROLES = PATH_DIR + 'roles.json'
+FILE_ENTITIES = PATH_DIR + 'entities.json'
+FILE_TIMERS = PATH_DIR + 'timers.json'
+FILE_TARGETS = PATH_DIR + 'targets.json'
+FILE_TRACKS = PATH_DIR + 'tracks.json'
+FILE_TRACKERS = PATH_DIR + 'trackers.json'
+FILE_WATCH = PATH_DIR + "watch.json"
+HELP_FILE = PATH_DIR + 'sirken-bot-help.json'
+HELP_DIR = "docs/"
+LOG_FILE = "logs/sirken-bot.log"
+LOG_IO_FILE = "logs/io.log"
+
+# The default date is used for sorting purposes
+DATE_DEFAULT = "1981-2-13 00:00"
+
+# How to store the date:
+DATE_FORMAT = "%Y-%m-%d %H:%M"
+# How to output the date:
+DATE_FORMAT_PRINT = "%b %d %H:%M"
+

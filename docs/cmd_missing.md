@@ -4,6 +4,7 @@
 This command will print a list of outdated merbs
 If you don't want to spam public channels, use it via private message
 -
+
 Print all merbs:
 ```
 !missing

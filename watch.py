@@ -11,7 +11,6 @@ class Watch:
         for key in json_watch:
             self.users[int(key)] = json_watch[key]
 
-
     def __str__(self):
         return self.users
 
@@ -36,7 +35,7 @@ class Watch:
     def get_all(self, user):
         output = {}
         if user not in self.users:
-            return False
+            return {}
         else:
             for merb in self.users[user]:
                 output[merb] = self.users[user][merb]
@@ -58,4 +57,4 @@ class Watch:
 
     def save(self):
         with open(self.url_json, 'w') as outfile:
-            json.dump(self.users, outfile, indent=2)
+            json.dump(self.users, outfile, indent=4)

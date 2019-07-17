@@ -4,9 +4,14 @@
 This command updates pop time. Use it when not sure about the tod.
 Pop times are used to calculate eta only if newer than ToD
 -
+
 Simplest way to update a merb (to current date)
 ```
-!pop Lord Bob now
+!pop Lord Bob
+```
+Pop a merb and Batphone!
+```
+!pop Lord Bob BP
 ```
 Updates some minutes ago
 ```

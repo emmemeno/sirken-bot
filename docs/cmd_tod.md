@@ -1,8 +1,9 @@
 -
 **!TOD**
 -
-This command updates the time of death, used to calculate the eta of a merb.
+This command updates Time of Death, used to calculate the eta of a merb.
 -
+
 Simplest way to update a merb (to current date)
 ```
 !tod Lord Bob now

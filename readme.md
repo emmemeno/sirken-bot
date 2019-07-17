@@ -5,115 +5,62 @@ Interactive discord bot who stores and updates times of death, pops and watch me
 
 ### LIST OF COMMANDS
 ```
-  [!help]         - Show the help
-  [!get]          - Show the status of a Merb
+  [!about]        - About Sirken Bot
+  [!help]         - Show this help
+  [!get]          - Show merbs due to spawn
   [!tod]          - Update the ToD of a Merb
-  [!pop]          - A Merb is popped
-  [!earthquake]   - omg omg omg (be careful, will reset all pop date/time!)
+  [!pop]          - Update the pop time of a Merb
+  [!track]        - Track a Merb
+  [!missing]      - Show a list of outdated merbs
+  [!earthquake]   - Omg omg omg (be careful, will reset all pop date/time!)
   [!watch]        - Keep an eye on your merbs
   [!merbs]        - List name and aliases of supported Merbs
-  [!about]        - About Sirken Bot
-```
+  [!target]       - Set a merb target
+  [!roles]        - Print Bot roles
+  [!setrole]      - Convert a discord role to a bot role
+  [!users]        - Print Users
 
-### !get
-Print all merbs due to spawn:
 ```
-!get all
+To see a specific help type !help command:
 ```
-Print all merbs in window
-```
-!get windows
-```
-Print all merbs of the specified tag
-```
-!get ntov
- ```            
- Get a specified merb
- ```
-!get Lord Bob
-```
-Get more info about a specified merb
-```
-!get Lord Bob info
-```
-
-### !tod & !pop
-With these commands you will update respectively time of death and pop time of a single merb.
-Pop times are used to calculate merb eta only if newer than tod.
-Both commands share the same syntax.
-
-Simplest way to update a merb (to current date)
-```
-!tod Lord Bob now
-```
-Updates some minutes ago
-```
-!tod Lord Bob 10 minutes ago
-```
-Updates to a specified time. If time is in the future, yesterday is assumed
-```
-!tod Lord Bob 14:01
-```
-Use different timezones
-```                                   
-!tod Lord Bob 14:01 yesterday est
-```
-Use the 12hour am/pm time format
-```
-!tod Lord Bob 02:01pm pst
-```
-Force the date to yesterday
-```                         
-!tod Lord Bob 02:01am yesterday
-```
-Full date/time
-```
-!tod Lord Bob 2019-04-20 12:01a.m.
+!help get
 ```
 ```
-!tod Lord Bob 2019-04-19 05:00PM pst
-```
-
-### !earthquake
-Updates all merbs pop times to the specified time. the time format is the same used for !tod and !pop
-```
-!earthquake now
+!help tod
 ```
 ```
-!earthquake 12:59am
-```
-
-### !watch
-Keep a look on your merbs and be alerted before their spawns/window opens.
-
-Print all watched merbs
-```
-!watch
-```
-Watch a specified merb and be alerted 30minutes before his eta
-```
-!watch Lord Bob
-```
-Be alerted one hour before eta
-```
-!watch Lord Bob 60
-```
-Switch off a watcher
-```
-!watch Lord Bob off
-```
-Switch off all watchers
-```
-!watch off
-```
-
-### !merbs
-Prints privately a crude list of merbs/alias/tags
-```
-!merbs
+...
 ```
 
 ### RELEASES
+##### 1.0 aka Killing the Spam
+```
+- Added the Target Timers widget in the brand new (read-only) timer channel, updated every minute.
+- The tracking system is now based on sessions to give more accurate tracking times. This is how it works:
+    - You can have only 1 active session at a time
+    - A session can be a single merb or a tag
+    - You can stop the session with just {!track stop} command...
+    - ...or when all your tracked merbs pop.
+    - If merb(s) is not in window yet, starting track time is set to merb(s) window opening.
+- Added the BP option on !pop command. This is added to prevent chaotic situations where merbs spawn close each other and a batphone is not needed.
+  So now if you want to batphone a merb, use the keyword `BP`:
+  ex. {!pop vulak bp}
+- Added the {!track info} command to show the status of your tracking session.
+- Added the {!watch info} command to show merbs you are watching
+- Removed the daily digest. You can still get merbs in the next 24 hours with the new command {!get today}
+- The allow/deny channel system is in. Interacting with the bot is now restricted to these channels: raid-chat, asky-gynok, sleepers-tomb, raid-strategies
+  Again, 95% of times you should interact with the bot via Direct Messages.
+  Gynok is also connected to a micro explosive located back on your neck. Writing in the wrong channel will activate it causing your skull to explode (experimental).
+- All the important messages (tods, pops, tracks, targets, windows opening alerts etc.) will be broadcasted, in different colors, to gynok-horn channel. This is a read-only channel.
+- Added new aliases: Shady, Doze, Fay, Gozz, Kozz, Lady M, Lady N, MotG, Sniffles, Telk, Trak, Velk
+- Added new tags: dn, swc
+```
+Wow, Gynok is of age! I want to thank all the wonderful Riots people who sent me great ideas, discovered potential bugs and helped with the beta-test. You guys rock!
+After this major release there will be not any significant update for a while but please don't stop to whisper your bot improvement ideas.
+The Tracking system has also reached the maturity. If used along with !pop it will give real tracking times, a must for our upcoming dkp bot (and now save Arthion some time).
+So if you are a tracker please keep using !pop command (with or without `BP`).
+Have a lovely Sunday!
+
 ##### 0.8 aka Paranoid Android
 ```
 - Added a RBAC: Now Sirken will parse discord servers roles converting them to bot roles. That means if you dont have

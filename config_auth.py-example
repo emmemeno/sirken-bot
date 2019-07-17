@@ -1,0 +1,14 @@
+# CONFIG FILE FOR AUTHORIZATION STUFF
+
+# Global switch for per-user authentication
+AUTHENTICATION = False
+
+# Leave empty for no permission checks
+ALLOWED_CHANNELS = []
+DENY_CHANNELS = [597343393093517312]
+
+# Client ID of the Bot Owner (superpowers!)
+CLIENT_ID_OWNER = [331361239718690821]
+
+PATH_DIR = "resources/"
+FILE_ROLES = PATH_DIR + 'roles.json'

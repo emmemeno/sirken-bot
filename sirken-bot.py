@@ -1,5 +1,4 @@
 import config
-import auth
 import logging
 import logging.config
 import asyncio
@@ -7,80 +6,18 @@ import discord
 from discord.ext import commands
 import timehandler as timeh
 import messagecomposer
+import embed_message
 from sirken_commands import SirkenCommands
 import npc
 import watch
+import trackers
 import helper
 from timeit import default_timer as timer
 
 
-######################
-# TIC EVERY MINUTE   #
-######################
-async def minute_digest():
-    tic = 60
-    while True:
-        await asyncio.sleep(tic)
-        now = timeh.now()
-
-        for merb in merbs.merbs:
-            # update merb eta
-            merb.eta = merb.get_new_eta()
-            minutes_diff = (merb.eta - now).total_seconds() // 60.0
-
-            # broadcast the alarm 30 minutes before a target spawns
-            if merb.target and minutes_diff == 30:
-                print_info = merb.print_short_info() + "\n"
-                trackers = merb.get_active_trackers()
-                if not trackers:
-                    print_info += "To start tracking type {!track %s start}" % merb.name
-                else:
-                    print_info += messagecomposer.tracker_list(merb, "UTC", only_active=True)
-                message = "@here\n" + messagecomposer.prettify(print_info, "CSS")[0]
-                await send_spam(message, config.BROADCAST_DAILY_DIGEST_CHANNELS)
-
-            # send a pm to watchers
-            for user in watch.users:
-                destination = discord.utils.get(client.get_all_members(), id=user)
-                if watch.check(user, merb.name, minutes_diff) and not merb.is_in_window():
-                    await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS")[0])
-                    logging.debug("ALARM TO %s: %s | ETA: %s | DIFF MINUTES: %s" %
-                                  (user, merb.name, merb.eta, minutes_diff))
-
-
-######################
-# TIC EVERY HOUR     #
-######################
-async def hour_digest():
-    # tic every hour
-    tic = 60*60
-    while True:
-        await asyncio.sleep(tic)
-
-        # Reload Roles and Users
-        authenticator.reload_discord_roles()
-        logger_sirken.info("Roles Reloaded")
-        authenticator.reload_discord_users()
-        logger_sirken.info("Users Reloaded")
-
-        # tic only one time per day
-        now = timeh.now()
-        if int(now.hour) == config.DAILY_HOUR:
-            merbs_print_list = merbs.print_all("CET", "countdown", limit_hours=24)
-            if merbs_print_list:
-                counter = len(merbs_print_list)
-
-                pre_content = "DAILY DIGEST\n############\n%d merbs are expected today, %s.\n\n" %\
-                              (counter, timeh.now().strftime("%d %b %Y"))
-                post_content = ""
-
-                output_list = messagecomposer.output_list(merbs_print_list)
-                output_content = messagecomposer.prettify(pre_content + output_list + post_content, "CSS")
-                for message in output_content:
-                    await send_spam(message, config.BROADCAST_DAILY_DIGEST_CHANNELS)
-                logger_sirken.info("Daily Digest sent")
-
-
+##############
+# LOGGER SETUP
+##############
 def setup_logger(name, log_file, level=logging.INFO):
 
     formatter = logging.Formatter('[%(asctime)s] - %(message)s')
@@ -94,6 +31,54 @@ def setup_logger(name, log_file, level=logging.INFO):
     return logger
 
 
+##################
+# TIC EVERY MINUTE
+##################
+async def minute_digest():
+    tic = 60
+    while True:
+        await asyncio.sleep(tic)
+        now = timeh.now()
+
+        for merb in merbs.merbs:
+            # update merb eta
+            merb.eta = merb.get_new_eta()
+            minutes_diff = (merb.eta - now).total_seconds() // 60.0
+
+            # broadcast the alarm 30 minutes before a target spawns
+            if merb.target and minutes_diff == 30:
+                print_info = merb.print_short_info(v_trackers=True) + "\n"
+                message = "here\n" + messagecomposer.prettify(print_info, "RED")
+                await client.get_channel(config.BROADCAST_CHANNEL).send(message)
+
+            # send a pm to watchers
+            for user in watch.users:
+                destination = discord.utils.get(client.get_all_members(), id=user)
+                if watch.check(user, merb.name, minutes_diff) and not merb.is_in_window():
+                    await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS"))
+                    logging.debug("ALARM TO %s: %s | ETA: %s | DIFF MINUTES: %s" %
+                                  (user, merb.name, merb.eta, minutes_diff))
+
+        # UPDATE EMBED TIMERS
+        await embed_timers.update_message(client, merbs, trackers)
+
+
+######################
+# TIC EVERY HOUR     #
+######################
+async def hour_digest():
+    # tic every hour
+    tic = 60*60
+    while True:
+        await asyncio.sleep(tic)
+
+        # Reload Roles and Users
+        config.authenticator.reload_discord_roles()
+        logger_sirken.info("Roles Reloaded")
+        config.authenticator.reload_discord_users()
+        logger_sirken.info("Users Reloaded")
+
+
 ########
 # MAIN #
 ########
@@ -103,7 +88,7 @@ if __name__ == "__main__":
     logger_sirken = setup_logger('Sirken-Bot', config.LOG_FILE)
 
     # Input file logger
-    logger_input = setup_logger('Input', config.LOG_INPUT_FILE)
+    logger_io = setup_logger('Input Output', config.LOG_IO_FILE)
 
     logging.config.dictConfig({
         'version': 1,
@@ -117,14 +102,13 @@ if __name__ == "__main__":
     logger_sirken.info("Loading Bot. Done in (%s)" % (round(t_end-t_start, 5)))
 
     # Initialize Auth
-    authenticator = auth.Auth(client)
+    config.authenticator.add_discord_client(client)
 
     # Initialize Merbs List
     t_start = timer()
     merbs = npc.MerbList(config.FILE_ENTITIES,
                          config.FILE_TIMERS,
                          config.FILE_TARGETS,
-                         config.FILE_TRACKS,
                          config.DATE_FORMAT,
                          config.DATE_FORMAT_PRINT)
     merbs.order()
@@ -143,96 +127,70 @@ if __name__ == "__main__":
     t_end = timer()
     logger_sirken.info("Loading Watcher. Done in %s seconds" % (round(t_end-t_start, 5)))
 
+    # Load Trackers
+    t_start = timer()
+    trackers = trackers.Trackers(config.FILE_TRACKERS, merbs)
+    t_end = timer()
+    logger_sirken.info("Loading Trackers. Done in %s seconds" % (round(t_end-t_start, 5)))
+
     # Initialize Sirken Commands
-    sirken_cmds = SirkenCommands(client, authenticator, merbs, helper, watch)
+    sirken_cmds = SirkenCommands(client, config.authenticator, merbs, helper, watch, trackers)
     t_end = timer()
     logger_sirken.info("Loading IO. Done in %s seconds" % (round(t_end-t_start, 5)))
+
+    # Initialize Embed timers
+    embed_timers = embed_message.EmbedMessage(config.TIMERS_CHANNEL, "**TARGET TIMERS**", "")
 
     @client.event
     async def on_ready():
         logger_sirken.info("Sirken Bot is online and connected to Discord")
         # Load Discord Roles
         t_start = timer()
-        authenticator.load_discord_roles()
+        config.authenticator.load_discord_roles()
         t_end = timer()
         logger_sirken.info("Loading Discord Roles. Done in %s seconds" % (round(t_end - t_start, 5)))
         t_start = timer()
-        authenticator.load_discord_users()
+        config.authenticator.load_discord_users()
         t_end = timer()
         logger_sirken.info("Loading Discord Users. Done in %s seconds" % (round(t_end - t_start, 5)))
-
+        # LOAD EMBED
+        await embed_timers.update_message(client, merbs, trackers)
 
     @client.event
-    async def on_message(message):
+    async def on_message(input_message):
         # Skip self messages
-        if message.author == client.user:
+        if input_message.author == client.user:
             return
 
-        messages_output = sirken_cmds.process(message.author, message.channel, message.content)
-        if not messages_output:
+        t_start = timer()
+
+        response_messages = sirken_cmds.process(input_message)
+
+        t_end = timer()
+        processing_time = round(t_end - t_start, 5)
+
+        # Do nothing if there are no responses
+        if not response_messages:
             return
 
-        # Anti spam filter. If message is longer than 1, destination is PM.
-        if len(messages_output["content"]) > 1:
-            message_destination = message.author
-        else:
-            message_destination = messages_output["destination"]
+        logger_io.info("INPUT: %s - %s (%s)" % (input_message.author.name, input_message.content, processing_time))
 
-        for message in messages_output["content"]:
-            await message_destination.send(message)
-            # BROADCAST THE MESSAGE
-            if messages_output['broadcast']:
-                await send_spam(message, messages_output['broadcast'])
-            # SEND A SECOND MESSAGE
-            if 'secondary_messages' in messages_output:
-                for secondary_message in messages_output['secondary_messages']:
-                    await send_spam(secondary_message['content'],
-                                    secondary_message['destination'])
-            # DO FANCY ACTIONS
-            if 'action' in messages_output:
-                if messages_output["action"] == 'leave_all_guilds':
-                    await leave_guild(authenticator.discord_guilds)
+        # Loop the messages list and cut messages too long  for discord
+        output_messages = list()
+        for raw_message in response_messages:
+            if len(raw_message['content']) > config.MAX_MESSAGE_LENGTH:
+                for trunk in messagecomposer.message_cut(raw_message['content'], config.MAX_MESSAGE_LENGTH):
+                    output_messages.append({'destination': raw_message['destination'],
+                                            'content': trunk,
+                                            'decoration': raw_message['decoration']})
+            else:
+                # if length is in limit, just copy the message in the output list
+                output_messages.append(raw_message)
 
-            # send PM Alerts
-            if 'merb_alert' in messages_output:
-                await send_pop_alerts(messages_output['merb_alert'], messages_output["content"])
-            # send EQ Alerts
-            if 'earthquake' in messages_output:
-                await send_eq_alert(messages_output['earthquake'])
-
-    # Leave Guild
-    async def leave_guild(guilds):
-        for guild in guilds:
-            logger_sirken.info("Leaving %s server" % guild.name)
-            await guild.leave()
-
-    # Send Spam to Broadcast Channel
-    @client.event
-    async def send_spam(message, channels):
-        for channel in channels:
-            destination = client.get_channel(channel)
-            await destination.send(message)
-
-    # Send Earthquake Messages
-    @client.event
-    async def send_eq_alert(author):
-        # for user in watch.users:
-        #   destination = discord.utils.get(client.get_all_members(), id=user)
-        #    await client.send_message(destination,
-        #                              messagecomposer.prettify("%s BROADCAST: Minions gather, their forms appearing"
-        #                                                       " as time and space coalesce." % author, "CSS"))
-        #    logging.info("EARTHQUAKE!")
-        pass
-
-    # Send Pop Message
-    @client.event
-    async def send_pop_alerts(merb: npc.Merb, message):
-        # for user in watch.users:
-        #    destination = discord.utils.get(client.get_all_members(), id=user)
-        #    if merb.name in watch.users[user]:
-        #        await client.send_message(destination, messagecomposer.prettify(message, "CSS"))
-        #        logging.info("SEND ALERT. %s pop TO: %s" % (merb.name, user))
-        pass
+        for output_m in output_messages:
+            # Send the decorated messages
+            await output_m['destination'].send(messagecomposer.prettify(output_m['content'], output_m['decoration']))
+            logger_io.debug("OUTPUT: %s - %s" % (output_m['destination'], output_m['content']))
 
     # Run the Bot
     client.loop.create_task(minute_digest())

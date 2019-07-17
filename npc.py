@@ -66,10 +66,9 @@ class Merb:
         if self.pop > new_tod:
             self.pop = self.tod
             self.pop_signed_by = author
-
         self.eta = self.get_new_eta()
         self.auto_switch_off_target()
-        self.stop_all_tracker(new_tod)
+        self.del_all_trackers()
 
     def update_pop(self, new_pop, author, snippet=""):
         # Updates only if pop is more recent than tod
@@ -79,7 +78,7 @@ class Merb:
             self.snippet = snippet
             self.window = self.get_window(new_pop)
             self.eta = self.get_new_eta()
-            self.stop_all_tracker(new_pop)
+            self.del_all_trackers()
             return True
         return False
 
@@ -120,64 +119,34 @@ class Merb:
 
         return eta
 
-    def get_single_active_tracker(self, target):
-        for my_tracker in self.trackers:
-            if target in my_tracker:
-                if "time_stop" not in my_tracker[target]:
-                    return my_tracker[target]
+    def get_trackers(self):
+        return self.trackers
+
+    def add_tracker(self, tracker_id):
+        if tracker_id not in self.trackers:
+            self.trackers.append(tracker_id)
+            return True
         return False
 
-    def get_active_trackers(self):
-        active_trackers = list()
-        for my_tracker in self.trackers:
-            tracker = my_tracker[next(iter(my_tracker))]
-            if "time_stop" not in tracker:
-                active_trackers.append(my_tracker)
-        return active_trackers
+    def del_tracker(self, tracker_id):
+        if tracker_id in self.trackers:
+            self.trackers.remove(tracker_id)
+            return True
+        return False
 
-    def start_tracker(self, tracker_name, time_start, mode):
-        if self.get_single_active_tracker(tracker_name):
-            return False
-        else:
-            new_tracker = {tracker_name: {"time_start": time_start, "mode": mode}}
-            self.trackers.append(new_tracker)
-            return new_tracker
-
-    def stop_tracker(self, tracker_name, time_stop):
-        my_tracker = self.get_single_active_tracker(tracker_name)
-        if my_tracker:
-            # prevent start time newer than stop time (when booking, etc.)
-            if my_tracker['time_start'] > time_stop:
-                time_stop = my_tracker['time_start']
-            # Stop the tracker
-            my_tracker['time_stop'] = time_stop
-
-            # Remove the tracker if he/she is a future
-            if timeh.now() <= my_tracker['time_start']:
-                self.trackers.remove({tracker_name: my_tracker})
-
-            return my_tracker
-        else:
-            return False
-
-    def stop_all_tracker(self, time_stop):
-        for my_tracker in self.trackers:
-            tracker = my_tracker[next(iter(my_tracker))]
-            if "time_stop" not in tracker:
-                if time_stop < tracker['time_start']:
-                    time_stop = tracker['time_start']
-                tracker['time_stop'] = time_stop
-        return
-
-    def wipe_trackers(self):
+    def del_all_trackers(self):
         del self.trackers[:]
-        return
 
     def is_target(self):
         if self.target:
             return True
         else:
             return False
+
+    def is_trackable(self):
+        if self.is_in_window() or timeh.halfway_to_start_window(self):
+            return True
+        return False
 
     def switch_target(self, mode):
         self.target = mode
@@ -199,21 +168,34 @@ class Merb:
         else:
             return False
 
-    def print_short_info(self, timezone="UTC", v_trackers=False, v_only_active_trackers=False, v_info=False, v_target_tag=True):
-        self.eta = self.get_new_eta()
-        return messagecomposer.merb_status(self, timezone,
-                                           v_trackers=v_trackers,
-                                           v_only_active_trackers=v_only_active_trackers,
-                                           v_info=v_info,
-                                           v_target_tag=v_target_tag)
+    def print_short_info(self, timezone="UTC",
+                         v_trackers=False,
+                         v_only_active_trackers=False,
+                         v_info=False,
+                         v_target_tag=True,
+                         v_single=True):
 
-    def print_long_info(self, timezone, v_trackers=True, v_only_active_trackers=False, v_info=True, v_target_tag=True):
-        self.eta = self.get_new_eta()
         return messagecomposer.merb_status(self, timezone,
                                            v_trackers=v_trackers,
                                            v_only_active_trackers=v_only_active_trackers,
                                            v_info=v_info,
-                                           v_target_tag=v_target_tag)
+                                           v_target_tag=v_target_tag,
+                                           v_single=v_single)
+
+    def print_long_info(self,
+                        timezone,
+                        v_trackers=True,
+                        v_only_active_trackers=False,
+                        v_info=True,
+                        v_target_tag=True,
+                        v_single=True):
+
+        return messagecomposer.merb_status(self, timezone,
+                                           v_trackers=v_trackers,
+                                           v_only_active_trackers=v_only_active_trackers,
+                                           v_info=v_info,
+                                           v_target_tag=v_target_tag,
+                                           v_single=v_single)
 
     def print_last_update(self, timezone):
         if self.pop > self.tod:
@@ -236,7 +218,8 @@ class Merb:
                              "signed_tod": self.tod_signed_by,
                              "signed_pop": self.pop_signed_by,
                              "accuracy": self.accuracy,
-                             "snippet": self.snippet
+                             "snippet": self.snippet,
+                             "trackers": self.trackers
                             }
                  })
 
@@ -247,15 +230,22 @@ class Merb:
                 return True
         return False
 
+    def print_aliases(self):
+        output = ""
+        for alias in self.alias:
+            output += alias + ", "
+        if len(output) > 2:
+            output = output[0:-2]
+        return output
+
 
 # Class container of Merbs, load from JSON
 class MerbList:
 
-    def __init__(self, url_entities, url_timers, url_targets, url_tracks, date_format_rec, date_format_print):
+    def __init__(self, url_entities, url_timers, url_targets, date_format_rec, date_format_print):
         self.url_entities = url_entities
         self.url_timers = url_timers
         self.url_targets = url_targets
-        self.url_tracks = url_tracks
         self.max_respawn_time = 0
 
         with open(url_entities) as f:
@@ -264,31 +254,33 @@ class MerbList:
             json_timers = json.load(f)
         with open(url_targets) as f:
             json_targets = json.load(f)
-        with open(url_tracks) as f:
-            json_tracks = json.load(f)
 
         self.merbs = list()
         self.tags = list()
-        for i in json_entities:
+        for merb in json_entities:
             # CALCULATE LIMIT HOURS FOR GET ALL REQUESTS
-            limit_respawn_time = json_entities[i]["respawn_time"] + json_entities[i]["plus_minus"]
+            limit_respawn_time = json_entities[merb]["respawn_time"] + json_entities[merb]["plus_minus"]
             if limit_respawn_time > self.max_respawn_time:
                 self.max_respawn_time = limit_respawn_time
             snippet = ""
-            if i in json_timers:
-                tod = json_timers[i]["tod"]
-                pop = json_timers[i]["pop"]
-                signed_tod = json_timers[i]["signed_tod"]
-                if "signed_pop" not in json_timers[i]:
+            trackers = list()
+            if merb in json_timers:
+                tod = json_timers[merb]["tod"]
+                pop = json_timers[merb]["pop"]
+                signed_tod = json_timers[merb]["signed_tod"]
+                if "signed_pop" not in json_timers[merb]:
                     signed_pop = signed_tod
                 else:
-                    signed_pop = json_timers[i]["signed_pop"]
+                    signed_pop = json_timers[merb]["signed_pop"]
+
+                if "trackers" in json_timers[merb]:
+                    trackers = json_timers[merb]["trackers"]
 
                 snippet = ""
-                if "snippet" in json_timers[i]:
-                    snippet = json_timers[i]["snippet"]
+                if "snippet" in json_timers[merb]:
+                    snippet = json_timers[merb]["snippet"]
 
-                accuracy = json_timers[i]["accuracy"]
+                accuracy = json_timers[merb]["accuracy"]
             else:
                 tod = config.DATE_DEFAULT
                 pop = config.DATE_DEFAULT
@@ -297,33 +289,17 @@ class MerbList:
                 accuracy = 0
 
             # LOAD TARGETS
-            if i in json_targets:
-                target = json_targets[i]
+            if merb in json_targets:
+                target = json_targets[merb]
             else:
                 target = False
 
-            # LOAD TRACKS
-            trackers = list()
-            if i in json_tracks:
-                for tracker in json_tracks[i]:
-                    tracker_name = next(iter(tracker))
-                    tracker_mode = tracker[tracker_name]["mode"]
-                    time_start = datetime.datetime.strptime(tracker[tracker_name]["time_start"], config.DATE_FORMAT)
-                    if tracker[tracker_name]["time_stop"]:
-                        time_stop = datetime.datetime.strptime(tracker[tracker_name]["time_stop"], config.DATE_FORMAT)
-                        trackers.append({tracker_name: {"time_start": time_start,
-                                                        "time_stop": time_stop,
-                                                        "mode": tracker[tracker_name]["mode"]}})
-                    else:
-                        trackers.append({tracker_name: {"time_start": time_start,
-                                                        "mode": tracker[tracker_name]["mode"]}})
-
-            self.merbs.append(Merb(i,
-                                   json_entities[i]["alias"],
-                                   json_entities[i]["respawn_time"],
-                                   json_entities[i]["plus_minus"],
-                                   json_entities[i]["recurring"],
-                                   json_entities[i]["tag"],
+            self.merbs.append(Merb(merb,
+                                   json_entities[merb]["alias"],
+                                   json_entities[merb]["respawn_time"],
+                                   json_entities[merb]["plus_minus"],
+                                   json_entities[merb]["recurring"],
+                                   json_entities[merb]["tag"],
                                    tod,
                                    pop,
                                    signed_tod,
@@ -336,7 +312,7 @@ class MerbList:
                                    date_format_print
                                    ))
             # Create a list of tag
-            for tag in json_entities[i]["tag"]:
+            for tag in json_entities[merb]["tag"]:
                 if not tag.lower() in self.tags and tag:
                     self.tags.append(tag.lower())
             self.tags.sort()
@@ -354,30 +330,6 @@ class MerbList:
                     output[merb.name] = merb.target
             json.dump(output, outfile, indent=4)
 
-    def save_trackers(self):
-        with open(self.url_tracks, 'w') as outfile:
-            self.order('name')
-            output = {}
-            for merb in self.merbs:
-                if merb.trackers:
-                    trackers_list = list()
-                    for tracker in merb.trackers:
-                        tracker_name = next(iter(tracker))
-                        time_start = datetime.datetime.strftime(tracker[tracker_name]["time_start"], config.DATE_FORMAT)
-                        if "time_stop" in tracker[tracker_name]:
-                            time_stop = datetime.datetime.strftime(tracker[tracker_name]["time_stop"], config.DATE_FORMAT)
-                        else:
-                            time_stop = ""
-                        trackers_list.append({tracker_name: {
-                            "time_start": time_start,
-                            "time_stop": time_stop,
-                            "mode": tracker[tracker_name]["mode"]}
-                        })
-
-                    output.update({merb.name: trackers_list})
-
-            json.dump(output, outfile, indent=4)
-
     def order(self, order='name'):
         if order == 'name':
             self.merbs.sort(key=lambda merb: merb.name.lower())
@@ -387,6 +339,12 @@ class MerbList:
         if order == 'window_end':
             self.merbs.sort(key=lambda merb: merb.window['end'], reverse=True)
 
+    def get_by_name(self, name):
+        for merb in self.merbs:
+            if merb.name == name:
+                return merb
+        return False
+
     def get_all_by_tag(self, tag):
         self.order('eta')
         output = list()
@@ -395,17 +353,30 @@ class MerbList:
                 output.append(merb)
         return output
 
+    def get_active_tracked_merbs(self):
+        self.order('eta')
+        output = list()
+        for merb in self.merbs:
+            if len(merb.trackers):
+                output.append(merb)
+        return output
+
+    def delete_all_active_trackers(self):
+        for merb in self.merbs:
+            if merb.trackers:
+                merb.del_all_trackers()
+
     def print_all_in_window(self):
         self.order('eta')
         output = list()
 
         for merb in self.merbs:
             if merb.window['start'] <= timeh.now() <= merb.window['end']:
-                output.append(merb.print_short_info())
+                output.append(merb.print_short_info(v_single=False))
 
         return output
 
-    def print_all(self, timezone, mode="countdown", limit_hours=None):
+    def print_all(self, limit_hours=None):
         if not limit_hours:
             limit_hours = self.max_respawn_time
         now = timeh.now()
@@ -417,11 +388,7 @@ class MerbList:
             date_diff = date_limit - merb.eta
             hour_diff = date_diff.total_seconds() / 3600
             if timeh.now() < merb.eta and hour_diff >= 0:
-                # Show online merb eta in the future
-                if mode == "countdown":
-                    output.append(merb.print_short_info())
-                else:
-                    output.append(merb.print_long_info(timezone))
+                output.append(merb.print_short_info(v_single=False))
         return output
 
     def print_all_by_tag(self, tag):
@@ -437,7 +404,7 @@ class MerbList:
         output = list()
         for merb in self.merbs:
             if merb.target and timeh.now() < merb.eta:
-                output.append(merb.print_short_info(v_target_tag=False))
+                output.append(merb.print_short_info(v_target_tag=True))
         return output
 
     def print_all_meta(self):

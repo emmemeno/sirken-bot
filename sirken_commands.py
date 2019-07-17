@@ -9,37 +9,37 @@ import timehandler as timeh
 import logging
 import operator
 
-logger = logging.getLogger("Input")
+logger = logging.getLogger("Input Output")
 
 
 class SirkenCommands:
 
-    def __init__(self, d_client, my_auth, merbs_list, my_help, watcher):
+    def __init__(self, d_client, my_auth, merbs_list, my_help, watcher, trackers):
         self.d_client = d_client
         self.authenticator = my_auth
         self.merbs = merbs_list
         self.lp = line_parser.LineParser(merbs_list)
         self.helper = my_help
         self.watch = watcher
+        self.trackers = trackers
         self.input_author = None
         self.input_author_roles = None
         self.input_channel = None
+        self.broadcast_channels = None
 
     ##################
     # PROCESS THE LINE
     ##################
-    def process(self, author, channel, line):
+    def process(self, message):
 
-        t_start = timer()
+        self.input_author = message.author
+        self.input_channel = message.channel
 
-        self.lp.process(line)
+        self.lp.process(message.content)
 
         # continue only if there is a command
         if not self.lp.cmd:
             return False
-
-        self.input_author = author
-        self.input_channel = channel
 
         cmd_list = {
             "about": self.cmd_about,  # About
@@ -60,35 +60,31 @@ class SirkenCommands:
             "missing": self.cmd_missing
         }
 
-        func = cmd_list.get(self.lp.cmd, lambda: {"destination": self.input_author,
-                                                  "content": messagecomposer.prettify(errors.error_command()),
-                                                  "broadcast": False})
+        func = cmd_list.get(self.lp.cmd, lambda: [{'destination': self.input_author,
+                                                   'content': errors.error_command(),
+                                                   "decoration": 'CSS'}])
         output = func()
-        t_end = timer()
-        processing_time = round(t_end - t_start, 5)
-        logger.info("%s - %s (%s)" % (messagecomposer.simple_username(str(self.input_author)), line, processing_time))
 
         # clearing the line
         self.lp.clear()
-
         return output
 
     #########################
     # PRINT THE ABOUT MESSAGE
     #########################
     def cmd_about(self):
-        return {"destination": self.input_author,
-                "content": self.helper.get_about(),
-                'broadcast': False}
+        return [{'destination': self.input_author,
+                 'content': self.helper.get_about(),
+                 'decoration': None}]
 
     #######
     # HELP
     #######
     @auth.cmd("help")
     def cmd_help(self):
-        return {"destination": self.input_author,
-                "content": self.helper.get_help(self.lp.param),
-                'broadcast': False}
+        return [{'destination': self.input_author,
+                 'content': self.helper.get_help(self.lp.param),
+                 'decoration': None}]
 
     ######
     # GET
@@ -96,7 +92,6 @@ class SirkenCommands:
     @auth.cmd("get")
     def cmd_get(self):
         output_channel = self.input_channel
-        output_broadcast = False
 
         # print merbs in target
         if "target" in self.lp.key_words:
@@ -117,17 +112,21 @@ class SirkenCommands:
 
         # print a list of all merbs
         elif "all" in self.lp.key_words:
-            output_content = messagecomposer.output_list(self.merbs.print_all(self.lp.timezone, 'countdown'))
+            output_content = messagecomposer.output_list(self.merbs.print_all())
+
+        elif "today" in self.lp.key_words:
+            output_content = messagecomposer.output_list(self.merbs.print_all(limit_hours=24))
 
         # print single merb
         elif self.lp.merb_found:
             if "info" in self.lp.key_words:
-                output_content = self.lp.merb_found.print_long_info(self.lp.timezone)
+                output_content = self.lp.merb_found.print_long_info(self.lp.timezone, v_single=True)
 
             else:
                 output_content = self.lp.merb_found.print_short_info(self.lp.timezone,
                                                                      v_trackers=True,
-                                                                     v_only_active_trackers=True)
+                                                                     v_only_active_trackers=True,
+                                                                     v_single=True)
 
         # no parameter recognized but a guessed merb
         elif self.lp.merb_guessed:
@@ -139,9 +138,9 @@ class SirkenCommands:
             output_content = errors.error_param(self.lp.cmd, "Missing Parameter. ")
             output_channel = self.input_author
 
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                'broadcast': output_broadcast}
+        return [{'destination': output_channel,
+                 'content': output_content,
+                 'decoration': "CSS"}]
 
     ###############
     # MISSING
@@ -149,7 +148,6 @@ class SirkenCommands:
     @auth.cmd("missing")
     def cmd_missing(self):
         output_channel = self.input_channel
-        output_broadcast = False
         output_content = "MISSING ETA"
 
         if self.lp.tag:
@@ -160,9 +158,9 @@ class SirkenCommands:
         output_content += "=" * len(output_content) + "\n\n"
         output_content += messagecomposer.output_list(self.merbs.get_all_missing(self.lp.timezone, self.lp.tag))
 
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                'broadcast': output_broadcast}
+        return [{'destination': output_channel,
+                'content': output_content,
+                'decoration': "CSS"}]
 
     ######################
     # UPDATE TIME OF DEATH
@@ -179,336 +177,398 @@ class SirkenCommands:
         return self.update_merb("pop")
 
     def update_merb(self, mode="tod"):
-        output_channel = self.input_channel
-        output_broadcast = False
-        secondary_messages = list()
+        output_messages = list()
+        mode_word = ""
 
         # Check for approx, exact for default
         approx = 1
-        approx_output = ""
         if "approx" in self.lp.key_words:
             approx = 0
-            approx_output = "~"
 
-        # If there is a Merb
-        if self.lp.merb_found:
+        # Assume now for !pop without time
+        if not self.lp.my_date and mode == "pop":
+            self.lp.my_date = timeh.now()
 
-            # Assume now for pop without times
-            if not self.lp.my_date and mode == "pop":
-                self.lp.my_date = timeh.now()
-            # Check if we have a date
-            if self.lp.my_date:
-                # UPDATE THE TOD
-                if mode == "tod":
-                    self.lp.merb_found.update_tod(self.lp.my_date, str(self.input_author), self.lp.snippet, approx)
-                if mode == "pop":
-                    self.lp.merb_found.update_pop(self.lp.my_date, str(self.input_author), self.lp.snippet)
-                    if config.BATPHONE and self.lp.merb_found.target:
-                        logger.info("%s BATPHONED in %s" % (self.lp.merb_found.name, config.BROADCAST_BP_CHANNELS))
-                        secondary_messages.append({"destination": config.BROADCAST_BP_CHANNELS,
-                                                   "content": "@everyone %s" % self.lp.merb_found.name,
-                                                   "broadcast": False})
+        if not self.lp.merb_found and self.lp.merb_guessed:
+            return [{'destination': self.input_author,
+                     'content': "Merb not found. Did you mean %s?" % self.lp.merb_guessed.name,
+                     'decoration': 'BLOCK'}]
 
-                # save merbs timers
-                self.merbs.save_timers()
+        if not self.lp.merb_found and not self.lp.merb_guessed:
+            return [{'destination': self.input_author,
+                     'content': "Merb not found!",
+                     'decoration': 'BLOCK'}]
+        if not self.lp.my_date:
+            return [{'destination': self.input_author,
+                     'content': "Time Syntax error.\n Type {!help %s} for the correct use" % mode,
+                     'decoration': 'BLOCK'}]
 
-                # save targets
-                self.merbs.save_targets()
+        # A Printable, timezone converted date
+        output_tz_time = timeh.change_naive_to_tz(self.lp.my_date, self.lp.timezone).strftime(config.DATE_FORMAT_PRINT)
+        # UPDATE THE TOD
+        if mode == "tod":
+            self.lp.merb_found.update_tod(self.lp.my_date, str(self.input_author), self.lp.snippet, approx)
+            mode_word = "died"
 
-                output_date = timeh.change_tz(timeh.naive_to_tz(self.lp.my_date, "UTC"),
-                                              self.lp.timezone)
-                output_content = "[%s] updated! New %s: {%s %s} - %ssigned by %s" % \
-                                 (self.lp.merb_found.name,
-                                  mode,
-                                  output_date.strftime(config.DATE_FORMAT_PRINT),
-                                  self.lp.timezone,
-                                  approx_output,
-                                  self.input_author.name)
-                if self.lp.snippet:
-                    output_content += "\n-\n%s" % self.lp.snippet
+        # UPDATE THE POP
+        if mode == "pop":
+            if not self.lp.merb_found.update_pop(self.lp.my_date, str(self.input_author), self.lp.snippet):
+                return [{'destination': self.input_author,
+                         'content': "%s has a more recent tod time. Pop is rejected" % self.lp.merb_found.name,
+                         'decoration': 'BLOCK'}]
 
-                output_broadcast = self.get_broadcast_channels(config.BROADCAST_TOD_CHANNELS)
+            mode_word = "popped"
 
-                # TRACKERS RECAP
-                self.delete_future_tracks(self.lp.merb_found)
-                if self.lp.merb_found.trackers:
-                    trackers_recap = messagecomposer.merb_trackers_recap(self.lp.merb_found, mode, self.lp.timezone)
-                    self.lp.merb_found.wipe_trackers()
+            # BATPHONE IT
+            if config.BATPHONE and "bp" in self.lp.key_words:
 
-                    # save trackers
-                    self.merbs.save_trackers()
+                output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_BP_CHANNEL),
+                                        'content': "@everyone %s" % self.lp.merb_found.name,
+                                        'decoration': None})
 
-                    secondary_messages.append({"destination": config.BROADCAST_TRACK_CHANNELS,
-                                               "content": messagecomposer.prettify(trackers_recap, "CSS")[0],
-                                               "broadcast": False})
+        # Answer message
+        output_messages.append({'destination': self.input_channel,
+                                'content': "[%s] %s at {%s %s}" % (self.lp.merb_found.name,
+                                                                   mode_word,
+                                                                   output_tz_time,
+                                                                   self.lp.timezone),
+                                'decoration': "CSS"})
 
+        # Recap of tracking times
+        output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                'content': messagecomposer.merb_update_recap(self.lp.merb_found,
+                                                                             mode,
+                                                                             "UTC"),
+                                'decoration': "CSS"})
+
+
+        # Stop trackers tracking the merb and alert them
+        public_content = private_content = ""
+        stopped_trackers = self.trackers.stop_trackers_by_merb(self.lp.merb_found)
+        for tracker in stopped_trackers:
+            tracker_id = next(iter(tracker))
+            tracker_name = tracker_id
+            try:
+                tracker_name = config.authenticator.users[tracker_id].name
+            except:
+                pass
+
+            tracker_ended = tracker[tracker_id]['ended']
+            tracker_info = tracker[tracker_id]['info']
+            if not tracker_ended:
+                private_content = "%s %s but you are still tracking " % (self.lp.merb_found.name, mode_word)
+                for merb in tracker_info['merbs']:
+                    private_content += "[%s] " % merb.name
+                private_content += "\nTo stop tracking please {!track stop}"
             else:
-                output_content = errors.error_param(self.lp.cmd, "Time Syntax Error. ")
-                output_channel = self.input_author
+                if tracker_info['date'] > timeh.now():
+                    total_duration = ""
+                else:
+                    total_duration = "(Total Time: %s)" % timeh.countdown(tracker_info['date'], timeh.now())
 
-        # If there is a guessed merb
-        elif self.lp.merb_guessed:
-            output_content = "Merb not found. Did you mean %s?" % self.lp.merb_guessed.name
-            output_channel = self.input_author
-        # If no merb
-        else:
-            output_channel = self.input_author
-            output_content = errors.error_merb_not_found()
+                public_content += "%s stops tracking %s %s" % (tracker_name,
+                                                               tracker_info['what'],
+                                                               total_duration)
+                private_content = "%s %s and you stop tracking %s" % (self.lp.merb_found.name,
+                                                                      mode_word,
+                                                                      total_duration)
 
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                'broadcast': output_broadcast,
-                'secondary_messages': secondary_messages}
+            output_messages.append({'destination': self.d_client.get_user(tracker_id),
+                                    'content': private_content,
+                                    'decoration': "CSS"})
+        if public_content:
+            output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                    'content': public_content,
+                                    'decoration': "YELLOW"})
 
-    def delete_future_tracks(self, merb):
-        if merb.trackers:
-            for tracker in merb.trackers:
-                tracker_name = next(iter(tracker))
-                if tracker[tracker_name]['time_start'] > timeh.now():
+        # save merbs timers
+        self.merbs.save_timers()
+        # save targets
+        self.merbs.save_targets()
+        # Save trackers
+        self.trackers.save()
 
-                    merb.trackers.remove(tracker)
-
+        return output_messages
 
     ############
     # EARTHQUAKE
     ############
     @auth.cmd("earthquake")
     def cmd_earthquake(self):
-        output_channel = self.input_channel
-        output_broadcast = False
-        secondary_messages = list()
+        output_messages = list()
+        eq_content = "%s BROADCASTS, 'Minions gather, their forms appearing" \
+                     " as time and space coalesce.'" % self.input_author.name
+        self.lp.snippet = "Earthquake"
 
-        if self.lp.my_date:
-            for merb in self.merbs.merbs:
-                merb.update_pop(self.lp.my_date, str(self.input_author), "earthquake pop")
+        # Assume now for when no time
+        if not self.lp.my_date:
+            self.lp.my_date = timeh.now()
 
-                # TRACKERS RESET AND RECAP
-                self.delete_future_tracks(merb)
-                if merb.trackers:
-                    trackers_recap = messagecomposer.merb_trackers_recap(merb, "pop", self.lp.timezone)
-                    merb.wipe_trackers()
+        if "bp" in self.lp.key_words:
+            output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_BP_CHANNEL),
+                                    'content': "everyone - Earthquake!!!",
+                                    'decoration': None})
+        output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                'content': eq_content,
+                                'decoration': 'BLOCK'})
+        output_messages.append({'destination': self.input_channel,
+                                'content': "Earthquake!!!",
+                                'decoration': 'BLOCK'})
 
-                    # save trackers
-                    secondary_messages.append({"destination": config.BROADCAST_TRACK_CHANNELS,
-                                               "content": messagecomposer.prettify(trackers_recap, "CSS")[0],
-                                               "broadcast": False})
+        for merb in self.merbs.merbs:
+            merb.update_pop(self.lp.my_date, str(self.input_author), self.lp.snippet)
 
-            self.merbs.save_timers()
-            self.merbs.save_trackers()
+        public_content = ""
+        for tracker in self.trackers.stop_all_trackers():
+            tracker_id = next(iter(tracker))
+            tracker_name = tracker_id
+            try:
+                tracker_name = config.authenticator.users[tracker_id].name
+            except:
+                pass
 
-            output_date = timeh.change_tz(timeh.naive_to_tz(self.lp.my_date, "UTC"), self.lp.timezone)
-            output_content = "Earthquake! All pop times updated [%s] %s, signed by %s" % \
-                             (output_date.strftime(config.DATE_FORMAT_PRINT),
-                              self.lp.timezone,
-                              self.input_author.name
-                              )
-            output_broadcast = self.get_broadcast_channels(config.BROADCAST_TOD_CHANNELS)
+            tracker_info = tracker[tracker_id]['info']
 
-        else:
-            output_content = errors.error_param(self.lp.cmd, "Time Syntax Error. ")
-            output_channel = self.input_author
+            if tracker_info['date'] > timeh.now():
+                total_duration = ""
+            else:
+                total_duration = "(Total Time: %s)" % timeh.countdown(tracker_info['date'], timeh.now())
 
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                'broadcast': output_broadcast,
-                'secondary_messages': secondary_messages,
-                'earthquake': True}
+            private_content = "You stop tracking %s %s" % (tracker_info['what'].capitalize(), total_duration)
+            public_content += "%s stops tracking %s %s" % (tracker_name, tracker_info['what'].capitalize(), total_duration)
+
+            output_messages.append({'destination': self.d_client.get_user(tracker_id),
+                                    'content': private_content,
+                                    'decoration': 'BLOCK'})
+        if public_content:
+            output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                    'content': public_content,
+                                    'decoration': "YELLOW"})
+
+        # save merbs timers
+        self.merbs.save_timers()
+        # save targets
+        self.merbs.save_targets()
+        # Save trackers
+        self.trackers.save()
+
+        return output_messages
 
     ###############
     # TRACK A MERB
     ###############
     @auth.cmd("track")
     def cmd_track(self):
-        output_channel = self.input_channel
-        output_broadcast = False
 
-        # FTE MODE?
-        if "fte" in self.lp.key_words:
-            track_mode = "fte"
+        output_messages = list()
+        author_tracker = self.trackers.get_tracker(self.input_author.id)
 
-        else:
-            track_mode = ""
+        # GET INFORMATION ABOUT SELF TRACKING
+        if "info" in self.lp.key_words:
+            return [{'destination': self.input_author,
+                     'content': messagecomposer.get_self_track_info(self.input_author.id, self.trackers),
+                     'decoration': 'CSS'}]
 
         # STOP TRACKING
-        if "off" in self.lp.key_words or "stop" in self.lp.key_words or "end" in self.lp.key_words:
-            active_tracker_counter = 0
-            tracker_counter = 0
-            output_content = ""
-            output_time = timeh.change_tz(timeh.naive_to_tz(timeh.now(), "UTC"), self.lp.timezone)
-            for merb in self.merbs.merbs:
-                stopped_tracker = merb.stop_tracker(self.input_author.name, timeh.now())
-                if stopped_tracker:
-                    tracker_counter = tracker_counter + 1
-                    tracker_start = timeh.change_tz(timeh.naive_to_tz(stopped_tracker["time_start"], "UTC"),
-                                                    self.lp.timezone)
-                    tracker_stop = timeh.change_tz(timeh.naive_to_tz(stopped_tracker["time_stop"], "UTC"), self.lp.timezone)
-                    tracking_time = timeh.countdown(tracker_start, tracker_stop)
+        elif "off" in self.lp.key_words or "stop" in self.lp.key_words or "end" in self.lp.key_words:
+            if not author_tracker:
+                return [{'destination': self.input_author,
+                         'content': "You are not tracking anything",
+                         'decoration': 'CSS'}]
 
-                    # Print only if active merbs was being tracked and not a future
-                    if timeh.now() >= stopped_tracker["time_start"]:
-                        active_tracker_counter = active_tracker_counter + 1
-                        output_content += "%s stops tracking [%s] at {%s} %s %s (%s)\n" % (self.input_author.name,
-                                                                                           merb.name,
-                                                                                           output_time.strftime(
-                                                                                            config.DATE_FORMAT_PRINT),
-                                                                                           self.lp.timezone,
-                                                                                           track_mode,
-                                                                                           tracking_time)
-            # Message to output when merbs being tracked are all future
-            if tracker_counter and not active_tracker_counter:
-                output_content = "%s stops tracking" % self.input_author.name
-            if not tracker_counter:
-                output_content = "You are not tracking any merb"
+            stopped_tracker = self.trackers.stop_tracker_by_user(self.input_author.id)
+            if stopped_tracker['date'] > timeh.now():
+                time_duration = ""
             else:
-                output_broadcast = self.get_broadcast_channels(config.BROADCAST_TRACK_CHANNELS)
+                time_duration = "(Total Time: %s)" % timeh.countdown(stopped_tracker['date'], timeh.now())
 
-            # save trackers
-            self.merbs.save_trackers()
+            output_messages.append({'destination': self.input_author,
+                                    'content': "You stop tracking [%s] %s" % (stopped_tracker['what'].capitalize(),
+                                                                            time_duration),
+                                    'decoration': 'CSS'})
+            output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                    'content': "%s stops tracking %s %s" % (self.input_author.name,
+                                                                         stopped_tracker['what'].capitalize(),
+                                                                         time_duration),
+                                    'decoration': 'YELLOW'})
 
-        # START TRACKING
+            # Save trackers
+            self.trackers.save()
+            return output_messages
+
+        # START SINGLE TRACKING
         elif "start" in self.lp.key_words:
+            help_msg = "Remember to {!track stop} when leaving or {!pop %s} at spawn time." \
+                       "If you want to Batphone please {!pop %s BP}"
+            # Don'start if you are already tracking
+            if author_tracker:
+                return [{'destination': self.input_author,
+                         'content': "You are already tracking [%s]\n"
+                                    "Please {!track stop} before tracking something else" % author_tracker['what'],
+                         'decoration': 'CSS'}]
 
-            # if no time is passed, assumed now
-            time = timeh.now()
-            time_future = False
-
-            # Track by TAG
-            if self.lp.tag:
-                # merbs in window being tracked
-                active_tracker_counter = 0
-                future_tracker_counter = 0
-
-                tag_merbs = self.merbs.get_all_by_tag(self.lp.tag)
-                for merb in tag_merbs:
-                    # start tracking only if merb is not being tracked by the author yet
-                    if not merb.get_single_active_tracker(self.input_author.name) and merb.has_eta():
-
-                        # if merb is not in window, start time is merb window start
-                        if not merb.is_in_window():
-
-                            # Track only merbs that are max 1hour in the future
-                            if timeh.next_future(hours=1) > merb.window['start']:
-                                future_tracker_counter = future_tracker_counter + 1
-                                merb.start_tracker(self.input_author.name, merb.window['start'], track_mode)
-
-                        else:
-                            active_tracker_counter = active_tracker_counter + 1
-                            merb.start_tracker(self.input_author.name, timeh.now(), track_mode)
-
-
-                        # save trackers
-
-                        # output_content += messagecomposer.track_msg(self.input_author.name, merb, track_mode, time,
-                        # time_future) + "\n"
-
-                self.merbs.save_trackers()
-                output_content = "%s starts tracking %s (%d merbs in window" % (self.input_author.name,
-                                                                           self.lp.tag,
-                                                                           active_tracker_counter)
-                if future_tracker_counter:
-                    output_content += " - %d in the next hour" % future_tracker_counter
-                output_content += ")"
-                output_broadcast = self.get_broadcast_channels(config.BROADCAST_TRACK_CHANNELS)
-
-            # Merb not found
-            elif not self.lp.merb_found:
-                output_channel = self.input_author
-                if self.lp.merb_guessed:
-                    output_content = "Merb not found. Did you mean %s?" % self.lp.merb_guessed.name
-                else:
-                    output_content = "Merb not found"
-
-            # Merb has no eta
-            elif not self.lp.merb_found.has_eta():
-                output_channel = self.input_author
-                output_content = "%s has not ETA. ToD too old?" % self.lp.merb_found.name
-
-            # Merb is not a window type
-            elif not self.lp.merb_found.plus_minus:
-                output_channel = self.input_author
-                output_content = "%s is not a window type!" % self.lp.merb_found.name
-
-            # Merb window opening is too far away
-            elif timeh.next_future(1) < self.lp.merb_found.window['start']:
-                output_channel = self.input_author
-                output_content = "%s's window opening is too far away" % self.lp.merb_found.name
+            # TRACK MODE
+            if "fte" in self.lp.key_words:
+                track_mode = "fte"
+                track_mode_print = ".fte"
             else:
+                track_mode = ""
+                track_mode_print = ""
 
-                user_is_tracking = self.lp.merb_found.get_single_active_tracker(self.input_author.name)
-                if user_is_tracking:
-                    output_channel = self.input_author
-                    output_content = "You are already tracking [%s]" % self.lp.merb_found.name
+            # START TRACKING A GROUP
+            if self.lp.tag:
+                started_tracker = self.trackers.add_tracker(self.input_author.id,
+                                                            self.lp.tag,
+                                                            timeh.now(),
+                                                            track_mode,
+                                                            self.merbs)
+
+                if not started_tracker:
+                    return [{'destination': self.input_author,
+                             'content': "There are no merbs to track in %s\n"
+                                        "Type {!get %s} for updated times" % (self.lp.tag, self.lp.tag),
+                             'decoration': 'CSS'}]
+
+                tracked_merbs = self.trackers.get_tracked_merb_by_user(self.input_author.id)
+                output_private_content = ""
+                for merb in tracked_merbs:
+                    if merb.is_in_window():
+                        output_private_content += "You start tracking [%s] %s\n" % (merb.name, track_mode_print)
+                    else:
+                        output_private_content += "You will start tracking [%s] in %s %s\n" % \
+                                                  (merb.name,
+                                                   timeh.countdown(timeh.now(),merb.window['start']),
+                                                   track_mode_print)
+                output_private_content += "\nRemember to {!track stop} when leaving or {!pop merb} at spawn time.\n" \
+                                           "If you want to Batphone please {!pop merb_name BP}"
+                output_messages.append({'destination': self.input_author,
+                                        'content': output_private_content,
+                                        'decoration': 'CSS'})
+
+                output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                        'content': "%s starts tracking %s %s" %
+                                                   (self.input_author.name,
+                                                    started_tracker['what'].capitalize(),
+                                                    track_mode_print),
+                                        'decoration': 'YELLOW'})
+
+                # Save trackers
+                self.trackers.save()
+                return output_messages
+            else:
+                # Merb not found
+                if not self.lp.merb_found:
+                    if self.lp.merb_guessed:
+                        output_content = "Merb not found. Did you mean %s?" % self.lp.merb_guessed.name
+                    else:
+                        output_content = "Merb not found"
+                    return [{'destination': self.input_author,
+                             'content': output_content,
+                             'decoration': 'BLOCK'}]
+
+                # Merb has no eta
+                elif not self.lp.merb_found.has_eta():
+                    return [{'destination': self.input_author,
+                             'content': "%s has not ETA. ToD too old?" % self.lp.merb_found.name,
+                             'decoration': 'BLOCK'}]
+
+                # Merb is not a window type
+                elif not self.lp.merb_found.plus_minus:
+                    return [{'destination': self.input_author,
+                             'content': "%s is not a window type!" % self.lp.merb_found.name,
+                             'decoration': 'BLOCK'}]
+
+                # Merb window opening is too far away
+                elif timeh.next_future(12) < self.lp.merb_found.window['start']:
+                    return [{'destination': self.input_author,
+                             'content': "%s's window is out of range" % self.lp.merb_found.name,
+                             'decoration': 'BLOCK'}]
                 else:
-                    if not self.lp.merb_found.is_in_window():
-                        time = self.lp.merb_found.eta
-                        time_future = True
+                    started_tracker = self.trackers.add_tracker(self.input_author.id,
+                                                                self.lp.merb_found,
+                                                                timeh.now(),
+                                                                track_mode,
+                                                                self.merbs)
 
-                    self.lp.merb_found.start_tracker(self.input_author.name, time, track_mode)
-                    # save trackers
-                    self.merbs.save_trackers()
+                    if self.lp.merb_found.is_in_window():
+                        output_private_content = "You start tracking [%s] %s\n\n" %\
+                                                 (self.lp.merb_found.name, track_mode_print)
+                    else:
+                        output_private_content = "You will start tracking [%s] in %s .%s\n\n" %\
+                                                 (self.lp.merb_found.name,
+                                                  timeh.countdown(timeh.now(), self.lp.merb_found.window['start']),
+                                                  track_mode_print)
 
-                    output_content = messagecomposer.track_msg(self.input_author.name, self.lp.merb_found,
-                                                               track_mode, time, time_future)
+                    output_private_content += "Remember to {!track stop} when leaving or {!pop %s} at spawn time.\n" \
+                                              "If you want to Batphone please {!pop %s BP}" % (self.lp.merb_found.name,
+                                                                                               self.lp.merb_found.name)
 
-                    output_broadcast = self.get_broadcast_channels(config.BROADCAST_TRACK_CHANNELS)
+                    output_messages.append({'destination': self.input_author,
+                                            'content': output_private_content,
+                                            'decoration': 'CSS'})
 
+                    output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                            'content': "%s starts tracking %s %s" %
+                                                       (self.input_author.name,
+                                                        started_tracker['what'].capitalize(),
+                                                        track_mode_print),
+                                            'decoration': 'YELLOW'})
+
+                    # Save trackers
+                    self.trackers.save()
+                    return output_messages
         else:
-            output_channel = self.input_author
-            output_content = "Missing Parameter.\nTo start tracking type {!track merb_name|tag start}\n" \
-                             "To stop tracking type {!track stop}\n" \
-                             "To get tracking info type {!get merb_name info}"
-
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                'broadcast': output_broadcast}
+            return [{'destination': self.input_author,
+                     'content': "Missing parameters!\nType {!help track} for the correct use",
+                     'decoration': 'CSS'}]
 
     ##################
     # SET UP A WATCHER
     ##################
     @auth.cmd("watch")
     def cmd_watch(self):
-        output_channel = self.input_author
-        output_broadcast = False
 
-        if self.lp.merb_found:
-            # search for minutes param
-            minutes = 30
-            reg_min = re.search(r"\b(\d+)\b", self.lp.param)
-            if reg_min:
-                minutes = int(reg_min.group(0))
-            off = False
-            if "off" in self.lp.key_words:
-                off = True
-                output_content = "Track OFF for [%s]" % self.lp.merb_found.name
+        # Output information about watched merbs
+        if "info" in self.lp.key_words:
+            output_content = ""
+            for merb, time in self.watch.get_all(self.input_author.id).items():
+                output_content += "[%s] - alert %s minutes before ETA\n" % (merb, time)
+            if not output_content:
+                output_content = "You are not watching any merb"
+
+            return [{'destination': self.input_author,
+                     'content': output_content,
+                     'decoration': 'CSS'}]
+
+        # Merb not found
+        if not self.lp.merb_found:
+            if self.lp.merb_guessed:
+                output_content = "Merb not found. Did you mean %s?" % self.lp.merb_guessed.name
             else:
-                output_content = "Track ON for [%s], I will alert you %d before ETA" % \
-                                 (self.lp.merb_found.name, minutes)
+                output_content = "Merb not found"
+            return [{'destination': self.input_author,
+                     'content': output_content,
+                     'decoration': 'BLOCK'}]
 
-            self.watch.switch(self.input_author.id, self.lp.merb_found.name, minutes, off)
+        # Find Minutes
+        minutes = 30
+        reg_min = re.search(r"\b(\d+)\b", self.lp.param)
+        if reg_min:
+            minutes = int(reg_min.group(0))
 
-        # If there is a guessed merb
-        elif self.lp.merb_guessed:
-            output_content = "Merb not found. Did you mean %s?" % self.lp.merb_guessed.name
-            output_channel = self.input_author
-
-        # if no merb is passed but OFF parameter is, toggle off all alarms
-        elif "off" in self.lp.key_words:
-            self.watch.all_off(self.input_author.id)
-            output_content = "All alarms are set to OFF"
-
-        # If not params are passed get the full list of tracked merbs
+        if "off" in self.lp.key_words:
+            off = True
+            private_content = "Watch OFF for [%s]" % self.lp.merb_found.name
         else:
-            tracked_merbs = self.watch.print_all(self.input_author.id)
-            if not tracked_merbs:
-                output_content = "No merbs tracked :("
-            else:
-                output_content = ""
-                for tmerb in tracked_merbs:
-                    output_content += '[%s] will alert %d minutes before ETA\n' % (tmerb, tracked_merbs[tmerb])
+            off = False
+            private_content = "Watch ON for [%s], I will alert you %d before ETA" % \
+                              (self.lp.merb_found.name, minutes)
 
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                "broadcast": output_broadcast}
+        self.watch.switch(self.input_author.id, self.lp.merb_found.name, minutes, off)
+
+        return [{'destination': self.input_author,
+                 'content': private_content,
+                 'decoration': 'CSS'}]
 
     ##################
     # SET A TARGET
@@ -516,36 +576,44 @@ class SirkenCommands:
     @auth.cmd("target")
     def cmd_target(self):
         output_channel = self.input_channel
-        output_broadcast = False
+        output_messages = list()
+
+        # Merb not found
+        if not self.lp.merb_found:
+            if self.lp.merb_guessed:
+                output_content = "Merb not found. Did you mean %s?" % self.lp.merb_guessed.name
+            else:
+                output_content = "Merb not found"
+            return [{'destination': self.input_author,
+                     'content': output_content,
+                     'decoration': 'BLOCK'}]
 
         if self.lp.merb_found:
             if "off" in self.lp.key_words:
                 self.lp.merb_found.switch_target(False)
-                output_content = "Target OFF for [%s] " % self.lp.merb_found.name
+                output_content = "- %s is no more a target " % self.lp.merb_found.name
             else:
                 if "sticky" in self.lp.key_words:
                     self.lp.merb_found.switch_target("auto")
-                    output_content = "[%s] is a sticky target! " % self.lp.merb_found.name
+                    output_content = "+ %s is a sticky target! " % self.lp.merb_found.name
                 else:
                     self.lp.merb_found.switch_target("manual")
-                    output_content = "[%s] is a target! " % self.lp.merb_found.name
-
-
+                    output_content = "+ %s is a new target! " % self.lp.merb_found.name
 
             output_content += "- signed by %s" % self.input_author.name
             self.merbs.save_targets()
-            output_broadcast = self.get_broadcast_channels(config.BROADCAST_TOD_CHANNELS)
-        # If there is a guessed merb
-        elif self.lp.merb_guessed:
-            output_content = "Merb not found. Did you mean %s?" % self.lp.merb_guessed.name
-            output_channel = self.input_author
         else:
             output_content = errors.error_param(self.lp.cmd, "Missing Parameter. ")
             output_channel = self.input_author
 
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                "broadcast": output_broadcast}
+        output_messages.append({'destination': output_channel,
+                                'content': output_content,
+                                'decoration': 'CSS'})
+        output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                'content': output_content,
+                                'decoration': 'MD'})
+
+        return output_messages
 
     ########################
     # PRINT ALIASES OF MERBS
@@ -554,17 +622,15 @@ class SirkenCommands:
     def cmd_merbs(self):
         output_content = messagecomposer.output_list(self.merbs.print_all_meta())
 
-        return {"destination": self.input_author,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                'broadcast': False}
+        return [{'destination': self.input_author,
+                 'content': output_content,
+                 'decoration': 'CSS'}]
 
     ########################
     # ROLES LIST/RELOAD
     ########################
     @auth.cmd("roles")
     def cmd_roles(self):
-        output_channel = self.input_author
-        output_broadcast = False
         output_content = ""
 
         # Reload Roles
@@ -593,17 +659,15 @@ class SirkenCommands:
                 output_bot_roles_content += "\n"
             output_bot_roles_content += "\n"
 
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_discord_roles_content + output_bot_roles_content),
-                'broadcast': output_broadcast}
+        return [{'destination': self.input_author,
+                 'content': output_discord_roles_content + output_bot_roles_content,
+                 'decoration': 'CSS'}]
 
     ##########
     # ROLE SET
     ##########
     @auth.cmd("setrole")
     def cmd_set_role(self):
-        output_channel = self.input_author
-        output_broadcast = False
         output_content = ""
 
         b_role = d_role = False
@@ -640,23 +704,21 @@ class SirkenCommands:
         else:
             output_content = errors.error_param(self.lp.cmd, "Missing Parameter. ")
 
-        return {"destination": output_channel,
-                "content":  messagecomposer.prettify(output_content, "CSS"),
-                'broadcast': output_broadcast}
+        return [{'destination': self.input_author,
+                'content':  output_content,
+                'decoration': "CSS"}]
 
     ########################
     # USERS LIST/RELOAD
     ########################
     @auth.cmd("users")
     def cmd_users(self):
-        output_channel = self.input_author
-        output_broadcast = False
 
         if "reload" in self.lp.key_words:
             self.authenticator.reload_discord_users()
-            return {"destination": output_channel,
-                    "content": messagecomposer.prettify("Users Reloaded!\n", "CSS"),
-                    'broadcast': output_broadcast}
+            return [{'destination': self.input_author,
+                    'content': "Users Reloaded!\n",
+                    'decoration': 'CSS'}]
 
         # Find the Bot_Roles
         b_role = False
@@ -672,9 +734,9 @@ class SirkenCommands:
 
         if "all" not in self.lp.key_words and b_role not in bot_roles_list:
             output_content = "Bot Role not found! Type !roles to list them or !users all"
-            return {"destination": output_channel,
-                    "content": messagecomposer.prettify(output_content, "CSS"),
-                    'broadcast': output_broadcast}
+            return [{'destination': self.input_author,
+                    'content': output_content,
+                    'decoration': 'CSS'}]
 
         output_content = "USERS\n=====\n"
         get_key = operator.attrgetter("name")
@@ -690,9 +752,9 @@ class SirkenCommands:
                 user_guilds = user_guilds[:-1]
                 output_content += "- [%s] %s - %s\n" % (user_name, user_guilds, user_bot_roles)
 
-        return {"destination": output_channel,
-                "content": messagecomposer.prettify(output_content, "CSS"),
-                'broadcast': output_broadcast}
+        return [{'destination': self.input_author,
+                'content': output_content,
+                'decoration': "CSS"}]
 
     ###########
     # BROADCAST
@@ -700,9 +762,9 @@ class SirkenCommands:
     @auth.cmd("echo")
     def cmd_echo(self):
 
-        return {"destination": self.input_channel,
-                "content": messagecomposer.prettify(self.lp.param, "CSS"),
-                'broadcast': self.get_broadcast_channels(config.BROADCAST_TOD_CHANNELS)}
+        return [{'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                 'content': self.lp.param,
+                 'decoration': 'CSS'}]
 
     ########################
     # LEAVE ALL SERVERS
@@ -710,9 +772,9 @@ class SirkenCommands:
     @auth.cmd("guild")
     def leave_all_guilds(self):
 
-        return {"destination": self.input_channel,
-                "content": messagecomposer.prettify("Farewell!", "CSS"),
-                'broadcast': self.get_broadcast_channels(config.BROADCAST_TOD_CHANNELS),
+        return {'destination': self.input_channel,
+                'content': messagecomposer.prettify("Farewell!", "CSS"),
+                'broadcast': self.broadcast_channels,
                 'action': 'leave_all_guilds'}
 
     #########################

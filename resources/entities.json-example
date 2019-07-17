@@ -19,12 +19,15 @@
 	},
 	"A shady goblin": {
 		"alias": [
-			"shady goblin"
+			"shady goblin",
+			"shady"
 		],
 		"respawn_time": 24,
 		"plus_minus": 0,
 		"recurring": 1,
-		"tag": []
+		"tag": [
+			"swc"
+		]
 	},
 	"Aaryonar": {
 		"alias": [
@@ -56,7 +59,9 @@
 		"respawn_time": 75.5,
 		"plus_minus": 3.5,
 		"recurring": 0,
-		"tag": []
+		"tag": [
+			"swc"
+		]
 	},
 	"Avatar of Abhorrence": {
 		"alias": [
@@ -153,7 +158,8 @@
 	},
 	"Dozekar the Cursed": {
 		"alias": [
-			"Dozekar"
+			"Dozeker",
+			"Doze"
 		],
 		"respawn_time": 168,
 		"plus_minus": 8,
@@ -189,7 +195,9 @@
 		"respawn_time": 24,
 		"plus_minus": 0,
 		"recurring": 0,
-		"tag": []
+		"tag": [
+			"swc"
+		]
 	},
 	"Druushk": {
 		"alias": [],
@@ -222,7 +230,9 @@
 		]
 	},
 	"Faydedar": {
-		"alias": [],
+		"alias": [
+			"fay"
+		],
 		"respawn_time": 168,
 		"plus_minus": 8,
 		"recurring": 0,
@@ -247,7 +257,9 @@
 		"tag": []
 	},
 	"Gozzrem": {
-		"alias": [],
+		"alias": [
+			"gozz"
+		],
 		"respawn_time": 168,
 		"plus_minus": 8,
 		"recurring": 0,
@@ -288,7 +300,8 @@
 	},
 	"Guardian Kozzalym": {
 		"alias": [
-			"Kozzalym"
+			"Kozzalym",
+			"kozz"
 		],
 		"respawn_time": 120,
 		"plus_minus": 0,
@@ -406,7 +419,8 @@
 	},
 	"Lady Mirenilla": {
 		"alias": [
-			"Mirenilla"
+			"Mirenilla",
+			"Lady M"
 		],
 		"respawn_time": 168,
 		"plus_minus": 8,
@@ -418,7 +432,8 @@
 	},
 	"Lady Nevederia": {
 		"alias": [
-			"Nevederia"
+			"Nevederia",
+			"Lady N"
 		],
 		"respawn_time": 168,
 		"plus_minus": 8,
@@ -562,7 +577,9 @@
 		"tag": []
 	},
 	"Master of the Guard": {
-		"alias": [],
+		"alias": [
+			"MoTG"
+		],
 		"respawn_time": 72,
 		"plus_minus": 12,
 		"recurring": 0,
@@ -714,7 +731,9 @@
 		]
 	},
 	"Stomples": {
-		"alias": [],
+		"alias": [
+			"Sniffles"
+		],
 		"respawn_time": 72,
 		"plus_minus": 0,
 		"recurring": 0,
@@ -737,7 +756,9 @@
 		]
 	},
 	"Telkorenar": {
-		"alias": [],
+		"alias": [
+			"Telk"
+		],
 		"respawn_time": 168,
 		"plus_minus": 8,
 		"recurring": 0,
@@ -779,7 +800,9 @@
 		]
 	},
 	"Trakanon": {
-		"alias": [],
+		"alias": [
+			"Traka"
+		],
 		"respawn_time": 72,
 		"plus_minus": 8,
 		"recurring": 0,
@@ -797,11 +820,14 @@
 		"respawn_time": 122,
 		"plus_minus": 0,
 		"recurring": 1,
-		"tag": []
+		"tag": [
+			"dn"
+		]
 	},
 	"Velketor the Sorcerer": {
 		"alias": [
-			"Velketor"
+			"Velketor",
+			"Velk"
 		],
 		"respawn_time": 72,
 		"plus_minus": 8,
@@ -838,7 +864,9 @@
 		"respawn_time": 24,
 		"plus_minus": 0,
 		"recurring": 0,
-		"tag": []
+		"tag": [
+			"dn"
+		]
 	},
 	"Vulak`Aerr": {
 		"alias": [
@@ -895,7 +923,9 @@
 		"respawn_time": 108,
 		"plus_minus": 12,
 		"recurring": 0,
-		"tag": []
+		"tag": [
+			"dn"
+		]
 	},
 	"Zlexak": {
 		"alias": [

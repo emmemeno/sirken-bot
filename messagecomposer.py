@@ -28,30 +28,36 @@ def message_cut(input_text: str, limit: int):
 
 def prettify(text: str, my_type="BLOCK"):
 
-    output_text = list()
-    prefix = postfix = ""
-    cut_text = message_cut(text, config.MAX_MESSAGE_LENGTH)
+    if my_type == "BLOCK":
+        prefix = postfix = "```\n"
+    elif my_type == "CSS":
+        prefix = "```css\n"
+        postfix = "```\n"
+    elif my_type == "YELLOW":
+        prefix = "```fix\n+ "
+        postfix = "```\n"
+    elif my_type == "RED":
+        prefix = "```diff\n"
+        postfix = "```\n"
+    elif my_type == "MD":
+        prefix = "```md\n"
+        postfix = "```\n"
+    elif my_type == "BLUE":
+        prefix = "```asciidoc\n= "
+        postfix = "```\n"
+    elif my_type == "SINGLE":
+        prefix = postfix = "`\n"
+    else:
+        prefix = postfix = ""
 
-    for chunk in cut_text:
-        if my_type == "BLOCK":
-            prefix = postfix = "```\n"
-        elif my_type == "CSS":
-            prefix = "```css\n"
-            postfix = "```\n"
-
-        elif my_type == "SINGLE":
-            prefix = "`\n"
-            postfix = prefix
-        output_text.append(prefix + chunk + postfix)
-
-    return output_text
+    return prefix + text + postfix
 
 
 def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target, v_target_tag=True):
     now = timeh.now()
     postfix = ""
     prefix = ""
-    output = "+ [" + name + "] "
+    output = "- [" + name + "] "
     approx = ""
     if accuracy <= 0 or spawns == 1:
         approx = "{roughly} "
@@ -83,7 +89,7 @@ def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target, v_ta
 
 
 def merb_status(merb, timezone,
-                v_trackers=False, v_only_active_trackers=False, v_info=False, v_target_tag=True):
+                v_trackers=False, v_only_active_trackers=False, v_info=False, v_target_tag=True, v_single=True):
 
     body_trackers = ""
     body_info = ""
@@ -101,7 +107,7 @@ def merb_status(merb, timezone,
         v_trackers = False
 
     # Force active trackers view when merb is in window and a target or active trackers are present
-    if (merb.target and merb.is_in_window() and not v_info) or merb.get_active_trackers():
+    if (merb.target and merb.is_in_window() and not v_info) or merb.get_trackers():
         v_trackers = True
         v_only_active_trackers = True
 
@@ -114,7 +120,12 @@ def merb_status(merb, timezone,
     if v_trackers:
         if v_only_active_trackers:
             # Show only active trackers on reduced version
-            body_trackers += tracker_list(merb, timezone, only_active=True)
+            active_trackers = tracker_list(merb, timezone, only_active=True)
+            if active_trackers:
+                body_trackers += active_trackers
+            else:
+                body_trackers = " No trackers!\n"
+
         else:
             # Show all trackers on long version
             body_trackers += tracker_list(merb, timezone)
@@ -136,10 +147,11 @@ def merb_status(merb, timezone,
                      " LAST POP      {%s} - signed by %s\n" \
                      " RESPAWN TIME  {%s±%s}\n" \
                      " TAGS          {%s}\n" \
+                     " ALIASES       {%s}\n" \
                      % (tod_tz, simple_username(merb.tod_signed_by),
                         pop_tz, simple_username(merb.pop_signed_by),
                         merb.respawn_time, merb.plus_minus,
-                        tags)
+                        tags, merb.print_aliases())
         if merb.plus_minus:
             body_info += " WINDOW OPEN   {%s}\n" \
                          " WINDOW CLOSE  {%s}\n" \
@@ -167,59 +179,54 @@ def track_msg(author, merb, track_mode, time, time_future):
     return output
 
 
-def merb_trackers_recap(merb, mode, timezone):
+def merb_update_recap(merb, mode, timezone):
     output = "[" + merb.name + "] "
+
     if mode == "pop":
-        output += "popped at {%s} %s\n" % (merb.pop.strftime(config.DATE_FORMAT_PRINT), timezone)
+        time_pop = timeh.change_tz(timeh.naive_to_tz(merb.pop, "UTC"), timezone)
+        output += "popped at {%s %s} - signed by %s\n" % (time_pop.strftime(config.DATE_FORMAT_PRINT),
+                                                          timezone,
+                                                          simple_username(merb.pop_signed_by))
     if mode == "tod":
-        output += "died at {%s} %s\n" % (merb.tod.strftime(config.DATE_FORMAT_PRINT), timezone)
-    output += header_sep(output, "-")
-    output += tracker_list(merb, timezone)
+        time_tod = timeh.change_tz(timeh.naive_to_tz(merb.tod, "UTC"), timezone)
+        output += "died at {%s %s} - signed by %s\n" % (time_tod.strftime(config.DATE_FORMAT_PRINT),
+                                                        timezone,
+                                                        simple_username(merb.tod_signed_by))
+    trackers = tracker_list(merb, timezone)
+
+    if trackers:
+        output += header_sep(output, "-")
+        output += trackers
+
     return output
 
 
 def tracker_list(merb, timezone, only_active=False):
     output = ""
-    if only_active:
-        trackers = merb.get_active_trackers()
-    else:
-        trackers = reversed(merb.trackers)
 
-    for tracker in trackers:
-        tracker_name = next(iter(tracker))
+    for tracker in merb.trackers:
+        tracker_name = tracker
+        try:
+            tracker_name = config.authenticator.users[tracker].name
+        except:
+            pass
+        output += "%s " % tracker_name
 
-        tracker_start = timeh.change_tz(timeh.naive_to_tz( tracker[tracker_name]["time_start"], "UTC"), timezone)
-        tracker_stop = False
-        tracker_mode = tracker[tracker_name]["mode"]
-        if "time_stop" in tracker[tracker_name]:
-            tracker_stop = timeh.change_tz(timeh.naive_to_tz( tracker[tracker_name]["time_stop"], "UTC"), timezone)
-            output += "  "
-        else:
-            output += "# "
-        if tracker[tracker_name]["time_start"] > timeh.now():
-            output += "%s will start tracking at window opening" % tracker_name
-        else:
-            if tracker_stop:
-                output += "%s started tracking at {%s %s} ended at {%s %s} (%s)" %\
-                           (tracker_name,
-                            tracker_start.strftime(config.DATE_FORMAT_PRINT),
-                            timezone,
-                            tracker_stop.strftime(config.DATE_FORMAT_PRINT),
-                            timezone,
-                            timeh.countdown(tracker_start, tracker_stop))
-            else:
-                virtual_end = timeh.naive_to_tz(timeh.now(), "UTC")
-                output += "%s is tracking since %s" % (tracker_name, timeh.countdown(tracker_start, virtual_end))
+    if output:
+        output = "Active Trackers: %s\n" % output
 
-        if tracker_mode:
-            output += ".%s" % tracker_mode
-        output += "\n"
-    if not output:
-        if only_active:
-            output = "No active Tracker :(\n"
-        else:
-            output = "No Tracker :(\n"
+    return output
 
+
+def get_self_track_info(user_id, trackers):
+    tracker = trackers.get_tracker(user_id)
+    if not tracker:
+        return "You are not tracking :("
+
+    output = 'You are tracking: '
+    for merb in tracker['merbs']:
+        output += "[%s] " % merb.name
+    output += "since %s" % timeh.countdown(tracker['date'], timeh.now())
     return output
 
 
