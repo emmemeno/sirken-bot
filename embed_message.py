@@ -37,14 +37,15 @@ class EmbedMessage:
 
                 if merb.pop > merb.tod and timeh.now() < merb.window['start']:
                     if not timeh.halfway_to_start_window(merb):
-                        field_content += "popped %s ago\n" % timeh.countdown(merb.pop, timeh.now())
+                        name_content = config.EMOJII_POPPED + "  " + name_content
+                        field_content += " popped %s ago\n" % timeh.countdown(merb.pop, timeh.now())
                     else:
                         field_content += "window roughly opens in %s\n" % timeh.countdown(timeh.now(), merb.eta)
                 else:
                     if merb.is_in_window():
                         counter_in_window = counter_in_window + 1
-                        name_content = ":crossed_swords: " + name_content
-                        field_content += "*__in window__* for the next "
+                        name_content = config.EMOJII_WINDOW_OPEN + "  " + name_content
+                        field_content += " *__in window__* for the next "
                     else:
                         field_content += "window opens in "
 
@@ -68,7 +69,7 @@ class EmbedMessage:
                         field_content = field_content[:-3]
                         field_content += "\n"
                     else:
-                        field_content += "No trackers\n"
+                        field_content += ""
                 field_content += "-"
 
                 embed_timers.add_field(name=name_content, value=field_content, inline=False)

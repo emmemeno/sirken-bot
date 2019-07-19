@@ -5,14 +5,14 @@ authenticator = auth.Auth()
 # The Discord Token
 DISCORD_TOKEN = ""
 
-# The ID Channel where the Target Timers is:
-TIMERS_CHANNEL = 111111111111111111
+# The ID Channel of Target Timers Widget:
+TIMERS_CHANNEL = 597695347040714752
 
 # The Broadcast Channel ID:
-BROADCAST_CHANNEL = 111111111111111111
+BROADCAST_CHANNEL =
 
 # The Batphone Channel ID:
-BROADCAST_BP_CHANNEL = 111111111111111111
+BROADCAST_BP_CHANNEL =
 
 # Set False to disable the batphone
 BATPHONE = True
@@ -27,7 +27,7 @@ MAX_BROADCAST_LENGTH = 1000
 FUZZY_THRESHOLD = 85
 FUZZY_GUESSED_THRESHOLD = 65
 
-# Files path
+# Files paths
 PATH_DIR = "resources/"
 FILE_ROLES = PATH_DIR + 'roles.json'
 FILE_ENTITIES = PATH_DIR + 'entities.json'
@@ -48,4 +48,11 @@ DATE_DEFAULT = "1981-2-13 00:00"
 DATE_FORMAT = "%Y-%m-%d %H:%M"
 # How to output the date:
 DATE_FORMAT_PRINT = "%b %d %H:%M"
+
+# Emojii for Target Timers Widget
+EMOJII_WINDOW_CLOSE = ""
+EMOJII_WINDOW_OPEN = ":openwindow:"
+EMOJII_POPPED = ":popwindow:"
+
+
 

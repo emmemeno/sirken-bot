@@ -7,7 +7,7 @@ import messagecomposer
 
 # Class that define Merb info and a bunch of utilities
 class Merb:
-    def __init__(self, name, alias, respawn_time, plus_minus, recurring, tag, tod, pop,
+    def __init__(self, name, alias, respawn_time, plus_minus, recurring, tag, tod, pop, living,
                  author_tod, author_pop, accuracy, target, trackers, snippet, date_rec, date_print):
 
         self.d_rec = date_rec
@@ -36,6 +36,8 @@ class Merb:
         self.pop_signed_by = author_pop
         # Snippet of the last ToD
         self.snippet = snippet
+        # True if the merb is alive (when pop time are newer then tod time)
+        self.living = living
         # Accuracy. 0 for approx time, 1 for exact time, -1 when pop > tod
         self.accuracy = accuracy
         # Number of spawns since last tod (for recurring mobs)
@@ -57,6 +59,7 @@ class Merb:
         return {"start": w_start, "end": w_end}
 
     def update_tod(self, new_tod, author, snippet="", approx=1):
+        self.living = False
         self.tod = new_tod
         self.tod_signed_by = author
         self.accuracy = approx
@@ -73,6 +76,7 @@ class Merb:
     def update_pop(self, new_pop, author, snippet=""):
         # Updates only if pop is more recent than tod
         if new_pop > self.tod:
+            self.living = True
             self.pop = new_pop
             self.pop_signed_by = author
             self.snippet = snippet
@@ -142,6 +146,11 @@ class Merb:
             return True
         else:
             return False
+
+    def is_alive(self):
+        if self.living and not timeh.halfway_to_start_window(self):
+            return True
+        return False
 
     def is_trackable(self):
         if self.is_in_window() or timeh.halfway_to_start_window(self):
@@ -267,6 +276,10 @@ class MerbList:
             if merb in json_timers:
                 tod = json_timers[merb]["tod"]
                 pop = json_timers[merb]["pop"]
+                if pop > tod:
+                    living = True
+                else:
+                    living = False
                 signed_tod = json_timers[merb]["signed_tod"]
                 if "signed_pop" not in json_timers[merb]:
                     signed_pop = signed_tod
@@ -302,6 +315,7 @@ class MerbList:
                                    json_entities[merb]["tag"],
                                    tod,
                                    pop,
+                                   living,
                                    signed_tod,
                                    signed_pop,
                                    accuracy,
@@ -336,6 +350,7 @@ class MerbList:
         if order == 'eta':
             self.merbs.sort(key=lambda merb: merb.eta)
             self.merbs.sort(key=lambda merb: merb.is_in_window(), reverse=True)
+            self.merbs.sort(key=lambda merb: merb.is_alive(), reverse=True)
         if order == 'window_end':
             self.merbs.sort(key=lambda merb: merb.window['end'], reverse=True)
 

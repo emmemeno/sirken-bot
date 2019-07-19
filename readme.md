@@ -55,11 +55,6 @@ To see a specific help type !help command:
 - Added new aliases: Shady, Doze, Fay, Gozz, Kozz, Lady M, Lady N, MotG, Sniffles, Telk, Trak, Velk
 - Added new tags: dn, swc
 ```
-Wow, Gynok is of age! I want to thank all the wonderful Riots people who sent me great ideas, discovered potential bugs and helped with the beta-test. You guys rock!
-After this major release there will be not any significant update for a while but please don't stop to whisper your bot improvement ideas.
-The Tracking system has also reached the maturity. If used along with !pop it will give real tracking times, a must for our upcoming dkp bot (and now save Arthion some time).
-So if you are a tracker please keep using !pop command (with or without `BP`).
-Have a lovely Sunday!
 
 ##### 0.8 aka Paranoid Android
 ```

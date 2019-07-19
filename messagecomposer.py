@@ -53,36 +53,41 @@ def prettify(text: str, my_type="BLOCK"):
     return prefix + text + postfix
 
 
-def time_remaining(name, eta, plus_minus, window, spawns, accuracy, target, v_target_tag=True):
+def time_remaining(merb, v_target_tag=True):
     now = timeh.now()
     postfix = ""
     prefix = ""
-    output = "- [" + name + "] "
+    output = "- [" + merb.name + "] "
     approx = ""
-    if accuracy <= 0 or spawns == 1:
+    if merb.accuracy <= 0 or merb.spawns == 1:
         approx = "{roughly} "
-    if accuracy <= -1 or spawns > 1:
+    if merb.accuracy <= -1 or merb.spawns > 1:
         approx = "{very roughly} "
-    if not plus_minus:
-        if now > eta:
+    if not merb.plus_minus:
+        if now > merb.eta:
             output += "ToD is too old. "
         else:
-            output += "will %sspawn in %s " % (approx, timeh.countdown(now, eta))
+            output += "will %sspawn in %s " % (approx, timeh.countdown(now, merb.eta))
     else:
-        if now > window['end']:
+        if merb.is_alive():
+            output += "popped %s ago " % timeh.countdown(merb.pop, timeh.now())
+
+        elif now > merb.window['end']:
             output += "window is closed "
-        elif now < window['start']:
-            output += "window will %sopen in %s " % (approx, timeh.countdown(now, eta))
-        elif window['start'] <= now <= window['end']:
+
+        elif now < merb.window['start']:
+            output += "window will %sopen in %s " % (approx, timeh.countdown(now, merb.eta))
+
+        elif merb.window['start'] <= now <= merb.window['end']:
             prefix = ""
             postfix = "## "
-            output += "is %sin .window until %s " % (approx, timeh.countdown(now, eta))
+            output += "is %sin .window until %s " % (approx, timeh.countdown(now, merb.eta))
 
-    if spawns >= 1:
-        output += "(%s respawn since last update) " % spawns
-    if target == "auto" and v_target_tag:
+    if merb.spawns >= 1:
+        output += "(%s respawn since last update) " % merb.spawns
+    if merb.target == "auto" and v_target_tag:
         postfix += ".sticky_target"
-    if target == "manual" and v_target_tag:
+    if merb.target == "manual" and v_target_tag:
         postfix += ".new_target"
 
     return prefix + output + postfix + "\n"
@@ -93,14 +98,7 @@ def merb_status(merb, timezone,
 
     body_trackers = ""
     body_info = ""
-    header = time_remaining(merb.name,
-                            merb.eta,
-                            merb.plus_minus,
-                            merb.window,
-                            merb.spawns,
-                            merb.accuracy,
-                            merb.target,
-                            v_target_tag)
+    header = time_remaining(merb, v_target_tag)
 
     # Force hide trackers on merb not in window.
     if not merb.plus_minus or not merb.is_in_window() and not v_info:
