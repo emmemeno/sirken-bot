@@ -61,6 +61,7 @@ async def minute_digest():
 
         # UPDATE EMBED TIMERS
         await embed_timers.update_message(client, merbs, trackers)
+        logger_io.info("MINUTE DIGEST DONE")
 
 
 ######################
@@ -162,6 +163,7 @@ if __name__ == "__main__":
         # Skip self messages
         if input_message.author == client.user:
             return
+        logger_io.info("INPUT: %s - %s" % (input_message.author.name, input_message.content))
 
         t_start = timer()
 
@@ -170,11 +172,13 @@ if __name__ == "__main__":
         t_end = timer()
         processing_time = round(t_end - t_start, 5)
 
+        logger_io.info("(%s)" % processing_time)
+
         # Do nothing if there are no responses
         if not response_messages:
             return
 
-        logger_io.info("INPUT: %s - %s (%s)" % (input_message.author.name, input_message.content, processing_time))
+
 
         # Loop the messages list and cut messages too long  for discord
         output_messages = list()
@@ -191,7 +195,7 @@ if __name__ == "__main__":
         for output_m in output_messages:
             # Send the decorated messages
             await output_m['destination'].send(messagecomposer.prettify(output_m['content'], output_m['decoration']))
-            logger_io.debug("OUTPUT: %s - %s" % (output_m['destination'], output_m['content']))
+            logger_io.info("OUTPUT: %s - %s" % (output_m['destination'], output_m['content']))
 
     # Run the Bot
     client.loop.create_task(minute_digest())
