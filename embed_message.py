@@ -30,7 +30,7 @@ class EmbedMessage:
         counter_all = counter_in_window = 0
         for merb in merbs.merbs:
 
-            if merb.has_eta() and merb.is_target():
+            if merb.has_eta() and merb.is_target() and counter_all < 24:
                 counter_all = counter_all + 1
                 field_content = ""
                 name_content = merb.name
