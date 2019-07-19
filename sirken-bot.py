@@ -60,7 +60,7 @@ async def minute_digest():
                                   (user, merb.name, merb.eta, minutes_diff))
 
         # UPDATE EMBED TIMERS
-        await embed_timers.update_message(client, merbs, trackers)
+        # await embed_timers.update_message(client, merbs, trackers)
 
 
 ######################
@@ -154,7 +154,7 @@ if __name__ == "__main__":
         t_end = timer()
         logger_sirken.info("Loading Discord Users. Done in %s seconds" % (round(t_end - t_start, 5)))
         # LOAD EMBED
-        await embed_timers.update_message(client, merbs, trackers)
+        # await embed_timers.update_message(client, merbs, trackers)
 
     @client.event
     async def on_message(input_message):
