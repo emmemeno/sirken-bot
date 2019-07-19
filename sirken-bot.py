@@ -35,33 +35,32 @@ def setup_logger(name, log_file, level=logging.INFO):
 # TIC EVERY MINUTE
 ##################
 async def minute_digest():
-    pass
-    # tic = 60
-    # while True:
-    #     await asyncio.sleep(tic)
-    #     now = timeh.now()
-    #
-    #     for merb in merbs.merbs:
-    #         # update merb eta
-    #         merb.eta = merb.get_new_eta()
-    #         minutes_diff = (merb.eta - now).total_seconds() // 60.0
-    #
-    #         # broadcast the alarm 30 minutes before a target spawns
-    #         if merb.target and minutes_diff == 30:
-    #             print_info = merb.print_short_info(v_trackers=True) + "\n"
-    #             message = "@here\n" + messagecomposer.prettify(print_info, "RED")
-    #             await client.get_channel(config.BROADCAST_CHANNEL).send(message)
-    #
-    #         # send a pm to watchers
-    #         for user in watch.users:
-    #             destination = discord.utils.get(client.get_all_members(), id=user)
-    #             if watch.check(user, merb.name, minutes_diff) and not merb.is_in_window():
-    #                 await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS"))
-    #                 logging.debug("ALARM TO %s: %s | ETA: %s | DIFF MINUTES: %s" %
-    #                               (user, merb.name, merb.eta, minutes_diff))
-    #
-    #     # UPDATE EMBED TIMERS
-    #     await embed_timers.update_message(client, merbs, trackers)
+    tic = 60
+    while True:
+        await asyncio.sleep(tic)
+        now = timeh.now()
+
+        for merb in merbs.merbs:
+            # update merb eta
+            merb.eta = merb.get_new_eta()
+            minutes_diff = (merb.eta - now).total_seconds() // 60.0
+
+            # broadcast the alarm 30 minutes before a target spawns
+            if merb.target and minutes_diff == 30:
+                print_info = merb.print_short_info(v_trackers=True) + "\n"
+                message = "@here\n" + messagecomposer.prettify(print_info, "RED")
+                await client.get_channel(config.BROADCAST_CHANNEL).send(message)
+
+            # send a pm to watchers
+            for user in watch.users:
+                destination = discord.utils.get(client.get_all_members(), id=user)
+                if watch.check(user, merb.name, minutes_diff) and not merb.is_in_window():
+                    await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS"))
+                    logging.debug("ALARM TO %s: %s | ETA: %s | DIFF MINUTES: %s" %
+                                  (user, merb.name, merb.eta, minutes_diff))
+
+        # UPDATE EMBED TIMERS
+        await embed_timers.update_message(client, merbs, trackers)
 
 
 ######################
@@ -155,7 +154,8 @@ if __name__ == "__main__":
         t_end = timer()
         logger_sirken.info("Loading Discord Users. Done in %s seconds" % (round(t_end - t_start, 5)))
         # LOAD EMBED
-        # await embed_timers.update_message(client, merbs, trackers)
+        await embed_timers.update_message(client, merbs, trackers)
+        print("BOT READY")
 
     @client.event
     async def on_message(input_message):
