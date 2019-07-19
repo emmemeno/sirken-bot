@@ -266,20 +266,22 @@ class SirkenCommands:
                 else:
                     total_duration = "(Total Time: %s)" % timeh.countdown(tracker_info['date'], timeh.now())
 
-                public_content += "%s stops tracking %s %s" % (tracker_name,
-                                                               tracker_info['what'],
-                                                               total_duration)
+                public_content = "%s stops tracking %s %s" % (tracker_name,
+                                                              tracker_info['what'],
+                                                              total_duration)
                 private_content = "%s %s and you stop tracking %s" % (self.lp.merb_found.name,
                                                                       mode_word,
                                                                       total_duration)
 
+                output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                                        'content': public_content,
+                                        'decoration': "YELLOW"})
+
             output_messages.append({'destination': self.d_client.get_user(tracker_id),
                                     'content': private_content,
                                     'decoration': "CSS"})
-        if public_content:
-            output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
-                                    'content': public_content,
-                                    'decoration': "YELLOW"})
+
+
 
         # save merbs timers
         self.merbs.save_timers()

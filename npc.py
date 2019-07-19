@@ -148,7 +148,7 @@ class Merb:
             return False
 
     def is_alive(self):
-        if self.living and not timeh.halfway_to_start_window(self):
+        if self.living and timeh.now() < (self.pop + datetime.timedelta(minutes=config.MAX_MERB_LIFE)):
             return True
         return False
 
