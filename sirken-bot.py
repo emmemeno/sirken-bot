@@ -156,7 +156,7 @@ if __name__ == "__main__":
         logger_sirken.info("Loading Discord Users. Done in %s seconds" % (round(t_end - t_start, 5)))
         # LOAD EMBED
         await embed_timers.update_message(client, merbs, trackers)
-        print("BOT READY")
+        print("BOT READY: %s" % config.DISCORD_TOKEN)
 
     @client.event
     async def on_message(input_message):
