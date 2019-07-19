@@ -394,6 +394,7 @@ class SirkenCommands:
 
             # Save trackers
             self.trackers.save()
+            self.merbs.save_timers()
             return output_messages
 
         # START SINGLE TRACKING
@@ -454,6 +455,7 @@ class SirkenCommands:
 
                 # Save trackers
                 self.trackers.save()
+                self.merbs.save_timers()
                 return output_messages
             else:
                 # Merb not found
@@ -516,6 +518,7 @@ class SirkenCommands:
 
                     # Save trackers
                     self.trackers.save()
+                    self.merbs.save_timers()
                     return output_messages
         else:
             return [{'destination': self.input_author,
