@@ -1,6 +1,8 @@
 import config
 import discord
+from discord.utils import get as get_discord
 import timehandler as timeh
+import config
 
 
 class EmbedMessage:
@@ -11,6 +13,8 @@ class EmbedMessage:
         self.channel = None
         self.message = None
         self.users = None
+        self.emojii_open_window = None
+        self.emojii_pop = None
 
     async def get_last_message(self, client):
         self.channel = client.get_channel(self.channel_id)
@@ -18,14 +22,15 @@ class EmbedMessage:
         if len(history):
             self.message = history[0]
 
+    def load_emojii(self, client):
+        self.channel = client.get_channel(self.channel_id)
+        guild = self.channel.guild
+        self.emojii_open_window = get_discord(guild.emojis, name=config.EMOJII_WINDOW_OPEN)
+        self.emojii_pop = get_discord(guild.emojis, name=config.EMOJII_POPPED)
+
     def compose_timers_message(self, merbs, trackers):
         embed_timers = discord.Embed(title=self.title, description=self.description, color=0x444444)
-        # field_content = "__in window__ for the next **8 hours and 29 minutes**\n"
-        # field_content += "Active Trackers: `Cat` `Dog` `Hot` `myself`"
-        # field_content2 = "window will open in 3 hours and 59 minutes\n"
-        #
-        # embed_timers.add_field(name="Trakanon", value=field_content, inline=True)
-        # embed_timers.add_field(name="Vulak", value=field_content2, inline=True)
+
         merbs.order('eta')
         counter_all = counter_in_window = 0
         for merb in merbs.merbs:
@@ -37,14 +42,14 @@ class EmbedMessage:
 
                 if merb.pop > merb.tod and timeh.now() < merb.window['start']:
                     if not timeh.halfway_to_start_window(merb):
-                        name_content = config.EMOJII_POPPED + "  " + name_content
+                        name_content = f"{self.emojii_pop} %s" % name_content
                         field_content += " popped %s ago\n" % timeh.countdown(merb.pop, timeh.now())
                     else:
                         field_content += "window roughly opens in %s\n" % timeh.countdown(timeh.now(), merb.eta)
                 else:
                     if merb.is_in_window():
                         counter_in_window = counter_in_window + 1
-                        name_content = config.EMOJII_WINDOW_OPEN + "  " + name_content
+                        name_content = f"{self.emojii_open_window} %s" % name_content
                         field_content += " *__in window__* for the next "
                     else:
                         field_content += "window opens in "
