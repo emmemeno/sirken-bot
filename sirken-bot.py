@@ -79,6 +79,9 @@ async def hour_digest():
         config.authenticator.reload_discord_users()
         logger_sirken.info("Users Reloaded")
 
+        # Reload Emojii
+        embed_timers.load_emojii(client)
+
 
 ########
 # MAIN #
