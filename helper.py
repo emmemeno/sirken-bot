@@ -1,6 +1,7 @@
 import os
 import glob
 import ntpath
+import config
 
 
 class Helper:
@@ -25,7 +26,7 @@ class Helper:
             return self.help['index']
 
     def get_about(self):
-        return self.help['about']
+        return self.help['about'] + "\nCLONE NAME: " + config.CLONE_NAME
 
     def get_released(self):
         return self.help['releases']
