@@ -64,15 +64,15 @@ class EmbedMessage:
                             tracker_name = str(tracker)
                             try:
                                 tracker_name = config.authenticator.users[tracker].name
+                                mode = trackers.get_tracker(tracker)['mode']
+                                field_content += tracker_name
+                                if mode:
+                                    field_content += " (%s)" % mode
+                                field_content += " - "
+                                field_content = field_content[:-3]
+                                field_content += "\n"
                             except:
                                 pass
-                            mode = trackers.get_tracker(tracker)['mode']
-                            field_content += tracker_name
-                            if mode:
-                                field_content += " (%s)" % mode
-                            field_content += " - "
-                        field_content = field_content[:-3]
-                        field_content += "\n"
                     else:
                         field_content += ""
                 field_content += "-"
