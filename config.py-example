@@ -1,21 +1,33 @@
 # The Authenticator is global
 import auth
+
 authenticator = auth.Auth()
 
+LOG_LEVEL = "DEBUG"
+CLONE_NAME = ""
 # The Discord Token
 DISCORD_TOKEN = ""
 
-# The ID Channel of Target Timers Widget:
-TIMERS_CHANNEL = 597695347040714752
+# The ID Channel where the Target Timers is:
+TIMERS_CHANNEL = 1111111111111111111
 
 # The Broadcast Channel ID:
-BROADCAST_CHANNEL =
+BROADCAST_CHANNEL = 22222222222222222222
 
 # The Batphone Channel ID:
-BROADCAST_BP_CHANNEL =
+BROADCAST_BP_CHANNEL = 33333333333333333
 
 # Set False to disable the batphone
 BATPHONE = True
+
+TAG_BATPHONE = "@everyone"
+TAG_ALERT = "@here"
+
+# Set true for the bridge to DKP Bot
+DKP_BRIDGE = True
+DKP_TRACKING_CHANNEL = 444444444444444444
+DKP_ADD_RAID_CHANNEL = 555555555555555555
+DKP_ADD_RAID_COMMAND = "$raid-add"
 
 # The maximum length allowed per message
 MAX_MESSAGE_LENGTH = 1800
@@ -27,7 +39,7 @@ MAX_BROADCAST_LENGTH = 1000
 FUZZY_THRESHOLD = 85
 FUZZY_GUESSED_THRESHOLD = 65
 
-# Files paths
+# Files path
 PATH_DIR = "resources/"
 FILE_ROLES = PATH_DIR + 'roles.json'
 FILE_ENTITIES = PATH_DIR + 'entities.json'
@@ -51,8 +63,10 @@ DATE_FORMAT_PRINT = "%b %d %H:%M"
 
 # Emojii for Target Timers Widget
 EMOJII_WINDOW_CLOSE = ""
-EMOJII_WINDOW_OPEN = ":openwindow:"
-EMOJII_POPPED = ":popwindow:"
+EMOJII_WINDOW_OPEN = "openwindow"
+EMOJII_POPPED = "popwindow"
 
+# Max minutes to consider a merb death
+MAX_MERB_LIFE = 360
 
 

@@ -141,6 +141,13 @@ class Merb:
     def del_all_trackers(self):
         del self.trackers[:]
 
+    def get_shortest_alias(self):
+        shortest_one = self.name
+        for alias in self.alias:
+            if len(alias) < len(shortest_one):
+                shortest_one = alias
+        return shortest_one
+
     def is_target(self):
         if self.target:
             return True
@@ -218,6 +225,7 @@ class Merb:
 
     def print_meta(self):
         return messagecomposer.meta(self.name, self.alias, self.tag)
+
 
     # serialize data
     def serialize(self):

@@ -1,9 +1,8 @@
-import config_auth as config
-import timehandler as timeh
 import json
 from miracle import Acl
-import errors
 import messagecomposer
+import config_auth as config
+import errors
 import discord
 
 
@@ -177,18 +176,12 @@ def cmd(command):
             user_check = u_acl.check_any(user_roles, "command", command)
             # CHECK FOR CHANNEL PERMISSION
             if not isinstance(input_channel, discord.channel.DMChannel):
-                channel_error_msg = "Hey %s! You are not allowed to ask me questions in %s channel\n" \
-                                    "Let's talk here!" % (parent_obj.input_author.name, input_channel.name)
                 if len(config.ALLOWED_CHANNELS):
                     if input_channel.id not in config.ALLOWED_CHANNELS and not input_channel.id == input_user:
-                        return [{"destination": parent_obj.input_author,
-                                "content": channel_error_msg,
-                                'decoration': "BLOCK"}]
+                        return False
                 if len(config.DENY_CHANNELS):
                     if input_channel.id in config.DENY_CHANNELS and not input_channel.id == input_user:
-                        return [{"destination": parent_obj.input_author,
-                                 "content": channel_error_msg,
-                                 'decoration': "BLOCK"}]
+                        return False
 
             # CHECK FOR USER PERMISSION
             if not user_check and config.AUTHENTICATION:

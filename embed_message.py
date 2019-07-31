@@ -1,4 +1,3 @@
-import config
 import discord
 from discord.utils import get as get_discord
 import timehandler as timeh

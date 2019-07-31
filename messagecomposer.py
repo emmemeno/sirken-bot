@@ -233,6 +233,37 @@ def last_update(name, last, mode="tod"):
     return output
 
 
+def print_stop_tracking_msg(who, what, mode, start_time):
+    output_msg = ''
+    if start_time > timeh.now():
+        total_duration = ""
+    else:
+        total_duration = "(Total Time: %s)" % timeh.countdown(start_time, timeh.now())
+
+    if who == 'You':
+        output_msg += f"You stop tracking {what} "
+    else:
+        output_msg += f"{who} stops tracking {what} "
+    if mode:
+        output_msg += f"[{mode}] "
+    output_msg += f"= {total_duration}"
+
+    return output_msg
+
+
+def print_dkp_tracking_msg(who, what, mode, start_time):
+    if start_time > timeh.now():
+        total_duration = ""
+    else:
+        total_duration = "(Total Time: %s)" % timeh.countdown(start_time, timeh.now())
+
+    output_msg = f"{who} tracked {what} "
+    if mode:
+        output_msg += f"[{mode}] "
+    output_msg += f"= {total_duration}"
+
+    return output_msg
+
 def output_list(content: list):
         output = ""
         for line in content:

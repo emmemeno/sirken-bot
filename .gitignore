@@ -1,7 +1,12 @@
 config.py
+config.py-production.py
+config_auth.py
+config_auth.py-production
 resources/roles.json
 resources/targets.json
 resources/entities.json
+resources/trackers.json
 resources/timers.json
 resources/watch.json
 logs/
+test.py

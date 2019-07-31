@@ -5,13 +5,13 @@ import asyncio
 import discord
 from discord.ext import commands
 import timehandler as timeh
-import messagecomposer
-import embed_message
-from sirken_commands import SirkenCommands
 import npc
 import watch
+import messagecomposer
 import trackers
+import embed_message
 import helper
+from sirken_commands import SirkenCommands
 from timeit import default_timer as timer
 
 
@@ -48,7 +48,7 @@ async def minute_digest():
             # broadcast the alarm 30 minutes before a target spawns
             if merb.target and minutes_diff == 30:
                 print_info = merb.print_short_info(v_trackers=True) + "\n"
-                message = "@here\n" + messagecomposer.prettify(print_info, "RED")
+                message = config.TAG_ALERT + "\n" + messagecomposer.prettify(print_info, "RED")
                 await client.get_channel(config.BROADCAST_CHANNEL).send(message)
 
             # send a pm to watchers
@@ -64,9 +64,9 @@ async def minute_digest():
         logger_io.info("MINUTE DIGEST DONE")
 
 
-######################
-# TIC EVERY HOUR     #
-######################
+################
+# TIC EVERY HOUR
+################
 async def hour_digest():
     # tic every hour
     tic = 60*60
@@ -83,9 +83,9 @@ async def hour_digest():
         embed_timers.load_emojii(client)
 
 
-########
-# MAIN #
-########
+######
+# MAIN
+######
 if __name__ == "__main__":
 
     # Generic Sirken-Bot file logger
@@ -145,6 +145,9 @@ if __name__ == "__main__":
     # Initialize Embed timers
     embed_timers = embed_message.EmbedMessage(config.TIMERS_CHANNEL, "**TARGET TIMERS**", "")
 
+    ##############
+    # BOT IS READY
+    ##############
     @client.event
     async def on_ready():
         logger_sirken.info("Sirken Bot is online and connected to Discord")
@@ -162,28 +165,28 @@ if __name__ == "__main__":
         await embed_timers.update_message(client, merbs, trackers)
         print("BOT READY: %s" % config.DISCORD_TOKEN)
 
+    ####################
+    # A MESSAGE INCOMING
+    ####################
     @client.event
     async def on_message(input_message):
         # Skip self messages
         if input_message.author == client.user:
             return
 
-        t_start = timer()
-
+        t_input_process_start = timer()
         response_messages = sirken_cmds.process(input_message)
-
-        t_end = timer()
-        processing_time = round(t_end - t_start, 5)
-
-        logger_io.info("INPUT: %s - %s (%s) " % (input_message.author.name, input_message.content, processing_time))
+        t_input_process_end = timer()
 
         # Do nothing if there are no responses
         if not response_messages:
             return
 
+        # calculate the processing time and print on log
+        processing_time = round(t_input_process_end - t_input_process_start, 5)
+        logger_io.info("INPUT: %s - %s (%s) " % (input_message.author.name, input_message.content, processing_time))
 
-
-        # Loop the messages list and cut messages too long  for discord
+        # Loop the output messages list and cut messages too long for discord
         output_messages = list()
         for raw_message in response_messages:
             if len(raw_message['content']) > config.MAX_MESSAGE_LENGTH:
@@ -192,7 +195,7 @@ if __name__ == "__main__":
                                             'content': trunk,
                                             'decoration': raw_message['decoration']})
             else:
-                # if length is in limit, just copy the message in the output list
+                # if length is under limit, just copy the message in the output list
                 output_messages.append(raw_message)
 
         for output_m in output_messages:
@@ -200,7 +203,10 @@ if __name__ == "__main__":
             await output_m['destination'].send(messagecomposer.prettify(output_m['content'], output_m['decoration']))
             logger_io.debug("OUTPUT: %s - %s" % (output_m['destination'], output_m['content']))
 
-    # Run the Bot
+
+    ###########################
+    # Run the Bot and two tasks
+    ###########################
     client.loop.create_task(minute_digest())
     client.loop.create_task(hour_digest())
     client.run(config.DISCORD_TOKEN)

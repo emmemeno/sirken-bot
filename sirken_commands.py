@@ -1,11 +1,10 @@
-from timeit import default_timer as timer
-import auth
-import line_parser
-import errors
-import messagecomposer
 import config
 import re
+import line_parser
 import timehandler as timeh
+import auth
+import messagecomposer
+import errors
 import logging
 import operator
 
@@ -60,9 +59,7 @@ class SirkenCommands:
             "missing": self.cmd_missing
         }
 
-        func = cmd_list.get(self.lp.cmd, lambda: [{'destination': self.input_author,
-                                                   'content': errors.error_command(),
-                                                   "decoration": 'CSS'}])
+        func = cmd_list.get(self.lp.cmd, lambda: False)
         output = func()
 
         # clearing the line
@@ -205,6 +202,8 @@ class SirkenCommands:
 
         # A Printable, timezone converted date
         output_tz_time = timeh.change_naive_to_tz(self.lp.my_date, self.lp.timezone).strftime(config.DATE_FORMAT_PRINT)
+        # Is a target?
+        is_target = self.lp.merb_found.is_target()
         # UPDATE THE TOD
         if mode == "tod":
             self.lp.merb_found.update_tod(self.lp.my_date, str(self.input_author), self.lp.snippet, approx)
@@ -223,7 +222,7 @@ class SirkenCommands:
             if config.BATPHONE and "bp" in self.lp.key_words:
 
                 output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_BP_CHANNEL),
-                                        'content': "@everyone %s" % self.lp.merb_found.name,
+                                        'content': f"{config.TAG_BATPHONE} {self.lp.merb_found.name}",
                                         'decoration': None})
 
         # Answer message
@@ -234,25 +233,26 @@ class SirkenCommands:
                                                                    self.lp.timezone),
                                 'decoration': "CSS"})
 
-        # Recap of tracking times
+        # Recap of merb status
         output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
                                 'content': messagecomposer.merb_update_recap(self.lp.merb_found,
                                                                              mode,
                                                                              "UTC"),
                                 'decoration': "CSS"})
 
+        # Send a raid-add command to DKP BOT if Target
+        if is_target and config.DKP_BRIDGE:
+            output_messages.append({'destination': self.d_client.get_channel(config.DKP_ADD_RAID_CHANNEL),
+                                    'content': f"{config.DKP_ADD_RAID_COMMAND} "
+                                               f"{self.lp.merb_found.get_shortest_alias()}",
+                                    'decoration': False})
 
         # Stop trackers tracking the merb and alert them
-        public_content = private_content = ""
         stopped_trackers = self.trackers.stop_trackers_by_merb(self.lp.merb_found)
         for tracker in stopped_trackers:
             tracker_id = next(iter(tracker))
-            tracker_name = tracker_id
-            try:
-                tracker_name = config.authenticator.users[tracker_id].name
-            except:
-                pass
 
+            # Check if tracking other merbs
             tracker_ended = tracker[tracker_id]['ended']
             tracker_info = tracker[tracker_id]['info']
             if not tracker_ended:
@@ -261,27 +261,7 @@ class SirkenCommands:
                     private_content += "[%s] " % merb.name
                 private_content += "\nTo stop tracking please {!track stop}"
             else:
-                if tracker_info['date'] > timeh.now():
-                    total_duration = ""
-                else:
-                    total_duration = "(Total Time: %s)" % timeh.countdown(tracker_info['date'], timeh.now())
-
-                public_content = "%s stops tracking %s %s" % (tracker_name,
-                                                              tracker_info['what'],
-                                                              total_duration)
-                private_content = "%s %s and you stop tracking %s" % (self.lp.merb_found.name,
-                                                                      mode_word,
-                                                                      total_duration)
-
-                output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
-                                        'content': public_content,
-                                        'decoration': "YELLOW"})
-
-            output_messages.append({'destination': self.d_client.get_user(tracker_id),
-                                    'content': private_content,
-                                    'decoration': "CSS"})
-
-
+                output_messages += self.assemble_stop_tracking_messages(tracker_id, tracker[tracker_id]['info'])
 
         # save merbs timers
         self.merbs.save_timers()
@@ -306,10 +286,12 @@ class SirkenCommands:
         if not self.lp.my_date:
             self.lp.my_date = timeh.now()
 
-        if "bp" in self.lp.key_words:
+        # BATPHONE IT
+        if config.BATPHONE:
             output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_BP_CHANNEL),
-                                    'content': "everyone - Earthquake!!!",
+                                    'content': f"{config.TAG_BATPHONE} EARTHQUAKE",
                                     'decoration': None})
+
         output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
                                 'content': eq_content,
                                 'decoration': 'BLOCK'})
@@ -320,32 +302,10 @@ class SirkenCommands:
         for merb in self.merbs.merbs:
             merb.update_pop(self.lp.my_date, str(self.input_author), self.lp.snippet)
 
-        public_content = ""
         for tracker in self.trackers.stop_all_trackers():
             tracker_id = next(iter(tracker))
-            tracker_name = tracker_id
-            try:
-                tracker_name = config.authenticator.users[tracker_id].name
-            except:
-                pass
 
-            tracker_info = tracker[tracker_id]['info']
-
-            if tracker_info['date'] > timeh.now():
-                total_duration = ""
-            else:
-                total_duration = "(Total Time: %s)" % timeh.countdown(tracker_info['date'], timeh.now())
-
-            private_content = "You stop tracking %s %s" % (tracker_info['what'].capitalize(), total_duration)
-            public_content += "%s stops tracking %s %s" % (tracker_name, tracker_info['what'].capitalize(), total_duration)
-
-            output_messages.append({'destination': self.d_client.get_user(tracker_id),
-                                    'content': private_content,
-                                    'decoration': 'BLOCK'})
-        if public_content:
-            output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
-                                    'content': public_content,
-                                    'decoration': "YELLOW"})
+            output_messages += self.assemble_stop_tracking_messages(tracker_id, tracker[tracker_id]['info'])
 
         # save merbs timers
         self.merbs.save_timers()
@@ -355,6 +315,71 @@ class SirkenCommands:
         self.trackers.save()
 
         return output_messages
+
+    def assemble_stop_tracking_messages(self, tracker_id, info):
+        messages = []
+        tracker_name = tracker_id
+        # Get tracker name
+        try:
+            tracker_name = config.authenticator.users[tracker_id].name
+        except:
+            logger.error(f"Can't retrieve {tracker_id} name")
+
+        private_content = messagecomposer.print_stop_tracking_msg("You",
+                                                                  info['what'],
+                                                                  info['mode'],
+                                                                  info['date']
+                                                                  )
+        public_content = messagecomposer.print_stop_tracking_msg(tracker_name,
+                                                                 info['what'],
+                                                                 info['mode'],
+                                                                 info['date']
+                                                                 )
+        dkp_content = messagecomposer.print_dkp_tracking_msg(tracker_name,
+                                                             info['what'],
+                                                             info['mode'],
+                                                             info['date']
+                                                             )
+        decoration = "YELLOW"
+
+        messages.append({'destination': self.d_client.get_user(tracker_id),
+                         'content': private_content,
+                         'decoration': decoration})
+        messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                         'content': public_content,
+                         'decoration': decoration})
+        if config.DKP_BRIDGE:
+            messages.append({'destination': self.d_client.get_channel(config.DKP_TRACKING_CHANNEL),
+                             'content': dkp_content,
+                             'decoration': decoration})
+
+        return messages
+
+    def assemble_start_tracking_messages(self, what, tracked_merbs, mode=''):
+        messages = []
+        output_private_content = ''
+        if mode:
+            mode = f"[{mode}]"
+
+        for merb in tracked_merbs:
+            if merb.is_in_window():
+                output_private_content += f"You start tracking {merb.name} {mode}\n"
+            else:
+                time_to_start = timeh.countdown(timeh.now(), merb.window['start'])
+                output_private_content += f"You will start tracking {merb.name} in {time_to_start} {mode}\n"
+
+        output_private_content += "\nRemember to {!track stop} when leaving or {!pop merb} at spawn time.\n" \
+                                  "If you want to Batphone please {!pop merb_name BP}"
+
+        messages.append({'destination': self.input_author,
+                         'content': output_private_content,
+                         'decoration': 'CSS'})
+
+        messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
+                         'content': f"{self.input_author.name} starts tracking {what.capitalize()} {mode}",
+                         'decoration': 'YELLOW'})
+
+        return messages
 
     ###############
     # TRACK A MERB
@@ -379,30 +404,15 @@ class SirkenCommands:
                          'decoration': 'CSS'}]
 
             stopped_tracker = self.trackers.stop_tracker_by_user(self.input_author.id)
-            if stopped_tracker['date'] > timeh.now():
-                time_duration = ""
-            else:
-                time_duration = "(Total Time: %s)" % timeh.countdown(stopped_tracker['date'], timeh.now())
+            output_messages += self.assemble_stop_tracking_messages(self.input_author.id, stopped_tracker)
 
-            output_messages.append({'destination': self.input_author,
-                                    'content': "You stop tracking [%s] %s" % (stopped_tracker['what'].capitalize(),
-                                                                            time_duration),
-                                    'decoration': 'CSS'})
-            output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
-                                    'content': "%s stops tracking %s %s" % (self.input_author.name,
-                                                                         stopped_tracker['what'].capitalize(),
-                                                                         time_duration),
-                                    'decoration': 'YELLOW'})
-
-            # Save trackers
+             # Save trackers
             self.trackers.save()
             self.merbs.save_timers()
             return output_messages
 
         # START SINGLE TRACKING
         elif "start" in self.lp.key_words:
-            help_msg = "Remember to {!track stop} when leaving or {!pop %s} at spawn time." \
-                       "If you want to Batphone please {!pop %s BP}"
             # Don'start if you are already tracking
             if author_tracker:
                 return [{'destination': self.input_author,
@@ -413,10 +423,10 @@ class SirkenCommands:
             # TRACK MODE
             if "fte" in self.lp.key_words:
                 track_mode = "fte"
-                track_mode_print = ".fte"
+            elif "buff" in self.lp.key_words:
+                track_mode = "buff"
             else:
                 track_mode = ""
-                track_mode_print = ""
 
             # START TRACKING A GROUP
             if self.lp.tag:
@@ -433,27 +443,7 @@ class SirkenCommands:
                              'decoration': 'CSS'}]
 
                 tracked_merbs = self.trackers.get_tracked_merb_by_user(self.input_author.id)
-                output_private_content = ""
-                for merb in tracked_merbs:
-                    if merb.is_in_window():
-                        output_private_content += "You start tracking [%s] %s\n" % (merb.name, track_mode_print)
-                    else:
-                        output_private_content += "You will start tracking [%s] in %s %s\n" % \
-                                                  (merb.name,
-                                                   timeh.countdown(timeh.now(),merb.window['start']),
-                                                   track_mode_print)
-                output_private_content += "\nRemember to {!track stop} when leaving or {!pop merb} at spawn time.\n" \
-                                           "If you want to Batphone please {!pop merb_name BP}"
-                output_messages.append({'destination': self.input_author,
-                                        'content': output_private_content,
-                                        'decoration': 'CSS'})
-
-                output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
-                                        'content': "%s starts tracking %s %s" %
-                                                   (self.input_author.name,
-                                                    started_tracker['what'].capitalize(),
-                                                    track_mode_print),
-                                        'decoration': 'YELLOW'})
+                output_messages += self.assemble_start_tracking_messages(self.lp.tag, tracked_merbs, track_mode)
 
                 # Save trackers
                 self.trackers.save()
@@ -494,29 +484,7 @@ class SirkenCommands:
                                                                 track_mode,
                                                                 self.merbs)
 
-                    if self.lp.merb_found.is_in_window():
-                        output_private_content = "You start tracking [%s] %s\n\n" %\
-                                                 (self.lp.merb_found.name, track_mode_print)
-                    else:
-                        output_private_content = "You will start tracking [%s] in %s .%s\n\n" %\
-                                                 (self.lp.merb_found.name,
-                                                  timeh.countdown(timeh.now(), self.lp.merb_found.window['start']),
-                                                  track_mode_print)
-
-                    output_private_content += "Remember to {!track stop} when leaving or {!pop %s} at spawn time.\n" \
-                                              "If you want to Batphone please {!pop %s BP}" % (self.lp.merb_found.name,
-                                                                                               self.lp.merb_found.name)
-
-                    output_messages.append({'destination': self.input_author,
-                                            'content': output_private_content,
-                                            'decoration': 'CSS'})
-
-                    output_messages.append({'destination': self.d_client.get_channel(config.BROADCAST_CHANNEL),
-                                            'content': "%s starts tracking %s %s" %
-                                                       (self.input_author.name,
-                                                        started_tracker['what'].capitalize(),
-                                                        track_mode_print),
-                                            'decoration': 'YELLOW'})
+                    output_messages += self.assemble_start_tracking_messages(self.lp.merb_found.name, [self.lp.merb_found], track_mode)
 
                     # Save trackers
                     self.trackers.save()
