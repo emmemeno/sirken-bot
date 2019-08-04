@@ -225,6 +225,13 @@ class SirkenCommands:
                                         'content': f"{config.TAG_BATPHONE} {self.lp.merb_found.name}",
                                         'decoration': None})
 
+                # Send a raid-add command to DKP BOT if Target
+                if config.DKP_BRIDGE:
+                    output_messages.append({'destination': self.d_client.get_channel(config.DKP_ADD_RAID_CHANNEL),
+                                            'content': f"{config.DKP_ADD_RAID_COMMAND} "
+                                            f"{self.lp.merb_found.get_shortest_alias()}",
+                                            'decoration': False})
+
         # Answer message
         output_messages.append({'destination': self.input_channel,
                                 'content': "[%s] %s at {%s %s}" % (self.lp.merb_found.name,
@@ -239,13 +246,6 @@ class SirkenCommands:
                                                                              mode,
                                                                              "UTC"),
                                 'decoration': "CSS"})
-
-        # Send a raid-add command to DKP BOT if Target
-        if is_target and config.DKP_BRIDGE:
-            output_messages.append({'destination': self.d_client.get_channel(config.DKP_ADD_RAID_CHANNEL),
-                                    'content': f"{config.DKP_ADD_RAID_COMMAND} "
-                                               f"{self.lp.merb_found.get_shortest_alias()}",
-                                    'decoration': False})
 
         # Stop trackers tracking the merb and alert them
         stopped_trackers = self.trackers.stop_trackers_by_merb(self.lp.merb_found)
