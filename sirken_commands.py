@@ -230,7 +230,7 @@ class SirkenCommands:
                     output_messages.append({'destination': self.d_client.get_channel(config.DKP_ADD_RAID_CHANNEL),
                                             'content': f"{config.DKP_ADD_RAID_COMMAND} "
                                                        f"{self.lp.merb_found.get_shortest_alias()} "
-                                                       f"({self.lp.merb_found.name})",
+                                                       f"[{self.lp.merb_found.name}]",
                                             'decoration': False})
 
         # Answer message
