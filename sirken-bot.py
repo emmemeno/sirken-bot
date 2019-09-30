@@ -69,7 +69,7 @@ async def minute_digest():
         # UPDATE EMBED TIMERS
         try:
             await embed_timers.update_message(client, merbs, trackers)
-            logger_sirken.info("Embed timers updated.")
+            # logger_sirken.info("Embed timers updated.")
         except Exception as e:
             logger_sirken.error(f"Embed timers not updated! Error: {e}")
         logger_io.info("MINUTE DIGEST DONE")
