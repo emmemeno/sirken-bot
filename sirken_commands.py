@@ -426,6 +426,8 @@ class SirkenCommands:
                 track_mode = "fte"
             elif "buff" in self.lp.key_words:
                 track_mode = "buff"
+            elif "coth" in self.lp.key_words:
+                track_mode = "coth"
             else:
                 track_mode = ""
 

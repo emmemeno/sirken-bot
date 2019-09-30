@@ -49,18 +49,29 @@ async def minute_digest():
             if merb.target and minutes_diff == 30:
                 print_info = merb.print_short_info(v_trackers=True) + "\n"
                 message = config.TAG_ALERT + "\n" + messagecomposer.prettify(print_info, "RED")
-                await client.get_channel(config.BROADCAST_CHANNEL).send(message)
+                try:
+                    await client.get_channel(config.BROADCAST_CHANNEL).send(message)
+                    logger_sirken.info(f"Broadcast alarm sent for {merb.name}")
+                except Exception as e:
+                    logger_sirken.error(f"Broadcast alarm not sent! Error: {e}")
 
             # send a pm to watchers
             for user in watch.users:
                 destination = discord.utils.get(client.get_all_members(), id=user)
                 if watch.check(user, merb.name, minutes_diff) and not merb.is_in_window():
-                    await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS"))
-                    logging.debug("ALARM TO %s: %s | ETA: %s | DIFF MINUTES: %s" %
-                                  (user, merb.name, merb.eta, minutes_diff))
+                    try:
+                        await destination.send(messagecomposer.prettify(merb.print_short_info(), "CSS"))
+                        logging.info("PM Alarm sent to %s: %s | ETA: %s | DIFF MINUTES: %s" %
+                                    (user, merb.name, merb.eta, minutes_diff))
+                    except Exception as e:
+                        logger_sirken.error(f"PM Alarm not sent! Error: {e}")
 
         # UPDATE EMBED TIMERS
-        await embed_timers.update_message(client, merbs, trackers)
+        try:
+            await embed_timers.update_message(client, merbs, trackers)
+            logger_sirken.info("Embed timers updated.")
+        except Exception as e:
+            logger_sirken.error(f"Embed timers not updated! Error: {e}")
         logger_io.info("MINUTE DIGEST DONE")
 
 
@@ -162,7 +173,11 @@ if __name__ == "__main__":
         logger_sirken.info("Loading Discord Users. Done in %s seconds" % (round(t_end - t_start, 5)))
         # LOAD EMBED
         embed_timers.load_emojii(client)
-        await embed_timers.update_message(client, merbs, trackers)
+        try:
+            await embed_timers.update_message(client, merbs, trackers)
+            logger_sirken.info("Embed timers updated.")
+        except Exception as e:
+            logger_sirken.error(f"Embed timers not updated! Error: {e}")
         print("BOT READY: %s" % config.DISCORD_TOKEN)
 
     ####################

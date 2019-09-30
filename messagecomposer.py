@@ -206,6 +206,7 @@ def tracker_list(merb, timezone, only_active=False):
         tracker_name = tracker
         try:
             tracker_name = config.authenticator.users[tracker].name
+
         except:
             pass
         output += "%s " % tracker_name
