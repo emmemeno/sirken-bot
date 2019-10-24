@@ -14,7 +14,8 @@ Track as a first to engage
 ```
 Start tracking a group of merbs. In case one of those pops/dies you will still continue tracking the others.
 ```
-!track tov start
+!track tov start coth
+!track vp start et
 !track fear start fte
 ```
 Stop tracking

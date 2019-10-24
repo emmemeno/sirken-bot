@@ -57,6 +57,7 @@ class LineParser:
             self.find_word("all")
             self.find_word("fte")
             self.find_word("buff")
+            self.find_word("et")
             self.find_word("coth")
             self.find_word("bp")
             self.find_word("target", r"\b(targets?)\b")
